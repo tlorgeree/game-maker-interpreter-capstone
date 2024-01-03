@@ -1,0 +1,15 @@
+{
+  "FolderOrderSettings": [
+    {"name":"Main","order":16,"path":"folders/Main.yy",},
+    {"name":"Code","order":1,"path":"folders/Main/Code.yy",},
+    {"name":"Managers","order":1,"path":"folders/Main/Code/Managers.yy",},
+    {"name":"GUI_Window","order":1,"path":"folders/Main/Code/Managers/GUI_Window.yy",},
+    {"name":"Fonts","order":2,"path":"folders/Main/Fonts.yy",},
+  ],
+  "ResourceOrderSettings": [
+    {"name":"GUI_Window_Manager","order":2,"path":"scripts/GUI_Window_Manager/GUI_Window_Manager.yy",},
+    {"name":"obj_Main","order":4,"path":"objects/obj_Main/obj_Main.yy",},
+    {"name":"spr_Window","order":1,"path":"sprites/spr_Window/spr_Window.yy",},
+    {"name":"Game_Manager","order":5,"path":"scripts/Game_Manager/Game_Manager.yy",},
+  ],
+}

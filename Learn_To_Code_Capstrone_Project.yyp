@@ -1,0 +1,43 @@
+{
+  "resourceType": "GMProject",
+  "resourceVersion": "1.7",
+  "name": "Learn_To_Code_Capstrone_Project",
+  "AudioGroups": [
+    {"resourceType":"GMAudioGroup","resourceVersion":"1.3","name":"audiogroup_default","targets":-1,},
+  ],
+  "configs": {
+    "children": [],
+    "name": "Default",
+  },
+  "defaultScriptType": 1,
+  "Folders": [
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Rooms","folderPath":"folders/Main/Rooms.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Main","folderPath":"folders/Main.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Code","folderPath":"folders/Main/Code.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Managers","folderPath":"folders/Main/Code/Managers.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"GUI_Window","folderPath":"folders/Main/Code/Managers/GUI_Window.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Fonts","folderPath":"folders/Main/Fonts.yy",},
+  ],
+  "IncludedFiles": [],
+  "isEcma": false,
+  "LibraryEmitters": [],
+  "MetaData": {
+    "IDEVersion": "2023.11.1.129",
+  },
+  "resources": [
+    {"id":{"name":"GUI_Window_Manager","path":"scripts/GUI_Window_Manager/GUI_Window_Manager.yy",},},
+    {"id":{"name":"fnt_Default","path":"fonts/fnt_Default/fnt_Default.yy",},},
+    {"id":{"name":"obj_GUI_Window","path":"objects/obj_GUI_Window/obj_GUI_Window.yy",},},
+    {"id":{"name":"obj_Main","path":"objects/obj_Main/obj_Main.yy",},},
+    {"id":{"name":"spr_Window","path":"sprites/spr_Window/spr_Window.yy",},},
+    {"id":{"name":"Game_Manager","path":"scripts/Game_Manager/Game_Manager.yy",},},
+    {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+  ],
+  "RoomOrderNodes": [
+    {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
+  ],
+  "templateType": "game",
+  "TextureGroups": [
+    {"resourceType":"GMTextureGroup","resourceVersion":"1.3","name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"targets":-1,},
+  ],
+}
