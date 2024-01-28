@@ -9,3 +9,5 @@ window_set_fullscreen(0);
 	global.Window_Manager.Create_Window(50, 50);
 	global.Game_Manager = new Game_Manager();
 #endregion
+
+lexer = new Lexer("this is a test string");
