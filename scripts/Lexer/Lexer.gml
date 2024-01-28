@@ -78,8 +78,10 @@ function Lexer(input_str) constructor{
 					tok.literal = Read_Identifier();
 					tok.type = tok.Lookup_Ident(tok.literal);
 					return tok;
-				}
-				else tok = new Token(TOKEN.ILLEGAL, ch);
+				} else if(Is_Digit(ch)){
+					tok = new Token(Read_Number(), TOKEN.INT);
+					return tok;
+				} else tok = new Token(TOKEN.ILLEGAL, ch);
 				break;
 		}
 		

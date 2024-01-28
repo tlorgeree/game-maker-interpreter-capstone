@@ -27,6 +27,7 @@
   },
   "resources": [
     {"id":{"name":"GUI_Window_Manager","path":"scripts/GUI_Window_Manager/GUI_Window_Manager.yy",},},
+    {"id":{"name":"REPL","path":"scripts/REPL/REPL.yy",},},
     {"id":{"name":"Lexer","path":"scripts/Lexer/Lexer.yy",},},
     {"id":{"name":"fnt_Default","path":"fonts/fnt_Default/fnt_Default.yy",},},
     {"id":{"name":"obj_GUI_Window","path":"objects/obj_GUI_Window/obj_GUI_Window.yy",},},

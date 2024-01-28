@@ -11,8 +11,6 @@ global.Game_Manager = new Game_Manager();
 #endregion
 
 #region Interpreter
-lexer = new Lexer("this is a test string");
-
 #region Token Keywords
 enum TOKEN {
 	ILLEGAL,
@@ -85,12 +83,34 @@ global.token_debug_str[TOKEN.RETURN] = "RETURN";
 #region Keyword Map
 global.keywords = ds_map_create();
 
-global.keywords["fn"] = TOKEN.FUNCTION;
-global.keywords["let"] = TOKEN.LET	;
-global.keywords["true"] = TOKEN.TRUE;
-global.keywords["false"] = TOKEN.FALSE;
-global.keywords["if"] = TOKEN.IF;
-global.keywords["else"] = TOKEN.ELSE;
-global.keywords["return"] = TOKEN.RETURN;
+global.keywords[? "fn"] = TOKEN.FUNCTION;
+global.keywords[? "let"] = TOKEN.LET	;
+global.keywords[? "true"] = TOKEN.TRUE;
+global.keywords[? "false"] = TOKEN.FALSE;
+global.keywords[? "if"] = TOKEN.IF;
+global.keywords[? "else"] = TOKEN.ELSE;
+global.keywords[? "return"] = TOKEN.RETURN;
 #endregion
 #endregion
+
+
+test_string =[
+	@"let five = 5; 
+	let ten = 10;
+	let add = fn(x, y) {
+	x + y;
+	};
+	let result = add(five, ten);
+	!-/*5;
+	5 < 10 > 5;
+	if (5 < 10) {
+	return true;
+	} else {
+	return false;
+	}
+	10 == 10;
+	10 != 9;
+"
+];
+
+repl = new Repl(test_string);
