@@ -114,3 +114,4 @@ test_string =[
 ];
 
 repl = new Repl(test_string);
+repl.Start();
