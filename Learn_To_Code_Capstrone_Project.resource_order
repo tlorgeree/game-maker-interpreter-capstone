@@ -10,6 +10,7 @@
     {"name":"GUI_Window_Manager","order":2,"path":"scripts/GUI_Window_Manager/GUI_Window_Manager.yy",},
     {"name":"REPL","order":2,"path":"scripts/REPL/REPL.yy",},
     {"name":"obj_Main","order":4,"path":"objects/obj_Main/obj_Main.yy",},
+    {"name":"Abstract_Syntax_Tree","order":3,"path":"scripts/Abstract_Syntax_Tree/Abstract_Syntax_Tree.yy",},
     {"name":"spr_Window","order":1,"path":"sprites/spr_Window/spr_Window.yy",},
     {"name":"Token","order":1,"path":"scripts/Token/Token.yy",},
     {"name":"Game_Manager","order":5,"path":"scripts/Game_Manager/Game_Manager.yy",},
