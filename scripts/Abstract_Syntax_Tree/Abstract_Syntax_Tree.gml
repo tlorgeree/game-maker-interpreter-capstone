@@ -59,6 +59,19 @@ function Parser(input_lexer) constructor{
 		
 		return false;
 	}
+	
+	Peek_Error = function(token_tpye){
+		var msg = $"expected next token to be {token_tpye}, got {peek_token.type} instead.";
+		show_debug_message(msg);
+		array_push(errors, msg);
+	}
+	
+	Check_Parser_Errors = function(){
+		var num_errors = array_length(errors);
+		if (num_errors) return;
+		
+		show_debug_message($"");
+	}
 }
 
 function Node(token) constructor{
