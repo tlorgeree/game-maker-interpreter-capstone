@@ -94,7 +94,7 @@ global.keywords[? "return"] = TOKEN.RETURN;
 #endregion
 
 
-test_string =[
+/*test_string =[
 	@"let five = 5; 
 	let ten = 10;
 	let add = fn(x, y) {
@@ -114,4 +114,14 @@ test_string =[
 ];
 
 repl = new Repl(test_string);
-repl.Start();
+repl.Start();*/
+
+let_statement_test = @"
+	let x = 5;
+	let y = 10;
+	let foobar = 838383;
+";
+
+parser = new Parser(new Lexer(let_statement_test));
+
+parser.Parse_Program();

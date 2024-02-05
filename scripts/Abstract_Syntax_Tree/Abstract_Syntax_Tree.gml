@@ -11,11 +11,17 @@ function Parser(input_lexer) constructor{
 	}
 	
 	Parse_Program = function(){
-		var statement = Parse_Statement();
-		if(!is_undefined(statement)){
-			array_push(program.statements, statement);	
+		var statement;
+		
+		while(!Curr_Token_Is(TOKEN.EOF)){
+			statement = Parse_Statement();			
+			if(!is_undefined(statement)){	
+				show_debug_message(statement.name.value);
+				array_push(program.statements, statement);	
+			}
+			Next_Token();
 		}
-		Next_Token();
+		
 	}
 	
 	Parse_Statement = function(){
@@ -34,7 +40,7 @@ function Parser(input_lexer) constructor{
 			return undefined;	
 		}
 		
-		statement.name = Identifier(curr_token);
+		statement.name = new Identifier(curr_token);
 		
 		if(!Curr_Token_Is(TOKEN.SEMICOLON)){
 			Next_Token();	
@@ -43,12 +49,12 @@ function Parser(input_lexer) constructor{
 		return statement;
 	}
 	
-	Curr_Token_Is = function(token_type){
-		return curr_token == token_type;
+	Curr_Token_Is = function(token_type){		
+		return curr_token.type == token_type;
 	}
 	
 	Peek_Token_Is = function(token_type){
-		return peek_token == token_type;
+		return peek_token.type == token_type;
 	}
 	
 	Expect_Peek = function(token_type){
@@ -57,6 +63,7 @@ function Parser(input_lexer) constructor{
 			return true;
 		}
 		
+		Peek_Error(token_type);		
 		return false;
 	}
 	
@@ -113,7 +120,7 @@ function Expression(token): Node(token) constructor{
 }
 
 function Identifier(token) : Expression(token) constructor{
-	name = token.literal;
+	value = token.literal;
 
 }
 #endregion
