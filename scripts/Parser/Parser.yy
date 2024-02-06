@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "Abstract_Syntax_Tree",
+  "name": "Parser",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {

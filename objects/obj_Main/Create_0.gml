@@ -125,3 +125,4 @@ let_statement_test = @"
 parser = new Parser(new Lexer(let_statement_test));
 
 parser.Parse_Program();
+parser.Check_Parser_Errors();

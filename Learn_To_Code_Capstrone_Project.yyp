@@ -32,7 +32,7 @@
     {"id":{"name":"fnt_Default","path":"fonts/fnt_Default/fnt_Default.yy",},},
     {"id":{"name":"obj_GUI_Window","path":"objects/obj_GUI_Window/obj_GUI_Window.yy",},},
     {"id":{"name":"obj_Main","path":"objects/obj_Main/obj_Main.yy",},},
-    {"id":{"name":"Abstract_Syntax_Tree","path":"scripts/Abstract_Syntax_Tree/Abstract_Syntax_Tree.yy",},},
+    {"id":{"name":"Parser","path":"scripts/Parser/Parser.yy",},},
     {"id":{"name":"spr_Window","path":"sprites/spr_Window/spr_Window.yy",},},
     {"id":{"name":"Token","path":"scripts/Token/Token.yy",},},
     {"id":{"name":"Game_Manager","path":"scripts/Game_Manager/Game_Manager.yy",},},

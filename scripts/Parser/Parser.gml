@@ -15,8 +15,7 @@ function Parser(input_lexer) constructor{
 		
 		while(!Curr_Token_Is(TOKEN.EOF)){
 			statement = Parse_Statement();			
-			if(!is_undefined(statement)){	
-				show_debug_message(statement.name.value);
+			if(!is_undefined(statement)){
 				array_push(program.statements, statement);	
 			}
 			Next_Token();
@@ -36,11 +35,11 @@ function Parser(input_lexer) constructor{
 	Parse_Let_Statement = function(){
 		var statement = new Let_Statement(curr_token);
 		
-		if(!Expect_Peek(TOKEN.IDENT)){
-			return undefined;	
-		}
+		if(!Expect_Peek(TOKEN.IDENT)) return undefined;
 		
 		statement.name = new Identifier(curr_token);
+		
+		if(!Expect_Peek(TOKEN.ASSIGN)) return undefined;
 		
 		if(!Curr_Token_Is(TOKEN.SEMICOLON)){
 			Next_Token();	
@@ -62,13 +61,12 @@ function Parser(input_lexer) constructor{
 			Next_Token();
 			return true;
 		}
-		
 		Peek_Error(token_type);		
 		return false;
 	}
 	
-	Peek_Error = function(token_tpye){
-		var msg = $"expected next token to be {token_tpye}, got {peek_token.type} instead.";
+	Peek_Error = function(token_type){
+		var msg = $"expected next token to be {global.token_debug_str[token_type]}, got {global.token_debug_str[peek_token.type]} instead.";
 		show_debug_message(msg);
 		array_push(errors, msg);
 	}
@@ -77,7 +75,9 @@ function Parser(input_lexer) constructor{
 		var num_errors = array_length(errors);
 		if (num_errors) return;
 		
-		show_debug_message($"");
+		for(var i=0; i< num_errors; i++){
+			show_debug_message($"Parser error: {errors[i]}");
+		}
 	}
 }
 
