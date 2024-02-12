@@ -48,6 +48,16 @@ enum TOKEN {
 	RETURN,
 }
 
+
+enum PRECEDENCE {
+	LOWEST,
+	EQUALS, // ==
+	LESSGREATER, // < or >
+	SUM, // +
+	PRODUCT, // *
+	PREFIX, // -X or !X
+	CALL // My_Function(X)
+}
 #region Token Debug String Map
 global.token_debug_str = array_create(TOKEN.RETURN+1, "");
 
@@ -117,9 +127,11 @@ repl = new Repl(test_string);
 repl.Start();*/
 
 let_statement_test = @"
-	let x = 5;
+	-5;
+	let x = -5;
 	let y = 10;
 	let foobar = 838383;
+	return;
 ";
 
 parser = new Parser(new Lexer(let_statement_test));
