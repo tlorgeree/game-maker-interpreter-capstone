@@ -16,6 +16,7 @@ function Parser(input_lexer) constructor{
 	
 	Next_Token = function(){
 		curr_token = peek_token;
+		show_debug_message(global.token_debug_str[curr_token.type]);
 		peek_token = lexer.Next_Token();
 	}
 	
@@ -23,14 +24,12 @@ function Parser(input_lexer) constructor{
 		var statement;
 		
 		while(!Curr_Token_Is(TOKEN.EOF)){
-			if(Curr_Token_Is(TOKEN.MINUS))show_message("found a minus");
 			statement = Parse_Statement();			
 			if(!is_undefined(statement)){
 				array_push(program.statements, statement);	
 			}
 			Next_Token();
-		}
-		
+		}		
 	}
 	
 	#region Statement Parsing
