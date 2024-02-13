@@ -6,12 +6,30 @@ function Parser(input_lexer) constructor{
 	program = new Program(new Token());
 	prefix_parse_fns = ds_map_create(); //token.type : Prefix_Parse_Fn()
 	infix_parse_fns = ds_map_create();
+	precedences = ds_map_create();
+	precedences[? TOKEN.EQ] = PRECEDENCE.EQUALS;
+	precedences[? TOKEN.NOT_EQ] = PRECEDENCE.EQUALS;
+	precedences[? TOKEN.LT] = PRECEDENCE.LESSGREATER;
+	precedences[? TOKEN.GT] = PRECEDENCE.LESSGREATER;
+	precedences[? TOKEN.PLUS] = PRECEDENCE.SUM;
+	precedences[? TOKEN.MINUS	] = PRECEDENCE.SUM;
+	precedences[? TOKEN.SLASH] = PRECEDENCE.PRODUCT;
+	precedences[? TOKEN.ASTERISK] = PRECEDENCE.PRODUCT;
 	
 	Init = function(){
 		Register_Prefix(TOKEN.IDENT, Parse_Identifier);
 		Register_Prefix(TOKEN.INT, Parse_Integer_Literal);
 		Register_Prefix(TOKEN.BANG, Parse_Prefix_Expression);
 		Register_Prefix(TOKEN.MINUS, Parse_Prefix_Expression);
+		
+		Register_Infix(TOKEN.PLUS, Parse_Infix_Expression);
+		Register_Infix(TOKEN.MINUS, Parse_Infix_Expression);
+		Register_Infix(TOKEN.SLASH, Parse_Infix_Expression);
+		Register_Infix(TOKEN.ASTERISK, Parse_Infix_Expression);
+		Register_Infix(TOKEN.EQ, Parse_Infix_Expression);
+		Register_Infix(TOKEN.NOT_EQ, Parse_Infix_Expression);
+		Register_Infix(TOKEN.LT, Parse_Infix_Expression);
+		Register_Infix(TOKEN.GT, Parse_Infix_Expression);
 	}
 	
 	Next_Token = function(){
@@ -29,7 +47,9 @@ function Parser(input_lexer) constructor{
 				array_push(program.statements, statement);	
 			}
 			Next_Token();
-		}		
+		}
+		
+		program.String();
 	}
 	
 	#region Statement Parsing
@@ -83,7 +103,7 @@ function Parser(input_lexer) constructor{
 	Parse_Expression_Statement = function(){
 		var statement = new Expression_Statement(curr_token);
 		
-		statement.expresison = Parse_Expression(PRECEDENCE.LOWEST);
+		statement.expression = Parse_Expression(PRECEDENCE.LOWEST);
 		
 		if(Peek_Token_Is(TOKEN.SEMICOLON)){
 			Next_Token();
@@ -103,7 +123,7 @@ function Parser(input_lexer) constructor{
 		
 		var left_exp = prefix();
 		
-		while(!Peek_Token_Is(TOKEN.SEMICOLON)) && precedence < Peak_Precedence(){
+		while(!Peek_Token_Is(TOKEN.SEMICOLON)) && precedence < Peek_Precedence(){
 			var infix = infix_parse_fns[? peek_token.type];
 			if (is_undefined(infix)){
 				return left_exp;	
@@ -123,17 +143,17 @@ function Parser(input_lexer) constructor{
 		
 		expression.right = Parse_Expression(PRECEDENCE.PREFIX);
 		
-		show_debug_message(expression.String());
 		return expression;
 	}
 	
-	Parse_Infix_Expression = function(){
-		var expression = new Prefix_Expression(curr_token);		
+	Parse_Infix_Expression = function(left_expression){
+		var expression = new Infix_Expression(curr_token);
+		expression.left = left_expression;
+		var precedence = Curr_Precedence();
 		Next_Token();
 		
-		expression.right = Parse_Expression(PRECEDENCE.PREFIX);
+		expression.right = Parse_Expression(precedence);
 		
-		show_debug_message(expression.String());
 		return expression;
 	}
 	
@@ -192,15 +212,7 @@ function Parser(input_lexer) constructor{
 			show_debug_message($"Parser error: {errors[i]}");
 		}
 	}
-	
-	Prefix_Parse_Fn = function(){
 		
-	}
-	
-	Infix_Parse_Fn = function(){
-		
-	}
-	
 	Register_Prefix = function(token_type, prefix_parse_fn){
 		prefix_parse_fns[? token_type] = prefix_parse_fn;	
 	}
@@ -213,10 +225,15 @@ function Parser(input_lexer) constructor{
 		var str_digits = string_digits(str);
 		
 		return (str == str_digits) ? real(str) : undefined;
+	}	
+	
+	Peek_Precedence = function(){
+		return precedences[? peek_token.type] ?? PRECEDENCE.LOWEST;		
 	}
 	
-	
+	Curr_Precedence = function(){
+		return precedences[? curr_token.type] ?? PRECEDENCE.LOWEST;	
+	}
 	
 	Init();
 }
-

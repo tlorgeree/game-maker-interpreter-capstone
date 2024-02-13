@@ -20,6 +20,7 @@ function Program(token): Node(token) constructor{
 	String = function(){
 		var str = "";
 		for(var i=0; i< array_length(statements); i++){
+			show_debug_message(statements[i].String());
 			str += statements[i].String();	
 		}
 		return str;
@@ -55,9 +56,8 @@ function Expression_Statement(token) : Statement(token) constructor{
 	//Token Literal from Node
 	
 	String = function(){
-		return (!is_undefined(expression)) ? expresison.String() : "";
-	}
-	
+		return (!is_undefined(expression)) ? expression.String() : "";
+	}	
 }
 #endregion
 
@@ -81,7 +81,17 @@ function Prefix_Expression(token) : Expression(token) constructor{
 	right = undefined; // expression
 	
 	String = function(){		
-		return $"({(!is_undefined(operator)) ? operator : ""}{(!is_undefined(right)) ? string(right.value) : ""})";	
+		return $"({(!is_undefined(operator)) ? operator : ""}{(!is_undefined(right)) ? string(right.String()) : ""})";	
+	}
+}
+
+function Infix_Expression(token) : Expression(token) constructor{
+	operator = token.literal; // prefix operator
+	left = undefined; //expression
+	right = undefined; // expression
+	
+	String = function(){		
+		return $"({(!is_undefined(left)) ? string(left.String()) : ""}{(!is_undefined(operator)) ? operator : ""}{(!is_undefined(right)) ? string(right.String()) : ""})";	
 	}
 }
 #endregion
@@ -91,5 +101,8 @@ function Prefix_Expression(token) : Expression(token) constructor{
 function Integer_Literal(token) : Node(token) constructor{
 	//token from Node
 	value = undefined;
+	String = function(){
+		return tok.literal;
+	}
 }
 #endregion

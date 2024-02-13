@@ -131,6 +131,12 @@ let_statement_test = @"
 	let x = -5;
 	let y = 10;
 	let foobar = 838383;
+	let z = 100 + 100;
+	let schoob = 1000 - 5 * 4;
+	a + b * c + d / e - f;
+	3 + 4; -5 * 5;
+	5 < 4 != 3 > 4;
+	3 + 4 * 5 == 3 * 1 + 4 * 5;
 	return;
 ";
 

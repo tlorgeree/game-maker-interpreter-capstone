@@ -39,7 +39,13 @@ function Lexer(input_str) constructor{
 				tok = new Token(TOKEN.COMMA, ch);
 				break;
 			case "=":
-				tok = new Token(TOKEN.ASSIGN, ch);
+				if(Peek_Char() == "="){
+					var char = ch;
+					Read_Char();
+					tok = new Token(TOKEN.EQ, char + ch)
+				}else{
+					tok = new Token(TOKEN.ASSIGN, ch);
+				}
 				break;
 			case "+":
 				tok = new Token(TOKEN.PLUS, ch);
