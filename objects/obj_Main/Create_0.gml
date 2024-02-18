@@ -137,6 +137,12 @@ let_statement_test = @"
 	3 + 4; -5 * 5;
 	5 < 4 != 3 > 4;
 	3 + 4 * 5 == 3 * 1 + 4 * 5;
+	let t = true ;
+	if(t == true){
+		y;
+	} else {
+		z;
+	}
 	return;
 ";
 

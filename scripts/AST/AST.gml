@@ -59,6 +59,16 @@ function Expression_Statement(token) : Statement(token) constructor{
 		return (!is_undefined(expression)) ? expression.String() : "";
 	}	
 }
+
+function Block_Statement(token): Statement(token) constructor{
+	statements = [];
+	
+	String = function(){
+		var str = "";
+		for(var i=0; i< array_length(statements); i++) str+=statements[i].String();
+		return str;
+	}
+}
 #endregion
 
 #region Expression Nodes
@@ -72,6 +82,14 @@ function Identifier(token) : Expression(token) constructor{
 	
 	String = function(){
 		return value;	
+	}
+}
+
+function Boolean(token) : Expression(token) constructor{
+	value = (token.type == TOKEN.TRUE);
+	
+	String = function(){
+		return tok.literal;	
 	}
 }
 
@@ -94,6 +112,18 @@ function Infix_Expression(token) : Expression(token) constructor{
 		return $"({(!is_undefined(left)) ? string(left.String()) : ""}{(!is_undefined(operator)) ? operator : ""}{(!is_undefined(right)) ? string(right.String()) : ""})";	
 	}
 }
+
+function If_Expression(token) : Expression(token) constructor{
+	condition = undefined; //expression
+	consequence = undefined;
+	alternative = undefined;
+	
+	String = function(){
+		return 	$"if {(!is_undefined(condition)) ? condition.String() : ""}" 
+		+ $" {(!is_undefined(consequence)) ? consequence.String() : ""} else {(!is_undefined(alternative) ? alternative.String() : "")}";
+	}
+}
+
 #endregion
 
 #region Lierals

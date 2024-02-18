@@ -21,6 +21,10 @@ function Parser(input_lexer) constructor{
 		Register_Prefix(TOKEN.INT, Parse_Integer_Literal);
 		Register_Prefix(TOKEN.BANG, Parse_Prefix_Expression);
 		Register_Prefix(TOKEN.MINUS, Parse_Prefix_Expression);
+		Register_Prefix(TOKEN.TRUE, Parse_Boolean);
+		Register_Prefix(TOKEN.FALSE, Parse_Boolean);
+		Register_Prefix(TOKEN.LPAREN, Parse_Grouped_Expression); 
+		Register_Prefix(TOKEN.IF, Parse_If_Expression);
 		
 		Register_Infix(TOKEN.PLUS, Parse_Infix_Expression);
 		Register_Infix(TOKEN.MINUS, Parse_Infix_Expression);
@@ -149,9 +153,9 @@ function Parser(input_lexer) constructor{
 	Parse_Infix_Expression = function(left_expression){
 		var expression = new Infix_Expression(curr_token);
 		expression.left = left_expression;
-		var precedence = Curr_Precedence();
-		Next_Token();
 		
+		var precedence = Curr_Precedence();
+		Next_Token();		
 		expression.right = Parse_Expression(precedence);
 		
 		return expression;
@@ -175,6 +179,62 @@ function Parser(input_lexer) constructor{
 		
 		return literal;		
 	}
+	
+	Parse_Boolean = function(){
+		return new Boolean(curr_token);
+	}
+	
+	Parse_Grouped_Expression = function(){
+		Next_Token();
+		
+		var expression = Parse_Expression(PRECEDENCE.LOWEST);
+		
+		if(!Expect_Peek(TOKEN.RPAREN)){
+			return undefined;	
+		}
+		
+		return expression;
+	}
+	
+	Parse_If_Expression = function(){
+		var expression = new If_Expression(curr_token);	
+		
+		if(!Expect_Peek(TOKEN.LPAREN)) return undefined;	
+				
+		Next_Token();
+		expression.condition = Parse_Expression(PRECEDENCE.LOWEST);
+		
+		if(!Expect_Peek(TOKEN.RPAREN)) return undefined;
+		if(!Expect_Peek(TOKEN.LBRACE)) return undefined;
+		
+		expression.consequence = Parse_Block_Statement();
+		
+		if(Peek_Token_Is(TOKEN.ELSE)){
+			Next_Token();
+			
+			if(!Expect_Peek(TOKEN.LBRACE)) return undefined;
+			expression.alternative = Parse_Block_Statement();
+		}
+		
+		return expression;		
+	}
+	
+	Parse_Block_Statement = function(){
+		var block = new Block_Statement(curr_token);
+		
+		Next_Token();
+		
+		while(!Curr_Token_Is(TOKEN.RBRACE) && !Curr_Token_Is(TOKEN.EOF)){
+			var statement = Parse_Statement();
+			
+			if(!is_undefined(statement)) array_push(block.statements, statement);
+			
+			Next_Token();
+		}
+		
+		return block;
+	}
+	
 	#endregion
 	
 	Curr_Token_Is = function(token_type){		
