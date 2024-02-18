@@ -143,6 +143,7 @@ let_statement_test = @"
 	} else {
 		z;
 	}
+	fn(x, y) { x + y; }
 	return;
 ";
 

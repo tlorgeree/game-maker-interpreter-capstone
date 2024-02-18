@@ -25,6 +25,7 @@ function Parser(input_lexer) constructor{
 		Register_Prefix(TOKEN.FALSE, Parse_Boolean);
 		Register_Prefix(TOKEN.LPAREN, Parse_Grouped_Expression); 
 		Register_Prefix(TOKEN.IF, Parse_If_Expression);
+		Register_Prefix(TOKEN.FUNCTION, Parse_Function_Literal);
 		
 		Register_Infix(TOKEN.PLUS, Parse_Infix_Expression);
 		Register_Infix(TOKEN.MINUS, Parse_Infix_Expression);
@@ -235,6 +236,44 @@ function Parser(input_lexer) constructor{
 		return block;
 	}
 	
+	Parse_Function_Literal = function(){
+		var literal = new Function_Literal(curr_token);
+		
+		if(!Expect_Peek(TOKEN.LPAREN)) return undefined;
+		
+		literal.parameters = Parse_Function_Parameters();
+		
+		if(!Expect_Peek(TOKEN.LBRACE)) return undefined;
+		
+		literal.body = Parse_Block_Statement();
+		
+		
+		return literal;
+	}
+	
+	Parse_Function_Parameters = function(){
+		var identifiers = [];
+		
+		if(Peek_Token_Is(TOKEN.RPAREN)){
+			Next_Token();
+			return identifiers;
+		}
+		
+		Next_Token();
+		
+		array_push(identifiers, new Identifier(curr_token));
+		
+		while(Peek_Token_Is(TOKEN.COMMA)){
+			Next_Token();
+			Next_Token();
+			
+			array_push(identifiers, new Identifier(curr_token));
+		}
+		
+		if(!Expect_Peek(TOKEN.RPAREN)) return undefined;
+		
+		return identifiers;
+	}
 	#endregion
 	
 	Curr_Token_Is = function(token_type){		

@@ -126,13 +126,29 @@ function If_Expression(token) : Expression(token) constructor{
 
 #endregion
 
-#region Lierals
+#region Literals
 
 function Integer_Literal(token) : Node(token) constructor{
 	//token from Node
 	value = undefined;
 	String = function(){
 		return tok.literal;
+	}
+}
+
+function Function_Literal(token) : Expression(token) constructor{
+	parameters = []; // Identifiers
+	body = undefined; //block statement
+	
+	String = function(){
+		var params = "";
+		
+		for(var i=0; i<array_length(parameters); i++){
+			params += parameters[i].String();
+			if(i<array_length(parameters)-1) params += ", ";
+		}
+				
+		return $"{Token_Literal()} ({params}) {(!is_undefined(body)) ? body.String() : ""}";
 	}
 }
 #endregion
