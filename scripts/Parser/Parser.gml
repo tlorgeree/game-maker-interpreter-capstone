@@ -12,9 +12,10 @@ function Parser(input_lexer) constructor{
 	precedences[? TOKEN.LT] = PRECEDENCE.LESSGREATER;
 	precedences[? TOKEN.GT] = PRECEDENCE.LESSGREATER;
 	precedences[? TOKEN.PLUS] = PRECEDENCE.SUM;
-	precedences[? TOKEN.MINUS	] = PRECEDENCE.SUM;
+	precedences[? TOKEN.MINUS] = PRECEDENCE.SUM;
 	precedences[? TOKEN.SLASH] = PRECEDENCE.PRODUCT;
 	precedences[? TOKEN.ASTERISK] = PRECEDENCE.PRODUCT;
+	precedences[? TOKEN.LPAREN] = PRECEDENCE.CALL;
 	
 	Init = function(){
 		Register_Prefix(TOKEN.IDENT, Parse_Identifier);
@@ -35,6 +36,7 @@ function Parser(input_lexer) constructor{
 		Register_Infix(TOKEN.NOT_EQ, Parse_Infix_Expression);
 		Register_Infix(TOKEN.LT, Parse_Infix_Expression);
 		Register_Infix(TOKEN.GT, Parse_Infix_Expression);
+		Register_Infix(TOKEN.LPAREN, Parse_Call_Expression);
 	}
 	
 	Next_Token = function(){
@@ -86,7 +88,6 @@ function Parser(input_lexer) constructor{
 			Next_Token();	
 		}
 		
-		show_debug_message(statement.String());
 		return statement;
 	}
 	
@@ -95,13 +96,12 @@ function Parser(input_lexer) constructor{
 		
 		Next_Token();
 		
-		//TODO: we're skipping expressions until we encounter a semicolon
+		statement.return_value = Parse_Expression(PRECEDENCE.LOWEST);
 		
 		while(!Curr_Token_Is(TOKEN.SEMICOLON)){
 			Next_Token();	
 		}
 		
-		show_debug_message(statement.String());
 		return statement;
 	}
 	
@@ -114,7 +114,6 @@ function Parser(input_lexer) constructor{
 			Next_Token();
 		}
 		
-		show_debug_message(statement.String());
 		return statement;	
 	}
 	
@@ -273,6 +272,34 @@ function Parser(input_lexer) constructor{
 		if(!Expect_Peek(TOKEN.RPAREN)) return undefined;
 		
 		return identifiers;
+	}
+	
+	Parse_Call_Expression = function(fn){
+		var expression = new Call_Expression(curr_token);
+		expression.fn = fn;
+		expression.arguments = Parse_Call_Arguments();
+		return expression;
+	}
+	
+	Parse_Call_Arguments = function(){
+		var args = []; //expressions
+		if(Peek_Token_Is(TOKEN.RPAREN)){
+			Next_Token();
+			return args;			
+		}
+		
+		Next_Token();
+		array_push(args, Parse_Expression(PRECEDENCE.LOWEST));
+		
+		while(Peek_Token_Is(TOKEN.COMMA)){
+			Next_Token();
+			Next_Token();
+			array_push(args, Parse_Expression(PRECEDENCE.LOWEST));
+		}
+		
+		if(!Expect_Peek(TOKEN.RPAREN)) return undefined;
+		
+		return args;	
 	}
 	#endregion
 	

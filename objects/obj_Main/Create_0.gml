@@ -144,6 +144,7 @@ let_statement_test = @"
 		z;
 	}
 	fn(x, y) { x + y; }
+	add(1, add(2, 3)); 
 	return;
 ";
 

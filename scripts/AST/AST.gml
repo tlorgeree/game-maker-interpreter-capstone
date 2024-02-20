@@ -44,8 +44,9 @@ function Let_Statement(token) : Statement(token) constructor{
 }
 
 function Return_Statement(token) : Statement(token) constructor{
+	return_value = undefined; // Expression
 	String = function(){
-		return $"{Token_Literal()} {(!is_undefined(value)) ? (string(value) + " "): ""};";		
+		return $"{Token_Literal()} {(!is_undefined(value)) ? (string(value) + " "): ""} {(!is_undefined(return_value) ? return_value.String() : "")};";		
 	}
 }
 
@@ -124,6 +125,21 @@ function If_Expression(token) : Expression(token) constructor{
 	}
 }
 
+
+function Call_Expression(token) : Expression(token) constructor{
+	fn = undefined; // function expression 
+	arguments = []; // Expressions
+	
+	String = function(){
+		var args = "";
+		for(var i=0; i< array_length(arguments); i++){
+			args += arguments[i].String();
+			if(i<array_length(arguments)-1) args += ", ";
+		}
+		
+		return $"{fn.String()}({args})";
+	}
+}
 #endregion
 
 #region Literals
