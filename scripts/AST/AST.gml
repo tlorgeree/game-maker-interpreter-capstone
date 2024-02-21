@@ -21,7 +21,7 @@ function Program(token): Node(token) constructor{
 		var str = "";
 		for(var i=0; i< array_length(statements); i++){
 			show_debug_message(statements[i].String());
-			str += statements[i].String();	
+			str += "\t" + statements[i].String() + "\n";	
 		}
 		return str;
 	}

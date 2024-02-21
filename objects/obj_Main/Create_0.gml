@@ -148,7 +148,5 @@ let_statement_test = @"
 	return;
 ";
 
-parser = new Parser(new Lexer(let_statement_test));
-
-parser.Parse_Program();
-parser.Check_Parser_Errors();
+repl = new Repl(let_statement_test);
+repl.Start();

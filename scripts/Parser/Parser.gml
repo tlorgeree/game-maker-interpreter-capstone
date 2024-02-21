@@ -56,7 +56,7 @@ function Parser(input_lexer) constructor{
 			Next_Token();
 		}
 		
-		program.String();
+		return program;
 	}
 	
 	#region Statement Parsing
