@@ -1,3 +1,13 @@
+enum PRECEDENCE {
+	LOWEST,
+	EQUALS, // ==
+	LESSGREATER, // < or >
+	SUM, // +
+	PRODUCT, // *
+	PREFIX, // -X or !X
+	CALL // My_Function(X)
+}
+
 function Parser(input_lexer) constructor{
 	lexer = input_lexer;
 	errors = [];
@@ -181,7 +191,7 @@ function Parser(input_lexer) constructor{
 	}
 	
 	Parse_Boolean = function(){
-		return new Boolean(curr_token);
+		return new Boolean_Expression(curr_token);
 	}
 	
 	Parse_Grouped_Expression = function(){

@@ -86,7 +86,7 @@ function Identifier(token) : Expression(token) constructor{
 	}
 }
 
-function Boolean(token) : Expression(token) constructor{
+function Boolean_Expression(token) : Expression(token) constructor{
 	value = (token.type == TOKEN.TRUE);
 	
 	String = function(){

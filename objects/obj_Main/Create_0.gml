@@ -10,57 +10,8 @@ global.Window_Manager.Create_Window(50, 50);
 global.Game_Manager = new Game_Manager();
 #endregion
 
-#region Interpreter
-#region Token Keywords
-enum TOKEN {
-	ILLEGAL,
-	EOF,
-	IDENT,
-	INT,
-	
-	// Operators
-	ASSIGN,
-	PLUS,
-	MINUS,
-	BANG,
-	ASTERISK,
-	SLASH,
-	GT,
-	LT,
-	EQ,
-	NOT_EQ,
-	
-	// Delimeters
-	COMMA,
-	SEMICOLON,
-	LPAREN,
-	RPAREN,
-	LBRACE,
-	RBRACE,
-	
-	// Keywords
-	FUNCTION,
-	LET,
-	TRUE,
-	FALSE,
-	IF,
-	ELSE,
-	RETURN,
-}
-
-
-enum PRECEDENCE {
-	LOWEST,
-	EQUALS, // ==
-	LESSGREATER, // < or >
-	SUM, // +
-	PRODUCT, // *
-	PREFIX, // -X or !X
-	CALL // My_Function(X)
-}
 #region Token Debug String Map
 global.token_debug_str = array_create(TOKEN.RETURN+1, "");
-
 global.token_debug_str[TOKEN.ILLEGAL] = "ILLEGAL";
 global.token_debug_str[TOKEN.EOF] = "EOF";
 global.token_debug_str[TOKEN.IDENT] = "IDENT";
@@ -92,7 +43,6 @@ global.token_debug_str[TOKEN.RETURN] = "RETURN";
 
 #region Keyword Map
 global.keywords = ds_map_create();
-
 global.keywords[? "fn"] = TOKEN.FUNCTION;
 global.keywords[? "let"] = TOKEN.LET	;
 global.keywords[? "true"] = TOKEN.TRUE;
@@ -101,30 +51,12 @@ global.keywords[? "if"] = TOKEN.IF;
 global.keywords[? "else"] = TOKEN.ELSE;
 global.keywords[? "return"] = TOKEN.RETURN;
 #endregion
+
+#region Object Type Keywords
+global.object_type_str[? OBJECT_TYPE.INTEGER] = "INTEGER";
+global.object_type_str[? OBJECT_TYPE.BOOLEAN] = "BOOLEAN";
+global.object_type_str[? OBJECT_TYPE.NULL] = "NULL";
 #endregion
-
-
-/*test_string =[
-	@"let five = 5; 
-	let ten = 10;
-	let add = fn(x, y) {
-	x + y;
-	};
-	let result = add(five, ten);
-	!-/*5;
-	5 < 10 > 5;
-	if (5 < 10) {
-	return true;
-	} else {
-	return false;
-	}
-	10 == 10;
-	10 != 9;
-"
-];
-
-repl = new Repl(test_string);
-repl.Start();*/
 
 let_statement_test = @"
 	-5;
