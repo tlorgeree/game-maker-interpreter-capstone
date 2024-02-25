@@ -11,6 +11,9 @@ function Eval(node){
 		case "Expression_Statement":
 			debug_print("eval expression statement");
 			return Eval(node.expression);
+		case "Block_Statement":
+			debug_print("eval block statement");
+			return Eval_Statements(node.statements);
 			
 		//expressions
 		case "Integer_Literal":
@@ -25,6 +28,9 @@ function Eval(node){
 		case "Infix_Expression":
 			debug_print("eval infix expression");			
 			return Eval_Infix_Expression(node.operator, Eval(node.left), Eval(node.right));
+		case "If_Expression":
+			debug_print("eval if expression");
+			return Eval_If_Expression(node);
 		default:
 			debug_print("undefined");
 			return global.null;
@@ -106,4 +112,20 @@ function Eval_Integer_Infix_Expression(operator, left, right){
 		default:
 			return global.null;
 	}
+}
+
+function Eval_If_Expression(node){
+	condition = Eval(node.condition);
+	
+	if(Is_Truthy(condition)){
+		return Eval(node.consequence);	
+	} else if(node.alternative != undefined){
+		return Eval(node.alternative);
+	} else return undefined;
+}
+
+function Is_Truthy(obj){
+	if(instanceof(obj) == "Null") return false;
+	if(instanceof(obj) == "Boolean") return (obj.value == true);	
+	return true;
 }

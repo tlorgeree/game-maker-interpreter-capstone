@@ -81,5 +81,8 @@ let_statement_test = @"
 	return;
 ";
 
-repl = new Repl("(5 > 5 == true) == false");
+ifstmt = @"
+  if ((1000 / 2) + 250 * 2 == 1000) { 9999 }
+";
+repl = new Repl(ifstmt);
 repl.Start();
