@@ -12,11 +12,6 @@ function Repl(str) constructor{
 		for(var i=0; i<array_length(parser.errors); i++){
 			print("\t" + parser.errors[i]);	
 		}
-			
-		for(var tok = lexer.Next_Token(); tok.type != TOKEN.EOF; tok = lexer.Next_Token()){
-			array_push(tokens, global.token_debug_str[tok.type]);
-			array_push(literals, tok.literal);
-		}
 		
 		var evaluated = Eval(program);
 		if(!is_undefined(evaluated)){
@@ -28,6 +23,7 @@ function Repl(str) constructor{
 		
 		
 		debug_print(program.String());
+		
 		debug_print(tokens);
 		debug_print(literals);
 	}

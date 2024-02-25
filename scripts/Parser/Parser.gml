@@ -52,13 +52,15 @@ function Parser(input_lexer) constructor{
 	Next_Token = function(){
 		curr_token = peek_token;		
 		peek_token = lexer.Next_Token();
+		debug_print(global.token_debug_str[peek_token.type]);
 	}
 	
 	Parse_Program = function(){
 		var statement;
 		while(!Curr_Token_Is(TOKEN.EOF)){
 			statement = Parse_Statement();
-			if(!is_undefined(statement) && !is_undefined(statement.expression)){
+			
+			if(!is_undefined(statement)){
 				array_push(program.statements, statement);	
 			}
 			Next_Token();
@@ -117,6 +119,7 @@ function Parser(input_lexer) constructor{
 		var statement = new Expression_Statement(curr_token);
 		
 		statement.expression = Parse_Expression(PRECEDENCE.LOWEST);
+		if(is_undefined(statement.expression)) return undefined;
 		
 		if(Peek_Token_Is(TOKEN.SEMICOLON)){
 			Next_Token();

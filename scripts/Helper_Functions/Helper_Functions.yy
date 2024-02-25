@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "Script10",
+  "name": "Helper_Functions",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {

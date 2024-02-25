@@ -1,6 +1,6 @@
 #region Init
 display_set_gui_size(1920, 1080);
-global.debug = false;
+global.debug = true;
 window_set_fullscreen(0);
 #endregion
 
@@ -82,5 +82,5 @@ let_statement_test = @"
 ";
 
 
-repl = new Repl("5");
+repl = new Repl("false;");
 repl.Start();

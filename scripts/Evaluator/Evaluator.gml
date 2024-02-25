@@ -12,6 +12,9 @@ function Eval(node){
 		case "Integer_Literal":
 			debug_print("eval integer literal");
 			return new Integer(node.value);
+		case "Boolean_Expression":
+			debug_print("eval booloean");
+			return new Boolean(node.value);
 		default:
 			debug_print("undefined");
 			return undefined;

@@ -95,6 +95,7 @@ function Lexer(input_str) constructor{
 		}
 		
 		Read_Char();
+		
 		return tok;
 	}
 	
