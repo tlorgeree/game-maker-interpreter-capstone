@@ -58,6 +58,7 @@ global.object_type_str[? OBJECT_TYPE.INTEGER] = "INTEGER";
 global.object_type_str[? OBJECT_TYPE.BOOLEAN] = "BOOLEAN";
 global.object_type_str[? OBJECT_TYPE.NULL] = "NULL";
 global.object_type_str[? OBJECT_TYPE.RETURN_VALUE] = "RETURN_VALUE";
+global.object_type_str[? OBJECT_TYPE.ERROR] = "ERROR";
 #endregion
 
 let_statement_test = @"
@@ -84,11 +85,11 @@ let_statement_test = @"
 
 ifstmt = @"
   if (10 > 1) {
-	if (10 > 1) {
+	if (10 < 1) {
 		return 10;
 	}
 	return 1;
 }
 ";
-repl = new Repl(ifstmt);
+repl = new Repl("5 + false");
 repl.Start();

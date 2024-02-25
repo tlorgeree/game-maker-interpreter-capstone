@@ -46,7 +46,15 @@ function Eval_Program(statement_arr){
 		result = Eval(statement_arr[i]);	
 		debug_print(result);
 		
-		if(instanceof(result) == "Return_Value") return result;
+		switch(instanceof(result)){
+			case "Return_Value":
+				return result.value;
+			case "Error":
+				return result;
+			default:
+				break;
+		}
+		
 	}
 	
 	return result;
@@ -65,7 +73,7 @@ function Eval_Prefix_Expression(operator, right){
 		case "-":
 			return Eval_Minus_Operator_Expression(right);
 		default:
-			return global.null;
+			return new Error($"unknown operator: {operator}{right.Inspect()}");
 	}
 }
 
@@ -81,18 +89,19 @@ function Eval_Bang_Operator_Expression(right){
 }
 
 function Eval_Minus_Operator_Expression(right){
-	if(instanceof(right) != "Integer") return global.null;
+	if(instanceof(right) != "Integer") return new Error($"unknown operator: -{right.Inspect()}");
 	
 	return new Integer(-right.value)
 }
 
 function Eval_Infix_Expression(operator, left, right){
-	if ((instanceof(left) == "Integer" && instanceof(right) == "Integer")
-		|| (instanceof(left) == "Boolean" && instanceof(right) == "Boolean")){
+	if ((instanceof(left) == "Integer" || instanceof(left) == "Boolean")
+		|| (instanceof(right) == "Integer" || instanceof(right) == "Boolean")){
 		return Eval_Integer_Infix_Expression(operator, left, right);
 	}
 	
-	return global.null;
+	
+	return new Error($"unknown operator: {left.Inspect()}{operator}{right.Inspect()}");
 }
 
 function Eval_Integer_Infix_Expression(operator, left, right){
@@ -114,12 +123,12 @@ function Eval_Integer_Infix_Expression(operator, left, right){
 		case "!=": 
 			return Native_Bool_To_Bool_Object(left.value != right.value);
 		default:
-			return global.null;
+			return new Error($"unknown operator: {left.Inspect()}{operator}{right.Inspect()}");
 	}
 }
 
 function Eval_If_Expression(node){
-	condition = Eval(node.condition);
+	var condition = Eval(node.condition);
 	
 	if(Is_Truthy(condition)){
 		return Eval(node.consequence);	
@@ -141,7 +150,8 @@ function Eval_Block_Statement(statement_arr){
 		result = Eval(statement_arr[i]);	
 		debug_print(result);
 		
-		if(!is_undefined(result) && instanceof(result) == "Return_Value") return result;
+		if(!is_undefined(result) 
+			&& (instanceof(result) == "Return_Value" || instanceof(result) == "Error")) return result;
 	}
 	
 	return result;	

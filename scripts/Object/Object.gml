@@ -3,6 +3,7 @@ enum OBJECT_TYPE {
 	BOOLEAN,
 	NULL,
 	RETURN_VALUE,
+	ERROR,
 }
 
 function Object() constructor{
@@ -32,4 +33,10 @@ function Return_Value(val=undefined) : Object() constructor{
 	value = val;
 	Type = function() { return global.object_type_str[? OBJECT_TYPE.RETURN_VALUE]; }
 	Inspect = function() { return (!is_undefined(value)) ? value.Inspect() : string(undefined);}
+}
+
+function Error(str="") : Object() constructor{
+	msg = str;
+	Type = function() { return global.object_type_str[? OBJECT_TYPE.ERROR]; }
+	Inspect = function() { return "ERROR: " + msg; }	
 }

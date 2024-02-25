@@ -108,7 +108,7 @@ function Parser(input_lexer) constructor{
 		
 		statement.return_value = Parse_Expression(PRECEDENCE.LOWEST);
 		
-		while(!Curr_Token_Is(TOKEN.SEMICOLON)){
+		while(!Curr_Token_Is(TOKEN.SEMICOLON) && !Curr_Token_Is(TOKEN.EOF)){
 			Next_Token();	
 		}
 		
