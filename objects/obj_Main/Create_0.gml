@@ -82,5 +82,5 @@ let_statement_test = @"
 ";
 
 
-repl = new Repl("false;");
+repl = new Repl("!false;");
 repl.Start();
