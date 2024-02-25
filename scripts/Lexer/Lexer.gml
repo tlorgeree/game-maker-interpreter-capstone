@@ -5,16 +5,17 @@ function Lexer(input_str) constructor{
 	ch = 0;
 	
 	Read_Char = function(){
-		if(read_position >= string_length(input)) ch = 0;
+		if(read_position > string_length(input)) ch = 0;
 		else ch = string_char_at(input, read_position);
 		
 		position = read_position;
 		read_position++;
 	}
 	
-	Read_Char(); // call on init
+	Read_Char();
 	
 	Next_Token = function(){
+		
 		var tok;
 		
 		Skip_Whitespace();
@@ -75,10 +76,10 @@ function Lexer(input_str) constructor{
 			case "<":
 				tok = new Token(TOKEN.LT, ch);
 				break;
-			case 0:
+			case 0:			
 				tok = new Token(TOKEN.EOF, "");
 				break;
-			default:
+			default:			
 				if(Is_Letter(ch)){
 					tok = new Token();
 					tok.literal = Read_Identifier();
@@ -133,7 +134,7 @@ function Lexer(input_str) constructor{
 	Read_Number = function(){
 		var start_pos = position;
 		
-		while(Is_Digit(ch)){
+		while(is_string(ch) && Is_Digit(ch)){
 			Read_Char();	
 		}
 		

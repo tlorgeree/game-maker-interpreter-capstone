@@ -11,6 +11,7 @@
     {"name":"GUI_Window_Manager","order":2,"path":"scripts/GUI_Window_Manager/GUI_Window_Manager.yy",},
     {"name":"REPL","order":2,"path":"scripts/REPL/REPL.yy",},
     {"name":"obj_Main","order":4,"path":"objects/obj_Main/obj_Main.yy",},
+    {"name":"Evaluator","order":6,"path":"scripts/Evaluator/Evaluator.yy",},
     {"name":"Object","order":5,"path":"scripts/Object/Object.yy",},
     {"name":"Parser","order":3,"path":"scripts/Parser/Parser.yy",},
     {"name":"spr_Window","order":1,"path":"sprites/spr_Window/spr_Window.yy",},

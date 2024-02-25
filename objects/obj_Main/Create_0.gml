@@ -53,6 +53,7 @@ global.keywords[? "return"] = TOKEN.RETURN;
 #endregion
 
 #region Object Type Keywords
+global.object_type_str = ds_map_create();
 global.object_type_str[? OBJECT_TYPE.INTEGER] = "INTEGER";
 global.object_type_str[? OBJECT_TYPE.BOOLEAN] = "BOOLEAN";
 global.object_type_str[? OBJECT_TYPE.NULL] = "NULL";
@@ -80,5 +81,12 @@ let_statement_test = @"
 	return;
 ";
 
-repl = new Repl(let_statement_test);
-repl.Start();
+/*
+repl = new Repl("5");
+repl.Start();*/
+
+lex = new Lexer("5");
+p = new Parser(lex);
+program = p.Parse_Program();
+
+show_message(Eval(program).value);

@@ -9,14 +9,14 @@ function Object() constructor{
 	Inspect = function() {};
 }
 
-function Integer() : Object() constructor{
-	value = undefined; // int
+function Integer(val=undefined) : Object() constructor{
+	value = val; // int
 	Type = function() { return global.object_type_str[? OBJECT_TYPE.INTEGER]; }
 	Inspect = function(){ return string(value); }
 }
 
-function Boolean() : Object() constructor{
-	value = undefined; // bool
+function Boolean(val=undefined) : Object() constructor{
+	value = val; // bool
 	Type = function() { return global.object_type_str[? OBJECT_TYPE.BOOLEAN]; }
 	Inspect = function(){ return string(value); }
 }

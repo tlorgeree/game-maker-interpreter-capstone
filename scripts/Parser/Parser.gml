@@ -10,9 +10,9 @@ enum PRECEDENCE {
 
 function Parser(input_lexer) constructor{
 	lexer = input_lexer;
-	errors = [];
-	curr_token = new Token();
+	errors = [];	
 	peek_token = new Token();
+	curr_token = new Token();
 	program = new Program(new Token());
 	prefix_parse_fns = ds_map_create(); //token.type : Prefix_Parse_Fn()
 	infix_parse_fns = ds_map_create();
@@ -50,17 +50,15 @@ function Parser(input_lexer) constructor{
 	}
 	
 	Next_Token = function(){
-		curr_token = peek_token;
-		show_debug_message(global.token_debug_str[curr_token.type]);
+		curr_token = peek_token;		
 		peek_token = lexer.Next_Token();
 	}
 	
 	Parse_Program = function(){
 		var statement;
-		
 		while(!Curr_Token_Is(TOKEN.EOF)){
-			statement = Parse_Statement();			
-			if(!is_undefined(statement)){
+			statement = Parse_Statement();
+			if(!is_undefined(statement) && !is_undefined(statement.expression)){
 				array_push(program.statements, statement);	
 			}
 			Next_Token();

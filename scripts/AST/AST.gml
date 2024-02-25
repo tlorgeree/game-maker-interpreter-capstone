@@ -1,3 +1,14 @@
+enum NODE {
+	DEFAULT,
+	PROGRAM,
+	STATEMENT,
+	LET_STATEMENT,
+	RETURN_STATEMENT,
+	EXPRESSION_STATEMENT,
+	BLOCK_STATEMENT,
+	
+}
+
 function Node(token) constructor{
 	tok = token;
 	Token_Literal = function(){
