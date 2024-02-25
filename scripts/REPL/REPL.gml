@@ -10,20 +10,26 @@ function Repl(str) constructor{
 			
 		var program = parser.Parse_Program();
 		for(var i=0; i<array_length(parser.errors); i++){
-			show_debug_message("\t" + parser.errors[i]);	
+			print("\t" + parser.errors[i]);	
 		}
 			
 		for(var tok = lexer.Next_Token(); tok.type != TOKEN.EOF; tok = lexer.Next_Token()){
 			array_push(tokens, global.token_debug_str[tok.type]);
 			array_push(literals, tok.literal);
 		}
+		
+		var evaluated = Eval(program);
+		if(!is_undefined(evaluated)){
+			print("out: " + string(evaluated.value));	
+		}
 			
 		ds_map_destroy(parser.prefix_parse_fns);
 		ds_map_destroy(parser.infix_parse_fns);
 		
-		show_debug_message(program.String());
-		show_debug_message(tokens);
-		show_debug_message(literals);
+		
+		debug_print(program.String());
+		debug_print(tokens);
+		debug_print(literals);
 	}
 	
 	

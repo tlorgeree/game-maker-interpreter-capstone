@@ -330,7 +330,7 @@ function Parser(input_lexer) constructor{
 	
 	Peek_Error = function(token_type){
 		var msg = $"expected next token to be {global.token_debug_str[token_type]}, got {global.token_debug_str[peek_token.type]} instead.";
-		show_debug_message(msg);
+		debug_print(msg);
 		array_push(errors, msg);
 	}
 	
@@ -343,7 +343,7 @@ function Parser(input_lexer) constructor{
 		if (num_errors) return;
 		
 		for(var i=0; i< num_errors; i++){
-			show_debug_message($"Parser error: {errors[i]}");
+			print($"Parser error: {errors[i]}");
 		}
 	}
 		

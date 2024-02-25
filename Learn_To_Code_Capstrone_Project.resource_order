@@ -10,6 +10,7 @@
     {"name":"AST","order":4,"path":"scripts/AST/AST.yy",},
     {"name":"GUI_Window_Manager","order":2,"path":"scripts/GUI_Window_Manager/GUI_Window_Manager.yy",},
     {"name":"REPL","order":2,"path":"scripts/REPL/REPL.yy",},
+    {"name":"Script10","order":2,"path":"scripts/Script10/Script10.yy",},
     {"name":"obj_Main","order":4,"path":"objects/obj_Main/obj_Main.yy",},
     {"name":"Evaluator","order":6,"path":"scripts/Evaluator/Evaluator.yy",},
     {"name":"Object","order":5,"path":"scripts/Object/Object.yy",},

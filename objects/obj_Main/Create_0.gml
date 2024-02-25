@@ -1,6 +1,6 @@
 #region Init
 display_set_gui_size(1920, 1080);
-global.debug = true;
+global.debug = false;
 window_set_fullscreen(0);
 #endregion
 
@@ -81,12 +81,6 @@ let_statement_test = @"
 	return;
 ";
 
-/*
+
 repl = new Repl("5");
-repl.Start();*/
-
-lex = new Lexer("5");
-p = new Parser(lex);
-program = p.Parse_Program();
-
-show_message(Eval(program).value);
+repl.Start();
