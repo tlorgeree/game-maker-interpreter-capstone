@@ -7,14 +7,16 @@ function Eval(node){
 		//statements
 		case "Program":
 			debug_print("eval program");
-			return Eval_Statements(node.statements);
+			return Eval_Program(node.statements);
 		case "Expression_Statement":
 			debug_print("eval expression statement");
 			return Eval(node.expression);
 		case "Block_Statement":
 			debug_print("eval block statement");
-			return Eval_Statements(node.statements);
-			
+			return Eval_Block_Statement(node.statements);
+		case "Return_Statement":
+			debug_print("eval return statement");
+			return new Return_Value(Eval(node.return_value));
 		//expressions
 		case "Integer_Literal":
 			debug_print("eval integer literal");
@@ -37,12 +39,14 @@ function Eval(node){
 	}
 }
 
-function Eval_Statements(statement_arr){
+function Eval_Program(statement_arr){
 	var result;
 	
 	for(var i=0; i<array_length(statement_arr); i++){
 		result = Eval(statement_arr[i]);	
 		debug_print(result);
+		
+		if(instanceof(result) == "Return_Value") return result;
 	}
 	
 	return result;
@@ -128,4 +132,17 @@ function Is_Truthy(obj){
 	if(instanceof(obj) == "Null") return false;
 	if(instanceof(obj) == "Boolean") return (obj.value == true);	
 	return true;
+}
+
+function Eval_Block_Statement(statement_arr){
+	var result;
+	
+	for(var i=0; i<array_length(statement_arr); i++){
+		result = Eval(statement_arr[i]);	
+		debug_print(result);
+		
+		if(!is_undefined(result) && instanceof(result) == "Return_Value") return result;
+	}
+	
+	return result;	
 }

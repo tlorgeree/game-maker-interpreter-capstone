@@ -2,6 +2,7 @@ enum OBJECT_TYPE {
 	INTEGER,
 	BOOLEAN,
 	NULL,
+	RETURN_VALUE,
 }
 
 function Object() constructor{
@@ -25,4 +26,10 @@ function Null() : Object() constructor{
 	value = undefined;
 	Type = function() { return global.object_type_str[? OBJECT_TYPE.NULL]; }
 	Inspect = function(){ return "null"; }
+}
+
+function Return_Value(val=undefined) : Object() constructor{
+	value = val;
+	Type = function() { return global.object_type_str[? OBJECT_TYPE.RETURN_VALUE]; }
+	Inspect = function() { return (!is_undefined(value)) ? value.Inspect() : string(undefined);}
 }

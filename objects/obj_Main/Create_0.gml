@@ -57,6 +57,7 @@ global.object_type_str = ds_map_create();
 global.object_type_str[? OBJECT_TYPE.INTEGER] = "INTEGER";
 global.object_type_str[? OBJECT_TYPE.BOOLEAN] = "BOOLEAN";
 global.object_type_str[? OBJECT_TYPE.NULL] = "NULL";
+global.object_type_str[? OBJECT_TYPE.RETURN_VALUE] = "RETURN_VALUE";
 #endregion
 
 let_statement_test = @"
@@ -82,7 +83,12 @@ let_statement_test = @"
 ";
 
 ifstmt = @"
-  if ((1000 / 2) + 250 * 2 == 1000) { 9999 }
+  if (10 > 1) {
+	if (10 > 1) {
+		return 10;
+	}
+	return 1;
+}
 ";
 repl = new Repl(ifstmt);
 repl.Start();

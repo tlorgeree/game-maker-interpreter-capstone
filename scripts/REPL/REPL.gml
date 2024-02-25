@@ -15,7 +15,7 @@ function Repl(str) constructor{
 		
 		var evaluated = Eval(program);
 		if(!is_undefined(evaluated)){
-			print("out: " + string(evaluated.value));	
+			print("out: " + evaluated.Inspect());	
 		}
 			
 		ds_map_destroy(parser.prefix_parse_fns);
