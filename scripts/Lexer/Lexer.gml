@@ -76,9 +76,11 @@ function Lexer(input_str) constructor{
 			case "<":
 				tok = new Token(TOKEN.LT, ch);
 				break;
-			case 0:			
-				tok = new Token(TOKEN.EOF, "");
-				break;
+			case 0:
+				if(!is_string(ch)){
+					tok = new Token(TOKEN.EOF, "");
+					break;
+				}
 			default:			
 				if(Is_Letter(ch)){
 					tok = new Token();

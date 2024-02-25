@@ -22,6 +22,7 @@ function Boolean(val=undefined) : Object() constructor{
 }
 
 function Null() : Object() constructor{
+	value = undefined;
 	Type = function() { return global.object_type_str[? OBJECT_TYPE.NULL]; }
 	Inspect = function(){ return "null"; }
 }

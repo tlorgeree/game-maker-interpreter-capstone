@@ -81,6 +81,5 @@ let_statement_test = @"
 	return;
 ";
 
-
-repl = new Repl("(5 + 10 * 2 + 15 / 3) * 2 * -10");
+repl = new Repl("(5 > 5 == true) == false");
 repl.Start();

@@ -23,7 +23,7 @@ function Eval(node){
 			debug_print("eval prefix expression");
 			return Eval_Prefix_Expression(node.operator, Eval(node.right))
 		case "Infix_Expression":
-			debug_print("eval infix expression");
+			debug_print("eval infix expression");			
 			return Eval_Infix_Expression(node.operator, Eval(node.left), Eval(node.right));
 		default:
 			debug_print("undefined");
@@ -77,7 +77,8 @@ function Eval_Minus_Operator_Expression(right){
 }
 
 function Eval_Infix_Expression(operator, left, right){
-	if (instanceof(left) == "Integer" && instanceof(right) == "Integer"){
+	if ((instanceof(left) == "Integer" && instanceof(right) == "Integer")
+		|| (instanceof(left) == "Boolean" && instanceof(right) == "Boolean")){
 		return Eval_Integer_Infix_Expression(operator, left, right);
 	}
 	
@@ -94,6 +95,14 @@ function Eval_Integer_Infix_Expression(operator, left, right){
 			return new Integer(left.value * right.value);
 		case "/":
 			return new Integer(left.value / right.value);
+		case "<":
+			return Native_Bool_To_Bool_Object(left.value < right.value);
+		case ">":
+			return Native_Bool_To_Bool_Object(left.value > right.value);
+		case "==":
+			return Native_Bool_To_Bool_Object(left.value == right.value);
+		case "!=": 
+			return Native_Bool_To_Bool_Object(left.value != right.value);
 		default:
 			return global.null;
 	}
