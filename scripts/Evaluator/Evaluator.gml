@@ -2,21 +2,26 @@ global.bool_true = new Boolean(true);
 global.bool_false = new Boolean(false);
 global.null = new Null();
 
-function Eval(node){
+function Eval(node, env){
 	switch(instanceof(node)){
 		//statements
 		case "Program":
 			debug_print("eval program");
-			return Eval_Program(node.statements);
+			return Eval_Program(node.statements, env);
 		case "Expression_Statement":
 			debug_print("eval expression statement");
-			return Eval(node.expression);
+			return Eval(node.expression, env);
 		case "Block_Statement":
 			debug_print("eval block statement");
-			return Eval_Block_Statement(node.statements);
+			return Eval_Block_Statement(node.statements, env);
 		case "Return_Statement":
 			debug_print("eval return statement");
-			return new Return_Value(Eval(node.return_value));
+			return new Return_Value(Eval(node.return_value, env));
+		case "Let_Statement":
+			debug_print("eval let statement");
+			var val = Eval(node.value, env);
+			if(Is_Error(node.value)) return val;
+			env.Set(node.name.value, val)
 		//expressions
 		case "Integer_Literal":
 			debug_print("eval integer literal");
@@ -26,24 +31,26 @@ function Eval(node){
 			return new Boolean(node.value);
 		case "Prefix_Expression":
 			debug_print("eval prefix expression");
-			return Eval_Prefix_Expression(node.operator, Eval(node.right))
+			return Eval_Prefix_Expression(node.operator, Eval(node.right, env))
 		case "Infix_Expression":
 			debug_print("eval infix expression");			
-			return Eval_Infix_Expression(node.operator, Eval(node.left), Eval(node.right));
+			return Eval_Infix_Expression(node.operator, Eval(node.left, env), Eval(node.right, env));
 		case "If_Expression":
 			debug_print("eval if expression");
-			return Eval_If_Expression(node);
+			return Eval_If_Expression(node, env);
+		case "Identifier":
+			return Eval_Identifier(node, env);
 		default:
 			debug_print("undefined");
 			return global.null;
 	}
 }
 
-function Eval_Program(statement_arr){
+function Eval_Program(statement_arr, env){
 	var result;
 	
 	for(var i=0; i<array_length(statement_arr); i++){
-		result = Eval(statement_arr[i]);	
+		result = Eval(statement_arr[i], env);	
 		debug_print(result);
 		
 		switch(instanceof(result)){
@@ -127,13 +134,13 @@ function Eval_Integer_Infix_Expression(operator, left, right){
 	}
 }
 
-function Eval_If_Expression(node){
-	var condition = Eval(node.condition);
+function Eval_If_Expression(node, env){
+	var condition = Eval(node.condition, env);
 	
 	if(Is_Truthy(condition)){
-		return Eval(node.consequence);	
+		return Eval(node.consequence, env);	
 	} else if(node.alternative != undefined){
-		return Eval(node.alternative);
+		return Eval(node.alternative, env);
 	} else return undefined;
 }
 
@@ -143,11 +150,11 @@ function Is_Truthy(obj){
 	return true;
 }
 
-function Eval_Block_Statement(statement_arr){
+function Eval_Block_Statement(statement_arr, env){
 	var result;
 	
 	for(var i=0; i<array_length(statement_arr); i++){
-		result = Eval(statement_arr[i]);	
+		result = Eval(statement_arr[i], env);	
 		debug_print(result);
 		
 		if(!is_undefined(result) 
@@ -155,4 +162,16 @@ function Eval_Block_Statement(statement_arr){
 	}
 	
 	return result;	
+}
+
+function Is_Error(obj){
+	if(!is_undefined(obj)) return (instanceof(obj) == "Error");
+	
+	return false;
+}
+
+function Eval_Identifier(node, env){
+	var val = env.Get(node.value);
+	if(is_undefined(val)) return new Error($"Identifier not found: {node.value}");
+	return val;
 }

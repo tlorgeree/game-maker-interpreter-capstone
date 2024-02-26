@@ -40,3 +40,15 @@ function Error(str="") : Object() constructor{
 	Type = function() { return global.object_type_str[? OBJECT_TYPE.ERROR]; }
 	Inspect = function() { return "ERROR: " + msg; }	
 }
+
+function Environment() : Object() constructor{
+	store = ds_map_create();//obj map
+	
+	Get = function(name){
+		return store[? name];
+	}
+	
+	Set = function(name, val){
+		store[? name] = val;	
+	}
+}

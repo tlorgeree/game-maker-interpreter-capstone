@@ -84,12 +84,9 @@ let_statement_test = @"
 ";
 
 ifstmt = @"
-  if (10 > 1) {
-	if (10 < 1) {
-		return 10;
-	}
-	return 1;
-}
+  let a = 5;
+  let b = 6;
+  return a + b;
 ";
-repl = new Repl("5 + false");
+repl = new Repl(ifstmt);
 repl.Start();

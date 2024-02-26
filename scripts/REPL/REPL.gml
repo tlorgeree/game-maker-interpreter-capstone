@@ -13,7 +13,7 @@ function Repl(str) constructor{
 			print("\t" + parser.errors[i]);	
 		}
 		
-		var evaluated = Eval(program);
+		var evaluated = Eval(program, new Environment());
 		if(!is_undefined(evaluated)){
 			print("out: " + evaluated.Inspect());	
 		}
