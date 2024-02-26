@@ -21,7 +21,7 @@ function Eval(node, env){
 			debug_print("eval let statement");
 			var val = Eval(node.value, env);
 			if(Is_Error(node.value)) return val;
-			env.Set(node.name.value, val)
+			env.Set(node.name.value, val);
 		//expressions
 		case "Integer_Literal":
 			debug_print("eval integer literal");

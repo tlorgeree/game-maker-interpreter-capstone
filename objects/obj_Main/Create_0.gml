@@ -42,24 +42,24 @@ global.token_debug_str[TOKEN.RETURN] = "RETURN";
 #endregion
 
 #region Keyword Map
-global.keywords = ds_map_create();
-global.keywords[? "fn"] = TOKEN.FUNCTION;
-global.keywords[? "let"] = TOKEN.LET	;
-global.keywords[? "true"] = TOKEN.TRUE;
-global.keywords[? "false"] = TOKEN.FALSE;
-global.keywords[? "if"] = TOKEN.IF;
-global.keywords[? "else"] = TOKEN.ELSE;
-global.keywords[? "return"] = TOKEN.RETURN;
+global.keywords = {}
+global.keywords[$ "fn"] = TOKEN.FUNCTION;
+global.keywords[$ "let"] = TOKEN.LET	;
+global.keywords[$ "true"] = TOKEN.TRUE;
+global.keywords[$ "false"] = TOKEN.FALSE;
+global.keywords[$ "if"] = TOKEN.IF;
+global.keywords[$ "else"] = TOKEN.ELSE;
+global.keywords[$ "return"] = TOKEN.RETURN;
 #endregion
 
 #region Object Type Keywords
-global.object_type_str = ds_map_create();
-global.object_type_str[? OBJECT_TYPE.INTEGER] = "INTEGER";
-global.object_type_str[? OBJECT_TYPE.BOOLEAN] = "BOOLEAN";
-global.object_type_str[? OBJECT_TYPE.NULL] = "NULL";
-global.object_type_str[? OBJECT_TYPE.RETURN_VALUE] = "RETURN_VALUE";
-global.object_type_str[? OBJECT_TYPE.ERROR] = "ERROR";
-global.object_type_str[? OBJECT_TYPE.FUNCTION] = "FUNCTION";
+global.object_type_str = {}
+global.object_type_str[$ OBJECT_TYPE.INTEGER] = "INTEGER";
+global.object_type_str[$ OBJECT_TYPE.BOOLEAN] = "BOOLEAN";
+global.object_type_str[$ OBJECT_TYPE.NULL] = "NULL";
+global.object_type_str[$ OBJECT_TYPE.RETURN_VALUE] = "RETURN_VALUE";
+global.object_type_str[$ OBJECT_TYPE.ERROR] = "ERROR";
+global.object_type_str[$ OBJECT_TYPE.FUNCTION] = "FUNCTION";
 #endregion
 
 let_statement_test = @"
@@ -85,11 +85,15 @@ let_statement_test = @"
 ";
 
 ifstmt = @"
-let newAdder = fn(x) {
-	fn(y) { x + y };
+let counter = fn(x) {
+if (x > 100) {
+return true;
+} else {
+let foobar = 9999;
+counter(x + 1);
+}
 };
-let addTwo = newAdder(2);
-addTwo(2);
+counter(0);
 ";
 repl = new Repl(ifstmt);
 repl.Start();

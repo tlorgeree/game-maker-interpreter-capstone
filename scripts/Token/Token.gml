@@ -41,7 +41,7 @@ function Token(token_type=TOKEN.ILLEGAL, ch="") constructor{
 	literal = ch;
 	
 	Lookup_Ident = function(ident){
-		if(!is_undefined(global.keywords[? ident])) return global.keywords[? ident];
+		if(!is_undefined(global.keywords[$ ident])) return global.keywords[$ ident];
 		
 		return TOKEN.IDENT;
 	}
