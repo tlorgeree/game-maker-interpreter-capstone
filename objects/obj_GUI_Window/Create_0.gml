@@ -25,3 +25,4 @@ Minimize = function(){
 	//Minimizes the window to the bottom of the screen
 }
 
+repl = new Repl(text);

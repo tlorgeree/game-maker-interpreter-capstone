@@ -58,7 +58,7 @@ function Eval(node, env){
 }
 
 function Eval_Program(statement_arr, env){
-	var result;
+	var result = new Null();
 	
 	for(var i=0; i<array_length(statement_arr); i++){
 		result = Eval(statement_arr[i], env);	

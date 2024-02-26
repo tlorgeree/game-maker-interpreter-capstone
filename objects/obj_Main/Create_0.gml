@@ -8,6 +8,9 @@ window_set_fullscreen(0);
 global.Window_Manager = new GUI_Window_Manager();
 global.Window_Manager.Create_Window(50, 50);
 global.Game_Manager = new Game_Manager();
+
+global.output_window = global.Window_Manager.Create_Window(700, 50);
+global.output_window.active = false;
 #endregion
 
 #region Token Debug String Map
