@@ -26,6 +26,8 @@ function Eval(node, env){
 		case "Integer_Literal":
 			debug_print("eval integer literal");
 			return new Integer(node.value);
+		case "Function_Literal":
+			return new Function(node, env);
 		case "Boolean_Expression":
 			debug_print("eval booloean expression");
 			return new Boolean(node.value);
@@ -38,6 +40,15 @@ function Eval(node, env){
 		case "If_Expression":
 			debug_print("eval if expression");
 			return Eval_If_Expression(node, env);
+		case "Call_Expression":
+			debug_print("eval call expression");
+			var fn = Eval(node.fn, env);
+			if(Is_Error(fn)) return fn;
+			var args = Eval_Expressions(node.arguments, env);
+			
+			if(array_length(args) == 1 && Is_Error(args[0])) return args[0];
+			
+			return Apply_Function(fn, args);
 		case "Identifier":
 			return Eval_Identifier(node, env);
 		default:
@@ -174,4 +185,42 @@ function Eval_Identifier(node, env){
 	var val = env.Get(node.value);
 	if(is_undefined(val)) return new Error($"Identifier not found: {node.value}");
 	return val;
+}
+
+function Eval_Expressions(args, env){
+	var result = [];
+	var evaluated;
+	for(var i=0; i<array_length(args); i++){
+		evaluated = Eval(args[i], env);
+		if(Is_Error(evaluated)) return [evaluated];
+		
+		array_push(result, evaluated);
+	}
+	
+	return result;
+}
+
+function Apply_Function(fn, args){
+	if(instanceof(fn) != "Function") return new Error($"not a function: {fn.Type()}");
+	
+	var extended_env = Extend_Function_Env(fn, args);
+	var evaluated = Eval(fn.body, extended_env);
+	
+	return Unwrap_Return_Value(evaluated);
+}
+
+function Extend_Function_Env(fn, args){
+	var env = new Environment(fn.env);
+	
+	for(var i=0; i<array_length(fn.parameters); i++){
+		env.Set(fn.parameters[i].value, args[i]);
+	}
+	
+	return env;
+}
+
+function Unwrap_Return_Value(obj){
+	if(instanceof(obj) == "Return_Value") return obj.value;
+	
+	return obj;
 }

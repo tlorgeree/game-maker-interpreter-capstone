@@ -59,6 +59,7 @@ global.object_type_str[? OBJECT_TYPE.BOOLEAN] = "BOOLEAN";
 global.object_type_str[? OBJECT_TYPE.NULL] = "NULL";
 global.object_type_str[? OBJECT_TYPE.RETURN_VALUE] = "RETURN_VALUE";
 global.object_type_str[? OBJECT_TYPE.ERROR] = "ERROR";
+global.object_type_str[? OBJECT_TYPE.FUNCTION] = "FUNCTION";
 #endregion
 
 let_statement_test = @"
@@ -84,9 +85,11 @@ let_statement_test = @"
 ";
 
 ifstmt = @"
-  let a = 5;
-  let b = 6;
-  return a + b;
+let newAdder = fn(x) {
+	fn(y) { x + y };
+};
+let addTwo = newAdder(2);
+addTwo(2);
 ";
 repl = new Repl(ifstmt);
 repl.Start();
