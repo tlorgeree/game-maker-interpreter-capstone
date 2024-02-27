@@ -10,4 +10,6 @@ if(active){
 		global.output_window.text = repl.Start();
 		text = "";
 	}
+	
+	if(keyboard_check_pressed(vk_backspace)) text = string_delete(text, string_length(text), 1);
 }
