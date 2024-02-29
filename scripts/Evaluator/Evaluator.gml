@@ -71,8 +71,7 @@ function Eval_Program(statement_arr, env){
 				return result;
 			default:
 				break;
-		}
-		
+		}		
 	}
 	
 	return result;

@@ -14,18 +14,18 @@ function Parser(input_lexer) constructor{
 	peek_token = new Token();
 	curr_token = new Token();
 	program = new Program(new Token());
-	prefix_parse_fns = ds_map_create(); //token.type : Prefix_Parse_Fn()
-	infix_parse_fns = ds_map_create();
-	precedences = ds_map_create();
-	precedences[? TOKEN.EQ] = PRECEDENCE.EQUALS;
-	precedences[? TOKEN.NOT_EQ] = PRECEDENCE.EQUALS;
-	precedences[? TOKEN.LT] = PRECEDENCE.LESSGREATER;
-	precedences[? TOKEN.GT] = PRECEDENCE.LESSGREATER;
-	precedences[? TOKEN.PLUS] = PRECEDENCE.SUM;
-	precedences[? TOKEN.MINUS] = PRECEDENCE.SUM;
-	precedences[? TOKEN.SLASH] = PRECEDENCE.PRODUCT;
-	precedences[? TOKEN.ASTERISK] = PRECEDENCE.PRODUCT;
-	precedences[? TOKEN.LPAREN] = PRECEDENCE.CALL;
+	prefix_parse_fns = {}; //token.type : Prefix_Parse_Fn()
+	infix_parse_fns = {}
+	precedences = {}
+	precedences[$ TOKEN.EQ] = PRECEDENCE.EQUALS;
+	precedences[$ TOKEN.NOT_EQ] = PRECEDENCE.EQUALS;
+	precedences[$ TOKEN.LT] = PRECEDENCE.LESSGREATER;
+	precedences[$ TOKEN.GT] = PRECEDENCE.LESSGREATER;
+	precedences[$ TOKEN.PLUS] = PRECEDENCE.SUM;
+	precedences[$ TOKEN.MINUS] = PRECEDENCE.SUM;
+	precedences[$ TOKEN.SLASH] = PRECEDENCE.PRODUCT;
+	precedences[$ TOKEN.ASTERISK] = PRECEDENCE.PRODUCT;
+	precedences[$ TOKEN.LPAREN] = PRECEDENCE.CALL;
 	
 	Init = function(){
 		Register_Prefix(TOKEN.IDENT, Parse_Identifier);
@@ -129,7 +129,7 @@ function Parser(input_lexer) constructor{
 	}
 	
 	Parse_Expression = function(precedence){
-		var prefix = prefix_parse_fns[? curr_token.type];
+		var prefix = prefix_parse_fns[$ curr_token.type];
 		
 		if(is_undefined(prefix)){
 			No_Prefix_Parser_Error(curr_token.type);
@@ -139,7 +139,7 @@ function Parser(input_lexer) constructor{
 		var left_exp = prefix();
 		
 		while(!Peek_Token_Is(TOKEN.SEMICOLON)) && precedence < Peek_Precedence(){
-			var infix = infix_parse_fns[? peek_token.type];
+			var infix = infix_parse_fns[$ peek_token.type];
 			if (is_undefined(infix)){
 				return left_exp;	
 			}
@@ -351,11 +351,11 @@ function Parser(input_lexer) constructor{
 	}
 		
 	Register_Prefix = function(token_type, prefix_parse_fn){
-		prefix_parse_fns[? token_type] = prefix_parse_fn;	
+		prefix_parse_fns[$ token_type] = prefix_parse_fn;	
 	}
 	
 	Register_Infix = function(token_type, infix_parse_fn){
-		infix_parse_fns[? token_type] = infix_parse_fn;	
+		infix_parse_fns[$ token_type] = infix_parse_fn;	
 	}
 	
 	Parse_Int = function(str){
@@ -365,11 +365,11 @@ function Parser(input_lexer) constructor{
 	}	
 	
 	Peek_Precedence = function(){
-		return precedences[? peek_token.type] ?? PRECEDENCE.LOWEST;		
+		return precedences[$ peek_token.type] ?? PRECEDENCE.LOWEST;		
 	}
 	
 	Curr_Precedence = function(){
-		return precedences[? curr_token.type] ?? PRECEDENCE.LOWEST;	
+		return precedences[$ curr_token.type] ?? PRECEDENCE.LOWEST;	
 	}
 	
 	Init();
