@@ -23,7 +23,5 @@ function Repl(str) constructor{
 		debug_print(literals);
 		
 		return evaluated.Inspect();
-	}
-	
-	
+	}	
 }

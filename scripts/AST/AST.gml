@@ -71,6 +71,12 @@ function Expression_Statement(token) : Statement(token) constructor{
 	}	
 }
 
+function Function_Statement(token) : Statement(token) constructor{
+	String = function(){
+		return $"{Token_Literal()} {name.String()} = {(!is_undefined(value)) ? (string(value.String()) + " "): ""};";	
+	}
+}
+
 function Block_Statement(token): Statement(token) constructor{
 	statements = [];
 	

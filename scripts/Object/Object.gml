@@ -67,6 +67,6 @@ function Function(node, environment) : Object() constructor{
 			array_push(params, string(parameters[i]));
 			if(i<array_length(parameters)-1) array_push(params, ", ");
 		}
-		return $"fn({params}\n{body.String()}\n";	
+		return $"function({params}\n{body.String()}\n";	
 	}
 }

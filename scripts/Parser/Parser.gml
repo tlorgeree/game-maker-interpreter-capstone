@@ -75,7 +75,9 @@ function Parser(input_lexer) constructor{
 			case TOKEN.LET:
 				return Parse_Let_Statement();
 			case TOKEN.RETURN:
-				return Parse_Return_Statement();				
+				return Parse_Return_Statement();	
+			case TOKEN.FUNCTION:
+				return Parse_Function_Statement();
 			default:
 				return Parse_Expression_Statement();				
 		}
@@ -93,6 +95,30 @@ function Parser(input_lexer) constructor{
 		Next_Token();
 		
 		statement.value = Parse_Expression(PRECEDENCE.LOWEST);
+		
+		if(!Curr_Token_Is(TOKEN.SEMICOLON)){
+			Next_Token();	
+		}
+		
+		return statement;
+	}
+	
+	Parse_Function_Statement = function(){
+		var statement = new Function_Statement(curr_token);
+		var literal = new Function_Literal(curr_token);
+		if(!Expect_Peek(TOKEN.IDENT)) return undefined;
+		
+		statement.name = new Identifier(curr_token);
+		
+		if(!Expect_Peek(TOKEN.LPAREN)) return undefined;
+		
+		Next_Token();
+		
+		literal.parameters = Parse_Call_Arguments();
+		if(!Expect_Peek(TOKEN.LBRACE)) literal = undefined;
+		else literal.body = Parse_Block_Statement();
+		
+		statement.value = literal;
 		
 		if(!Curr_Token_Is(TOKEN.SEMICOLON)){
 			Next_Token();	
@@ -246,7 +272,7 @@ function Parser(input_lexer) constructor{
 		return block;
 	}
 	
-	Parse_Function_Literal = function(){
+	Parse_Function_Literal = function(){		
 		var literal = new Function_Literal(curr_token);
 		
 		if(!Expect_Peek(TOKEN.LPAREN)) return undefined;
@@ -256,9 +282,8 @@ function Parser(input_lexer) constructor{
 		if(!Expect_Peek(TOKEN.LBRACE)) return undefined;
 		
 		literal.body = Parse_Block_Statement();
-		
-		
-		return literal;
+			
+		return literal;		
 	}
 	
 	Parse_Function_Parameters = function(){
