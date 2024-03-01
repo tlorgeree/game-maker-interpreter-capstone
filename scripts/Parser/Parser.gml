@@ -106,15 +106,15 @@ function Parser(input_lexer) constructor{
 	Parse_Function_Statement = function(){
 		var statement = new Function_Statement(curr_token);
 		var literal = new Function_Literal(curr_token);
+		
 		if(!Expect_Peek(TOKEN.IDENT)) return undefined;
 		
 		statement.name = new Identifier(curr_token);
 		
 		if(!Expect_Peek(TOKEN.LPAREN)) return undefined;
 		
-		Next_Token();
-		
-		literal.parameters = Parse_Call_Arguments();
+		literal.parameters = Parse_Function_Parameters();
+		show_message(literal.parameters);
 		if(!Expect_Peek(TOKEN.LBRACE)) literal = undefined;
 		else literal.body = Parse_Block_Statement();
 		
@@ -304,7 +304,6 @@ function Parser(input_lexer) constructor{
 			
 			array_push(identifiers, new Identifier(curr_token));
 		}
-		
 		if(!Expect_Peek(TOKEN.RPAREN)) return undefined;
 		
 		return identifiers;

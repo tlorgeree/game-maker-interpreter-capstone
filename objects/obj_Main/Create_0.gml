@@ -66,25 +66,8 @@ global.object_type_str[$ OBJECT_TYPE.FUNCTION] = "FUNCTION";
 #endregion
 
 let_statement_test = @"
-	-5;
-	let x = -5;
-	let y = 10;
-	let foobar = 838383;
-	let z = 100 + 100;
-	let schoob = 1000 - 5 * 4;
-	a + b * c + d / e - f;
-	3 + 4; -5 * 5;
-	5 < 4 != 3 > 4;
-	3 + 4 * 5 == 3 * 1 + 4 * 5;
-	let t = true ;
-	if(t == true){
-		y;
-	} else {
-		z;
-	}
-	let add = function(x, y) { x + y; }
-	add(1, add(2, 3)); 
-	return;
+	function Add(x,y) { x+y;}
+	return Add(1,3);
 ";
 
 ifstmt = @"

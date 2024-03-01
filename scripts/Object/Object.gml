@@ -56,10 +56,12 @@ function Environment(outer_env=undefined) : Object() constructor{
 	}
 }
 
-function Function(node, environment) : Object() constructor{
+function Function(node, environment, is_var=true) : Object() constructor{
 	parameters = node.parameters;
 	body = node.body; //block statement
 	env = environment;
+	variable = is_var;
+	
 	Type = function() { return global.object_type_str[$ OBJECT_TYPE.FUNCTION]; }
 	Inspect = function(){
 		var params = "";

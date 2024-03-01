@@ -22,6 +22,13 @@ function Eval(node, env){
 			var val = Eval(node.value, env);
 			if(Is_Error(node.value)) return val;
 			env.Set(node.name.value, val);
+			return;
+		case "Function_Statement":
+			debug_print("eval function statement");
+			var val = Eval(node.value, env);
+			if(Is_Error(node.value)) return val;
+			env.Set(node.name.value, val);
+			return;
 		//expressions
 		case "Integer_Literal":
 			debug_print("eval integer literal");
