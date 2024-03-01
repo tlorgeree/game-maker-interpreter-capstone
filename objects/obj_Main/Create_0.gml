@@ -46,7 +46,7 @@ global.token_debug_str[TOKEN.RETURN] = "RETURN";
 
 #region Keyword Map
 global.keywords = {}
-global.keywords[$ "fn"] = TOKEN.FUNCTION;
+global.keywords[$ "function"] = TOKEN.FUNCTION;
 global.keywords[$ "let"] = TOKEN.LET	;
 global.keywords[$ "true"] = TOKEN.TRUE;
 global.keywords[$ "false"] = TOKEN.FALSE;
@@ -82,7 +82,7 @@ let_statement_test = @"
 	} else {
 		z;
 	}
-	fn(x, y) { x + y; }
+	let add = function(x, y) { x + y; }
 	add(1, add(2, 3)); 
 	return;
 ";
@@ -92,5 +92,5 @@ ifstmt = @"
 function 
 
 ";
-repl = new Repl(ifstmt);
+repl = new Repl(let_statement_test);
 repl.Start();
