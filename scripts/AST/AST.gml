@@ -141,6 +141,27 @@ function If_Expression(token) : Expression(token) constructor{
 	}
 }
 
+function For_Expression(token) : Expression(token) constructor{
+	assignment = undefined; //let statement
+	condition = undefined; //expression
+	iterator = undefined; //expression
+	block = undefined; //block
+	
+	String = function(){
+		return 	$"if {(!is_undefined(condition)) ? condition.String() : ""}" 
+		+ $" {(!is_undefined(consequence)) ? consequence.String() : ""} else {(!is_undefined(alternative) ? alternative.String() : "")}";
+	}
+}
+
+function While_Expression(token) : Expression(token) constructor{
+	condition = undefined; //expression
+	block = undefined; //block
+	
+	String = function(){
+		return 	$"if {(!is_undefined(condition)) ? condition.String() : ""}" 
+		+ $" {(!is_undefined(consequence)) ? consequence.String() : ""} else {(!is_undefined(alternative) ? alternative.String() : "")}";
+	}
+}
 
 function Call_Expression(token) : Expression(token) constructor{
 	fn = undefined; // function expression 

@@ -256,6 +256,14 @@ function Parser(input_lexer) constructor{
 		return expression;		
 	}
 	
+	Parse_While_Expression = function(){
+		return undefined;
+	}
+	
+	Parse_For_Expression = function(){
+		return undefined;
+	}
+	
 	Parse_Block_Statement = function(){
 		var block = new Block_Statement(curr_token);
 		
