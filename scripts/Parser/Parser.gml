@@ -424,6 +424,7 @@ function Parser(input_lexer) constructor{
 		expression.left = left;
 		Next_Token();
 		expression.index = Parse_Expression(PRECEDENCE.LOWEST);
+		Next_Token();
 		return expression;
 	}
 	#endregion
