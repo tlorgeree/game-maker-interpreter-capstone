@@ -33,6 +33,8 @@ global.token_debug_str[TOKEN.COMMA] = "COMMA";
 global.token_debug_str[TOKEN.SEMICOLON] = "SEMICOLON";
 global.token_debug_str[TOKEN.LPAREN] = "LPAREN";
 global.token_debug_str[TOKEN.RPAREN] = "RPAREN";
+global.token_debug_str[TOKEN.LBRACKET] = "LBRACE";
+global.token_debug_str[TOKEN.RBRACKET] = "RBRACE";
 global.token_debug_str[TOKEN.LBRACE] = "LBRACE";
 global.token_debug_str[TOKEN.RBRACE] = "RBRACE";
 global.token_debug_str[TOKEN.FUNCTION] = "FUNCTION";
@@ -49,7 +51,7 @@ global.token_debug_str[TOKEN.FOR] = "FOR";
 #region Keyword Map
 global.keywords = {}
 global.keywords[$ "function"] = TOKEN.FUNCTION;
-global.keywords[$ "let"] = TOKEN.LET	;
+global.keywords[$ "let"] = TOKEN.LET;
 global.keywords[$ "true"] = TOKEN.TRUE;
 global.keywords[$ "false"] = TOKEN.FALSE;
 global.keywords[$ "if"] = TOKEN.IF;
@@ -67,6 +69,7 @@ global.object_type_str[$ OBJECT_TYPE.NULL] = "NULL";
 global.object_type_str[$ OBJECT_TYPE.RETURN_VALUE] = "RETURN_VALUE";
 global.object_type_str[$ OBJECT_TYPE.ERROR] = "ERROR";
 global.object_type_str[$ OBJECT_TYPE.FUNCTION] = "FUNCTION";
+global.object_type_str[$ OBJECT_TYPE.ARRAY] = "ARRAY";
 #endregion
 
 let_statement_test = @"
@@ -82,8 +85,9 @@ let_statement_test = @"
 
 ifstmt = @"
 
-function 
+let z = [1,2];
+return z[1];
 
 ";
-repl = new Repl(let_statement_test);
+repl = new Repl(ifstmt);
 repl.Start();

@@ -5,6 +5,7 @@ enum OBJECT_TYPE {
 	RETURN_VALUE,
 	ERROR,
 	FUNCTION,
+	ARRAY,
 }
 
 function Object() constructor{
@@ -70,5 +71,20 @@ function Function(node, environment, is_var=true) : Object() constructor{
 			if(i<array_length(parameters)-1) array_push(params, ", ");
 		}
 		return $"function({params}\n{body.String()}\n";	
+	}
+}
+
+function Array(element_list) : Object() constructor{
+	elements = element_list; //object
+	Type = function() { return global.object_type_str[$ OBJECT_TYPE.ARRAY]; }
+	
+	Inspect = function(){
+		var elems = "";
+		for(var i=0; i<array_length(elements); i++){
+			elems+=elements[i].Inspect();
+			if(i<array_length(elements)-1) elems += ", ";
+		}
+		
+		return $"[{elems}]";
 	}
 }

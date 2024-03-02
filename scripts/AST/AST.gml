@@ -167,6 +167,15 @@ function Call_Expression(token) : Expression(token) constructor{
 		return $"{fn.String()}({args})";
 	}
 }
+
+function Index_Expression(token) : Expression(token) constructor{
+	left = undefined; //expression
+	index = undefined; //expression
+	
+	String = function(){
+		return $"({left.String()}[{index.String()}])";	
+	}
+}
 #endregion
 
 #region Literals
@@ -192,6 +201,20 @@ function Function_Literal(token) : Expression(token) constructor{
 		}
 				
 		return $"{Token_Literal()} ({params}) {(!is_undefined(body)) ? body.String() : ""}";
+	}
+}
+
+function Array_Literal(token) : Expression(token) constructor{
+	elements = [];
+	
+	String = function(){
+		var elems = "";
+		for(var i=0; i<array_length(elements); i++){
+			elems+=elements[i].String();
+			if(i<array_length(elements)-1) elems += ", ";
+		}
+		
+		return $"[{elems}]";
 	}
 }
 #endregion

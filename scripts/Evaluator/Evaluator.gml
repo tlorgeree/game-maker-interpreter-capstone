@@ -35,6 +35,11 @@ function Eval(node, env){
 			return new Integer(node.value);
 		case "Function_Literal":
 			return new Function(node, env);
+		case "Array_Literal":
+			debug_print("eval array literal");
+			var elements = Eval_Expressions(node.elements, env);
+			if((array_length(elements) == 1) && Is_Error(elements[0])) return elements[0];
+			return new Array(elements);
 		case "Boolean_Expression":
 			debug_print("eval booloean expression");
 			return new Boolean(node.value);
@@ -62,6 +67,14 @@ function Eval(node, env){
 			if(array_length(args) == 1 && Is_Error(args[0])) return args[0];
 			
 			return Apply_Function(fn, args);
+		case "Index_Expression":
+			debug_print("eval index expression");
+			var left = Eval(node.left, env);
+			if(Is_Error(left)) return left;
+			var index = Eval(node.index, env);
+			if(Is_Error(index)) return index;
+			
+			return Eval_Index_Expression(left, index);
 		case "Identifier":
 			return Eval_Identifier(node, env);
 		default:
@@ -254,4 +267,15 @@ function Unwrap_Return_Value(obj){
 	if(instanceof(obj) == "Return_Value") return obj.value;
 	
 	return obj;
+}
+
+function Eval_Index_Expression(left, index){
+	if(left.Type() == "ARRAY" && index.Type() == "INTEGER") return Eval_Array_Index_Expression(left, index);
+	return new Error($"index operator not supported: {left.Type()}");
+}
+
+function Eval_Array_Index_Expression(array, index){
+	var ind = index.value;
+	if(ind<0 || ind>(array_length(array.elements)-1)) return global.null;
+	return array.elements[ind];
 }

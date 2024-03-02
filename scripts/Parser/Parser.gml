@@ -5,7 +5,8 @@ enum PRECEDENCE {
 	SUM, // +
 	PRODUCT, // *
 	PREFIX, // -X or !X
-	CALL // My_Function(X)
+	CALL, // My_Function(X)
+	INDEX
 }
 
 function Parser(input_lexer) constructor{
@@ -26,6 +27,7 @@ function Parser(input_lexer) constructor{
 	precedences[$ TOKEN.SLASH] = PRECEDENCE.PRODUCT;
 	precedences[$ TOKEN.ASTERISK] = PRECEDENCE.PRODUCT;
 	precedences[$ TOKEN.LPAREN] = PRECEDENCE.CALL;
+	precedences[$ TOKEN.LBRACKET] = PRECEDENCE.INDEX;
 	
 	Init = function(){
 		Register_Prefix(TOKEN.IDENT, Parse_Identifier);
@@ -34,7 +36,8 @@ function Parser(input_lexer) constructor{
 		Register_Prefix(TOKEN.MINUS, Parse_Prefix_Expression);
 		Register_Prefix(TOKEN.TRUE, Parse_Boolean);
 		Register_Prefix(TOKEN.FALSE, Parse_Boolean);
-		Register_Prefix(TOKEN.LPAREN, Parse_Grouped_Expression); 
+		Register_Prefix(TOKEN.LPAREN, Parse_Grouped_Expression);
+		Register_Prefix(TOKEN.LBRACKET, Parse_Array_Literal); 
 		Register_Prefix(TOKEN.IF, Parse_If_Expression);
 		Register_Prefix(TOKEN.WHILE, Parse_While_Expression);
 		Register_Prefix(TOKEN.FOR, Parse_For_Expression);
@@ -49,6 +52,7 @@ function Parser(input_lexer) constructor{
 		Register_Infix(TOKEN.LT, Parse_Infix_Expression);
 		Register_Infix(TOKEN.GT, Parse_Infix_Expression);
 		Register_Infix(TOKEN.LPAREN, Parse_Call_Expression);
+		Register_Infix(TOKEN.LBRACKET, Parse_Index_Expression);
 	}
 	
 	Next_Token = function(){
@@ -383,29 +387,44 @@ function Parser(input_lexer) constructor{
 	Parse_Call_Expression = function(fn){
 		var expression = new Call_Expression(curr_token);
 		expression.fn = fn;
-		expression.arguments = Parse_Call_Arguments();
+		expression.arguments = Parse_Expression_List(TOKEN.RPAREN);
 		return expression;
 	}
 	
-	Parse_Call_Arguments = function(){
-		var args = []; //expressions
-		if(Peek_Token_Is(TOKEN.RPAREN)){
+	Parse_Array_Literal = function(){
+		var array = new Array_Literal(curr_token);
+		array.elements = Parse_Expression_List(TOKEN.RBRACKET);
+		return array;
+	}
+	
+	Parse_Expression_List = function(end_tok){
+		var list = [];
+		
+		if(Peek_Token_Is(end_tok)){
 			Next_Token();
-			return args;			
+			return list;
 		}
 		
 		Next_Token();
-		array_push(args, Parse_Expression(PRECEDENCE.LOWEST));
+		array_push(list, Parse_Expression(PRECEDENCE.LOWEST));
 		
 		while(Peek_Token_Is(TOKEN.COMMA)){
 			Next_Token();
 			Next_Token();
-			array_push(args, Parse_Expression(PRECEDENCE.LOWEST));
+			array_push(list, Parse_Expression(PRECEDENCE.LOWEST));
 		}
 		
-		if(!Expect_Peek(TOKEN.RPAREN)) return undefined;
+		if(!Expect_Peek(end_tok)) return undefined;
 		
-		return args;	
+		return list;
+	}
+	
+	Parse_Index_Expression = function(left){
+		var expression = new Index_Expression(curr_token);
+		expression.left = left;
+		Next_Token();
+		expression.index = Parse_Expression(PRECEDENCE.LOWEST);
+		return expression;
 	}
 	#endregion
 	

@@ -30,6 +30,12 @@ function Lexer(input_str) constructor{
 			case ")":
 				tok = new Token(TOKEN.RPAREN, ch);
 				break;
+			case "[":
+				tok = new Token(TOKEN.LBRACKET, ch);
+				break;
+			case "]":
+				tok = new Token(TOKEN.RBRACKET, ch);
+				break;
 			case "{":
 				tok = new Token(TOKEN.LBRACE, ch);
 				break;
