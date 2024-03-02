@@ -81,6 +81,7 @@ function Parser(input_lexer) constructor{
 			case TOKEN.FUNCTION:
 				return Parse_Function_Statement();
 			default:
+				if(Curr_Token_Is(TOKEN.IDENT) && (Peek_Token_Is(TOKEN.ASSIGN))) return Parse_Implied_Let_Statement();
 				return Parse_Expression_Statement();				
 		}
 	}
@@ -107,6 +108,28 @@ function Parser(input_lexer) constructor{
 		}
 		
 		return statement;
+	}
+	
+	Parse_Implied_Let_Statement = function(){
+		var statement = new Let_Statement(new Token(TOKEN.LET, "let"));
+		
+		statement.name = new Identifier(curr_token);
+		
+		if(!Expect_Peek(TOKEN.ASSIGN)) return undefined;
+		
+		Next_Token();
+		
+		statement.value = Parse_Expression(PRECEDENCE.LOWEST);
+		
+		var look_for;
+		if(instanceof(statement.value) == "Function_Literal") look_for = TOKEN.RBRACE;
+		else look_for = TOKEN.SEMICOLON;
+		
+		if(!Curr_Token_Is(look_for)){
+			Next_Token();	
+		}
+		
+		return statement;	
 	}
 	
 	Parse_Function_Statement = function(){

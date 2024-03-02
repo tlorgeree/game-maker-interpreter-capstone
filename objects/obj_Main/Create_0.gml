@@ -73,9 +73,9 @@ let_statement_test = @"
 	let add = function(x,y) { x+y;}
 	
 	let z = 1;
-	
-	for(let i = 1; i<10; let i = i+1;){
-		let z = add(z, 1);
+	z=2;
+	for(let i = 1; i<10; i = i+1;){
+		z = add(z, 1);
 	}
 	return z;
 ";
