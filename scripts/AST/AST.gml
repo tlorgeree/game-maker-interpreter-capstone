@@ -1,14 +1,3 @@
-enum NODE {
-	DEFAULT,
-	PROGRAM,
-	STATEMENT,
-	LET_STATEMENT,
-	RETURN_STATEMENT,
-	EXPRESSION_STATEMENT,
-	BLOCK_STATEMENT,
-	
-}
-
 function Node(token) constructor{
 	tok = token;
 	Token_Literal = function(){
@@ -142,14 +131,15 @@ function If_Expression(token) : Expression(token) constructor{
 }
 
 function For_Expression(token) : Expression(token) constructor{
-	assignment = undefined; //let statement
+	expression = undefined; //let statement
 	condition = undefined; //expression
 	iterator = undefined; //expression
 	block = undefined; //block
 	
 	String = function(){
-		return 	$"if {(!is_undefined(condition)) ? condition.String() : ""}" 
-		+ $" {(!is_undefined(consequence)) ? consequence.String() : ""} else {(!is_undefined(alternative) ? alternative.String() : "")}";
+		return 	$"for ({(!is_undefined(expression)) ? expression.String()+";" : ""}" 
+		+ $" {(!is_undefined(condition)) ? condition.String()+";" : ""}; {(!is_undefined(iterator) ? iterator.String() : "")})"
+		+$"{(!is_undefined(block) ? block.String() : "")}";
 	}
 }
 
@@ -158,8 +148,8 @@ function While_Expression(token) : Expression(token) constructor{
 	block = undefined; //block
 	
 	String = function(){
-		return 	$"if {(!is_undefined(condition)) ? condition.String() : ""}" 
-		+ $" {(!is_undefined(consequence)) ? consequence.String() : ""} else {(!is_undefined(alternative) ? alternative.String() : "")}";
+		return 	$"while {(!is_undefined(condition)) ? condition.String() : ""}" 
+		+ $" {(!is_undefined(block)) ? block.String() : ""}";
 	}
 }
 

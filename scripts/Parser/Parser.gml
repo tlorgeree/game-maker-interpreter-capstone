@@ -36,6 +36,8 @@ function Parser(input_lexer) constructor{
 		Register_Prefix(TOKEN.FALSE, Parse_Boolean);
 		Register_Prefix(TOKEN.LPAREN, Parse_Grouped_Expression); 
 		Register_Prefix(TOKEN.IF, Parse_If_Expression);
+		Register_Prefix(TOKEN.WHILE, Parse_While_Expression);
+		Register_Prefix(TOKEN.FOR, Parse_For_Expression);
 		Register_Prefix(TOKEN.FUNCTION, Parse_Function_Literal);
 		
 		Register_Infix(TOKEN.PLUS, Parse_Infix_Expression);
@@ -96,7 +98,11 @@ function Parser(input_lexer) constructor{
 		
 		statement.value = Parse_Expression(PRECEDENCE.LOWEST);
 		
-		if(!Curr_Token_Is(TOKEN.SEMICOLON)){
+		var look_for;
+		if(instanceof(statement.value) == "Function_Literal") look_for = TOKEN.RBRACE;
+		else look_for = TOKEN.SEMICOLON;
+		
+		if(!Curr_Token_Is(look_for)){
 			Next_Token();	
 		}
 		
@@ -114,13 +120,13 @@ function Parser(input_lexer) constructor{
 		if(!Expect_Peek(TOKEN.LPAREN)) return undefined;
 		
 		literal.parameters = Parse_Function_Parameters();
-		show_message(literal.parameters);
+		
 		if(!Expect_Peek(TOKEN.LBRACE)) literal = undefined;
 		else literal.body = Parse_Block_Statement();
 		
 		statement.value = literal;
 		
-		if(!Curr_Token_Is(TOKEN.SEMICOLON)){
+		if(!Curr_Token_Is(TOKEN.RBRACE)){
 			Next_Token();	
 		}
 		
@@ -257,11 +263,45 @@ function Parser(input_lexer) constructor{
 	}
 	
 	Parse_While_Expression = function(){
-		return undefined;
+		var expression = new While_Expression(curr_token);
+		
+		if(!Expect_Peek(TOKEN.LPAREN)) return undefined;	
+				
+		Next_Token();
+		expression.condition = Parse_Expression(PRECEDENCE.LOWEST);
+		
+		if(!Expect_Peek(TOKEN.RPAREN)) return undefined;
+		if(!Expect_Peek(TOKEN.LBRACE)) return undefined;
+		
+		expression.block = Parse_Block_Statement();
+		
+		return expression;
 	}
 	
-	Parse_For_Expression = function(){
-		return undefined;
+	Parse_For_Expression = function(){		
+		var expression = new For_Expression(curr_token);
+		
+		if(!Expect_Peek(TOKEN.LPAREN)) return undefined		
+		Next_Token();
+		
+		expression.expression = Parse_Statement();
+		if(is_undefined(expression.expression)) return undefined;		
+		Next_Token();
+		
+		expression.condition = Parse_Expression(PRECEDENCE.LOWEST);
+		if(is_undefined(expression.condition)) return undefined;
+		
+		Next_Token();
+		Next_Token();
+		expression.iterator = Parse_Statement();
+		if(is_undefined(expression.iterator)) return undefined;
+		
+		if(!Expect_Peek(TOKEN.RPAREN)) return undefined;
+		if(!Expect_Peek(TOKEN.LBRACE)) return undefined;
+		
+		expression.block = Parse_Block_Statement();
+		
+		return expression;
 	}
 	
 	Parse_Block_Statement = function(){

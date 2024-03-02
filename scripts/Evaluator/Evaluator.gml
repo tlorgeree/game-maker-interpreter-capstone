@@ -47,6 +47,12 @@ function Eval(node, env){
 		case "If_Expression":
 			debug_print("eval if expression");
 			return Eval_If_Expression(node, env);
+		case "While_Expression":
+			debug_print("eval while expression");
+			return Eval_While_Expression(node, env);
+		case "For_Expression":
+			debug_print("eval for expression");
+			return Eval_For_Expression(node, env);
 		case "Call_Expression":
 			debug_print("eval call expression");
 			var fn = Eval(node.fn, env);
@@ -159,6 +165,25 @@ function Eval_If_Expression(node, env){
 	} else if(node.alternative != undefined){
 		return Eval(node.alternative, env);
 	} else return undefined;
+}
+
+function Eval_While_Expression(node, env){
+	var block = undefined;
+	while(Is_Truthy(Eval(node.condition, env))){
+		block = Eval(node.block, env);	
+	}
+	return block;
+}
+
+function Eval_For_Expression(node, env){
+	Eval(node.expression, env);
+	
+	var block = undefined;
+	while(Is_Truthy(Eval(node.condition, env))){
+		block = Eval(node.block, env);
+		Eval(node.iterator, env);
+	}
+	return block;
 }
 
 function Is_Truthy(obj){

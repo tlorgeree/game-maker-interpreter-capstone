@@ -70,8 +70,14 @@ global.object_type_str[$ OBJECT_TYPE.FUNCTION] = "FUNCTION";
 #endregion
 
 let_statement_test = @"
-	function Add(x,y) { x+y;}
-	return Add(1,3);
+	let add = function(x,y) { x+y;}
+	
+	let z = 1;
+	
+	for(let i = 1; i<10; let i = i+1;){
+		let z = add(z, 1);
+	}
+	return z;
 ";
 
 ifstmt = @"
