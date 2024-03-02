@@ -42,6 +42,8 @@ global.token_debug_str[TOKEN.FALSE] = "FALSE";
 global.token_debug_str[TOKEN.IF] = "IF";
 global.token_debug_str[TOKEN.ELSE] = "ELSE";
 global.token_debug_str[TOKEN.RETURN] = "RETURN";
+global.token_debug_str[TOKEN.WHILE] = "WHILE";
+global.token_debug_str[TOKEN.FOR] = "FOR";
 #endregion
 
 #region Keyword Map
@@ -53,6 +55,8 @@ global.keywords[$ "false"] = TOKEN.FALSE;
 global.keywords[$ "if"] = TOKEN.IF;
 global.keywords[$ "else"] = TOKEN.ELSE;
 global.keywords[$ "return"] = TOKEN.RETURN;
+global.keywords[$ "while"] = TOKEN.WHILE;
+global.keywords[$ "for"] = TOKEN.FOR;
 #endregion
 
 #region Object Type Keywords

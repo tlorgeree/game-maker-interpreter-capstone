@@ -32,6 +32,8 @@ enum TOKEN {
 	FALSE,
 	IF,
 	ELSE,
+	WHILE,
+	FOR,
 	RETURN,
 }
 #endregion
