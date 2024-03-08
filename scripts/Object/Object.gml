@@ -88,3 +88,9 @@ function Array(element_list) : Object() constructor{
 		return $"[{elems}]";
 	}
 }
+
+function Built_In(func) : Object() constructor{
+	fn = func;
+	Type = function(){ }	
+	Inspect = function(){ return "built-in function"; }
+}

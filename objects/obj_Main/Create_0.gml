@@ -84,9 +84,8 @@ let_statement_test = @"
 ";
 
 ifstmt = @"
-
-let z = [[1,2],[3,4]];
-return z[1][0];
+let z = [2,3,4];
+return len(z);
 
 ";
 repl = new Repl(ifstmt);

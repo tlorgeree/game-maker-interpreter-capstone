@@ -1,6 +1,18 @@
 global.bool_true = new Boolean(true);
 global.bool_false = new Boolean(false);
 global.null = new Null();
+global.builtins = {
+	"len" : new Built_In(function(obj){
+		switch(instanceof(obj)){
+			case "Array":
+				return new Integer(array_length(obj.elements));
+			case "String":
+				return new Integer(string_length(obj));
+			default:
+				return global.null;
+		}
+	}),
+};
 
 function Eval(node, env){
 	switch(instanceof(node)){
@@ -102,7 +114,6 @@ function Eval_Program(statement_arr, env){
 	
 	return result;
 }
-
 
 function Native_Bool_To_Bool_Object(value){
 	if(value) return global.bool_true;	
@@ -227,8 +238,11 @@ function Is_Error(obj){
 
 function Eval_Identifier(node, env){
 	var val = env.Get(node.value);
-	if(is_undefined(val)) return new Error($"Identifier not found: {node.value}");
-	return val;
+	if(!is_undefined(val)) return val;
+	
+	var built_in = global.builtins[$ node.value];
+	if(!is_undefined(built_in)) return built_in;
+	return new Error($"Identifier not found: {node.value}");
 }
 
 function Eval_Expressions(args, env){
@@ -245,12 +259,17 @@ function Eval_Expressions(args, env){
 }
 
 function Apply_Function(fn, args){
-	if(instanceof(fn) != "Function") return new Error($"not a function: {fn.Type()}");
+	if(instanceof(fn) == "Function"){
+		var extended_env = Extend_Function_Env(fn, args);
+		var evaluated = Eval(fn.body, extended_env);
 	
-	var extended_env = Extend_Function_Env(fn, args);
-	var evaluated = Eval(fn.body, extended_env);
+		return Unwrap_Return_Value(evaluated);
+	}
+	else if(instanceof(fn) == "Built_In"){
+		return method_call(fn.fn, args);
+	}	
 	
-	return Unwrap_Return_Value(evaluated);
+	return new Error($"not a function: {fn.Type()}");	
 }
 
 function Extend_Function_Env(fn, args){

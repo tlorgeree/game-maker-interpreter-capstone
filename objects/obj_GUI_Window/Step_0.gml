@@ -7,7 +7,9 @@ if(active){
 
 	if(keyboard_check_pressed(vk_enter) && keyboard_check(vk_shift)){
 		repl.input = text;
-		global.output_window.text = repl.Start();
+		var eval_code = repl.Start();
+		debug_print("Return type: " + eval_code.Type());
+		global.output_window.text = eval_code.Inspect();
 		text = "";
 	}
 	
