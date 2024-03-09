@@ -85,8 +85,10 @@ let_statement_test = @"
 
 ifstmt = @"
 let z = [2,3,4];
-return len(z);
+return z;
 
 ";
 repl = new Repl(ifstmt);
-repl.Start();
+var result = repl.Start();
+
+print("result is: " + string(result));

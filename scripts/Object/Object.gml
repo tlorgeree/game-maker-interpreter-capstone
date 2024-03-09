@@ -11,30 +11,35 @@ enum OBJECT_TYPE {
 function Object() constructor{
 	Type = function() {}; // string : object type
 	Inspect = function() {};
+	Value = function() {}; //for using the returned value;
 }
 
 function Integer(val=undefined) : Object() constructor{
 	value = val; // int
 	Type = function() { return global.object_type_str[$ OBJECT_TYPE.INTEGER]; }
 	Inspect = function(){ return string(value); }
+	Value = function() { return value; }
 }
 
 function Boolean(val=undefined) : Object() constructor{
 	value = val; // bool
 	Type = function() { return global.object_type_str[$ OBJECT_TYPE.BOOLEAN]; }
 	Inspect = function(){ return string(value); }
+	Value = function() { return value; }
 }
 
 function Null() : Object() constructor{
 	value = undefined;
 	Type = function() { return global.object_type_str[$ OBJECT_TYPE.NULL]; }
 	Inspect = function(){ return "null"; }
+	Value = function() { return value; }
 }
 
 function Return_Value(val=undefined) : Object() constructor{
 	value = val;
 	Type = function() { return global.object_type_str[$ OBJECT_TYPE.RETURN_VALUE]; }
 	Inspect = function() { return (!is_undefined(value)) ? value.Inspect() : string(undefined);}
+	Value = function() { return value; }
 }
 
 function Error(str="") : Object() constructor{
@@ -86,6 +91,12 @@ function Array(element_list) : Object() constructor{
 		}
 		
 		return $"[{elems}]";
+	}
+	
+	Value = function(){
+		var arr = array_create(array_length(elements), -1);
+		for(var i=0; i< array_length(elements); i++) arr[i] = elements[i].Value();
+		return arr;
 	}
 }
 
