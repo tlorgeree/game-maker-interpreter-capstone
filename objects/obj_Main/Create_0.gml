@@ -71,6 +71,13 @@ global.object_type_str[$ OBJECT_TYPE.ERROR] = "ERROR";
 global.object_type_str[$ OBJECT_TYPE.FUNCTION] = "FUNCTION";
 global.object_type_str[$ OBJECT_TYPE.ARRAY] = "ARRAY";
 #endregion
+
+#region Get Singleton
+player = undefined;
+Get_Player() = function() { return player; }
+
+#endregion
+
 let_statement_test = @"
 	let add = function(x,y) { x+y;}
 	
@@ -83,7 +90,7 @@ let_statement_test = @"
 ";
 
 ifstmt = @"
-return len([1,2]);
+return len.len([1,2]);
 
 ";
 repl = new Repl(ifstmt);

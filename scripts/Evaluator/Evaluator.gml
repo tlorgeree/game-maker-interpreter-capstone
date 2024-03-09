@@ -3,7 +3,7 @@ global.bool_false = new Boolean(false);
 global.null = new Null();
 global.builtins = new Environment();
 global.builtins.store = {
-	"len" : new Built_In(function(obj){
+	len : new Built_In(function(obj){
 		switch(instanceof(obj)){
 			case "Array":
 				return new Integer(array_length(obj.elements));
@@ -12,7 +12,24 @@ global.builtins.store = {
 			default:
 				return global.null;
 		}
-	}),	
+	}),
+	
+	Player : {
+		Get_X : new Built_In(function(){
+			var player = obj_Main.Get_Player();
+			if(is_undefined(player)) return undefined;
+			return new Integer(player.Get_X());
+		}),
+		Get_Y : new Built_In(function(obj){
+			var player = obj_Main.Get_Player();
+			if(is_undefined(player)) return undefined;
+			return new Integer(player.Get_Y());
+		}),
+		Set_Path : new Built_In(function(obj){
+			if(instanceof(obj) != "Array") return new Error("Cannot set Player path. Input needs to be an array or arrays."
+			+"\nFor example: [[x1,y1], [x2,y2], ... [xn, yn]]");
+		}),
+	},
 };
 
 function Eval(node, env){
