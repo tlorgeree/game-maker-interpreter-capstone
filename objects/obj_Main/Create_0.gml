@@ -1,15 +1,15 @@
 #region Init
-display_set_gui_size(1920, 1080);
+display_set_gui_size(960, 540);
 global.debug = true;
 window_set_fullscreen(0);
 #endregion
 
 #region Managers
 global.Window_Manager = new GUI_Window_Manager();
-global.Window_Manager.Create_Window(50, 50);
+global.Window_Manager.Create_Window(544, 0);
 global.Game_Manager = new Game_Manager();
 
-global.output_window = global.Window_Manager.Create_Window(700, 50);
+global.output_window = global.Window_Manager.Create_Window(544, room_height-room_height*(1/4), true);
 global.output_window.active = false;
 #endregion
 
@@ -71,7 +71,6 @@ global.object_type_str[$ OBJECT_TYPE.ERROR] = "ERROR";
 global.object_type_str[$ OBJECT_TYPE.FUNCTION] = "FUNCTION";
 global.object_type_str[$ OBJECT_TYPE.ARRAY] = "ARRAY";
 #endregion
-
 let_statement_test = @"
 	let add = function(x,y) { x+y;}
 	
@@ -84,8 +83,7 @@ let_statement_test = @"
 ";
 
 ifstmt = @"
-let z = [2,3,4];
-return z;
+return len([1,2]);
 
 ";
 repl = new Repl(ifstmt);

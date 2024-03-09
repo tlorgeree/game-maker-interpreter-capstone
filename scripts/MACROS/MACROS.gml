@@ -1,0 +1,5 @@
+enum STATUS {
+	NORMAL,
+	SUCCESS,
+	FAILURE,
+}

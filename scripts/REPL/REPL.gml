@@ -22,6 +22,6 @@ function Repl(str) constructor{
 		debug_print(tokens);
 		debug_print(literals);
 		
-		return evaluated.Value();
+		return evaluated;
 	}	
 }

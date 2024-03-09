@@ -119,7 +119,8 @@ function Lexer(input_str) constructor{
 	
 	Is_Letter = function(char){
 		if (ord(char) >= ord("a") && ord(char) <= ord("z"))
-			|| (ord(char) >= ord("A") && ord(char) <= ord("Z")) return true;
+			|| (ord(char) >= ord("A") && ord(char) <= ord("Z"))
+			|| (ord(char) == ord(".")) return true;
         
 		return false;
 	}

@@ -8,8 +8,17 @@ if(active){
 	if(keyboard_check_pressed(vk_enter) && keyboard_check(vk_shift)){
 		repl.input = text;
 		var eval_code = repl.Start();
-		debug_print("Return type: " + eval_code.Type());
-		global.output_window.text = eval_code.Inspect();
+		var out_type = instanceof(eval_code);
+		if(!is_undefined(out_type)){
+			debug_print("Return type: " + (eval_code.Type() ?? "unknown type"));
+			global.output_window.text = eval_code.Inspect();
+			if(out_type == "Error") global.output_window.Set_Mode(STATUS.FAILURE);
+			else global.output_window.Set_Mode(STATUS.SUCCESS);
+			
+		} else{ 
+			global.output_window.text = "No output";
+			global.output_window.Set_Mode(STATUS.NORMAL);
+		}
 		text = "";
 	}
 	

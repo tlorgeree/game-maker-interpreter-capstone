@@ -52,8 +52,17 @@ function Environment(outer_env=undefined) : Object() constructor{
 	store = {};//obj map
 	outer = outer_env;
 	Get = function(name){
-		var val = store[$ name];
-		if(is_undefined(val) && !is_undefined(outer)) return outer.store[$ name];		
+		var arr = string_split(name, ".", true);
+		if(array_length(arr) == 0) return undefined;
+		var val = store[$ arr[0]];
+		
+		for(var i=1; i< array_length(arr); i++){
+			if(is_undefined(val)) return val;
+			print(arr[i]);
+			val = val[$ arr[i]];
+		}
+		
+		if(is_undefined(val) && !is_undefined(outer)) return outer.Get(name);		
 		return val;
 	}
 	

@@ -1,7 +1,8 @@
 global.bool_true = new Boolean(true);
 global.bool_false = new Boolean(false);
 global.null = new Null();
-global.builtins = {
+global.builtins = new Environment();
+global.builtins.store = {
 	"len" : new Built_In(function(obj){
 		switch(instanceof(obj)){
 			case "Array":
@@ -11,7 +12,7 @@ global.builtins = {
 			default:
 				return global.null;
 		}
-	}),
+	}),	
 };
 
 function Eval(node, env){
@@ -240,7 +241,7 @@ function Eval_Identifier(node, env){
 	var val = env.Get(node.value);
 	if(!is_undefined(val)) return val;
 	
-	var built_in = global.builtins[$ node.value];
+	var built_in = global.builtins.Get(node.value);
 	if(!is_undefined(built_in)) return built_in;
 	return new Error($"Identifier not found: {node.value}");
 }
