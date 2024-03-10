@@ -83,6 +83,7 @@ board_w = 17;
 board_h = 16;
 board = array_create(board_w, -1);
 for(var i=0; i<board_w; i++) board[i] = array_create(board_h, -1);
+
 for(var i=0; i<board_w; i++){
 	for(var j=0; j<board_h; j++){
 		if(i==0 || i==(board_w-1) || j==0 || j==(board_h-1)){
@@ -98,6 +99,16 @@ player = instance_create_layer(TILE_SIZE*1, TILE_SIZE*14, "Instances", obj_Playe
 goal = instance_create_layer(TILE_SIZE*15, TILE_SIZE*1, "Instances", obj_Goal, {
 	coords : [15,1]
 });
+
+Coords_Within_Bounds = function(coord_arr){
+	if(!is_array(coord_arr)) return false;
+	return (coord_arr[0] >=0 && coord_arr[0]<board_w && coord_arr[1]>=0 && coord_arr[1]<board_h);
+}
+
+Coords_Get_Instance = function(coord_arr){
+	if(!Coords_Within_Bounds(coord_arr)) return false;
+	return board[coord_arr[0]][coord_arr[1]];
+}
 #endregion
 
 let_statement_test = @"
@@ -113,8 +124,8 @@ let_statement_test = @"
 
 ifstmt = @"
 return len.len([1,2]);
-
 ";
+
 repl = new Repl(ifstmt);
 var result = repl.Start();
 

@@ -15,42 +15,42 @@ global.builtins.store = {
 	}),
 	
 	Player : {
-		GetX : new Built_In(function(){
+		get_x : new Built_In(function(){
 			var player = obj_Main.Get_Player();
 			if(is_undefined(player)) return undefined;
 			return new Integer(player.Get_X());
 		}),
-		GetY : new Built_In(function(obj){
+		get_y : new Built_In(function(obj){
 			var player = obj_Main.Get_Player();
 			if(is_undefined(player)) return undefined;
 			return new Integer(player.Get_Y());
 		}),
-		SetPath : new Built_In(function(obj){
+		set_path : new Built_In(function(obj){
 			if(instanceof(obj) != "Array") return new Error("Cannot set Player path. Input needs to be an array or arrays."
 			+"\nFor example: [[x1,y1], [x2,y2], ... [xn, yn]]");
 		}),
-		MoveUp : new Built_In(function(){
+		move_up : new Built_In(function(){
 			var player = obj_Main.Get_Player();
 			if(is_undefined(player)){
 				return new Error("Player object not instantiated");	
 			}
 			player.Move_Up();
 		}),
-		MoveDown : new Built_In(function(){
+		move_down : new Built_In(function(){
 			var player = obj_Main.Get_Player();
 			if(is_undefined(player)){
 				return new Error("Player object not instantiated");	
 			}
 			player.Move_Down();
 		}),
-		MoveLeft : new Built_In(function(){
+		move_left : new Built_In(function(){
 			var player = obj_Main.Get_Player();
 			if(is_undefined(player)){
 				return new Error("Player object not instantiated");	
 			}
 			player.Move_Left();
 		}),
-		MoveRight : new Built_In(function(){
+		move_right : new Built_In(function(){
 			var player = obj_Main.Get_Player();
 			if(is_undefined(player)){
 				return new Error("Player object not instantiated");	
@@ -58,6 +58,13 @@ global.builtins.store = {
 			player.Move_Right();
 		}),
 	},
+	
+	wall_at_coords : new Built_In(function(coord_arr){
+		if(instanceof(coord_arr) != "Array") return new Error("wall_at_coords: Input type needs to be array");
+		var at_coords = obj_Main.Coords_Get_Instance(coord_arr.Value());
+		if(at_coords != -1) return global.bool_true;
+		else return global.bool_false;
+	}),
 };
 
 function Eval(node, env){

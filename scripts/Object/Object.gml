@@ -9,6 +9,7 @@ enum OBJECT_TYPE {
 }
 
 function Object() constructor{
+	value = undefined;
 	Type = function() {}; // string : object type
 	Inspect = function() {};
 	Value = function() {}; //for using the returned value;
