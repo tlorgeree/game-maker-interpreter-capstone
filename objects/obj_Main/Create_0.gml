@@ -74,8 +74,30 @@ global.object_type_str[$ OBJECT_TYPE.ARRAY] = "ARRAY";
 
 #region Get Singleton
 player = undefined;
-Get_Player() = function() { return player; }
+Get_Player = function() { return player; }
 
+#endregion
+
+#region Maze
+board_w = 17;
+board_h = 16;
+board = array_create(board_w, -1);
+for(var i=0; i<board_w; i++) board[i] = array_create(board_h, -1);
+for(var i=0; i<board_w; i++){
+	for(var j=0; j<board_h; j++){
+		if(i==0 || i==(board_w-1) || j==0 || j==(board_h-1)){
+			board[i][j] = instance_create_layer(i*TILE_SIZE, j*TILE_SIZE, "Instances", obj_Wall);
+		}
+	}
+}
+
+instance_create_layer(TILE_SIZE*1, TILE_SIZE*14, "Instances", obj_Player, {
+	coord : [1,14]
+});
+
+instance_create_layer(TILE_SIZE*15, TILE_SIZE*1, "Instances", obj_Goal, {
+	coord : [15,1]
+});
 #endregion
 
 let_statement_test = @"
