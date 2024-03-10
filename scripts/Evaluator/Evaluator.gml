@@ -15,19 +15,47 @@ global.builtins.store = {
 	}),
 	
 	Player : {
-		Get_X : new Built_In(function(){
+		GetX : new Built_In(function(){
 			var player = obj_Main.Get_Player();
 			if(is_undefined(player)) return undefined;
 			return new Integer(player.Get_X());
 		}),
-		Get_Y : new Built_In(function(obj){
+		GetY : new Built_In(function(obj){
 			var player = obj_Main.Get_Player();
 			if(is_undefined(player)) return undefined;
 			return new Integer(player.Get_Y());
 		}),
-		Set_Path : new Built_In(function(obj){
+		SetPath : new Built_In(function(obj){
 			if(instanceof(obj) != "Array") return new Error("Cannot set Player path. Input needs to be an array or arrays."
 			+"\nFor example: [[x1,y1], [x2,y2], ... [xn, yn]]");
+		}),
+		MoveUp : new Built_In(function(){
+			var player = obj_Main.Get_Player();
+			if(is_undefined(player)){
+				return new Error("Player object not instantiated");	
+			}
+			player.Move_Up();
+		}),
+		MoveDown : new Built_In(function(){
+			var player = obj_Main.Get_Player();
+			if(is_undefined(player)){
+				return new Error("Player object not instantiated");	
+			}
+			player.Move_Down();
+		}),
+		MoveLeft : new Built_In(function(){
+			var player = obj_Main.Get_Player();
+			if(is_undefined(player)){
+				return new Error("Player object not instantiated");	
+			}
+			player.Move_Left();
+		}),
+		MoveRight : new Built_In(function(){
+			var player = obj_Main.Get_Player();
+			if(is_undefined(player)){
+				return new Error("Player object not instantiated");	
+			}
+			player.Move_Right();
 		}),
 	},
 };

@@ -91,12 +91,12 @@ for(var i=0; i<board_w; i++){
 	}
 }
 
-instance_create_layer(TILE_SIZE*1, TILE_SIZE*14, "Instances", obj_Player, {
-	coord : [1,14]
+player = instance_create_layer(TILE_SIZE*1, TILE_SIZE*14, "Instances", obj_Player, {
+	coords : [1,14]
 });
 
-instance_create_layer(TILE_SIZE*15, TILE_SIZE*1, "Instances", obj_Goal, {
-	coord : [15,1]
+goal = instance_create_layer(TILE_SIZE*15, TILE_SIZE*1, "Instances", obj_Goal, {
+	coords : [15,1]
 });
 #endregion
 
