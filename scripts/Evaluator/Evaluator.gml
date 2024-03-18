@@ -14,6 +14,26 @@ global.builtins.store = {
 		}
 	}),
 	
+	array_add : new Built_In(function(obj, index, to_add){
+		switch(instanceof(obj)){
+			case "Array":
+				array_insert(obj.elements, index, Eval(to_add, new Environment()));
+				return global.null;
+			default:
+				return global.null;
+		}
+	}),
+	
+	array_remove : new Built_In(function(obj, index){
+		switch(instanceof(obj)){
+			case "Array":
+				array_delete(obj.elements, index, 1);
+				return global.null;
+			default:
+				return global.null;
+		}
+	}),
+	
 	Player : {
 		get_x : new Built_In(function(){
 			var player = obj_Main.Get_Player();

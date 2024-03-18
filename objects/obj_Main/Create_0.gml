@@ -84,9 +84,38 @@ board_h = 16;
 board = array_create(board_w, -1);
 for(var i=0; i<board_w; i++) board[i] = array_create(board_h, -1);
 
-for(var i=0; i<board_w; i++){
+board_pattern = [
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+];
+
+
+/*for(var i=0; i<board_w; i++){
 	for(var j=0; j<board_h; j++){
 		if(i==0 || i==(board_w-1) || j==0 || j==(board_h-1)){
+			board[i][j] = instance_create_layer(i*TILE_SIZE, j*TILE_SIZE, "Instances", obj_Wall);
+		}
+	}
+}*/
+
+for(var i=0; i<board_w; i++){
+	for(var j=0; j<board_h; j++){
+		if(board_pattern[i][j] == 1){
 			board[i][j] = instance_create_layer(i*TILE_SIZE, j*TILE_SIZE, "Instances", obj_Wall);
 		}
 	}
@@ -109,6 +138,8 @@ Coords_Get_Instance = function(coord_arr){
 	if(!Coords_Within_Bounds(coord_arr)) return false;
 	return board[coord_arr[0]][coord_arr[1]];
 }
+
+path = a_star(player.coords, goal.coords, board_pattern);
 #endregion
 
 let_statement_test = @"
