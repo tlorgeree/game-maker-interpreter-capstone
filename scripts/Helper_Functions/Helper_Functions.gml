@@ -24,34 +24,37 @@ function a_star(start_coords, end_coords, grid){
 		array_push(closed_set, node);
 		
 		//left neighbor
-		if(node.x > 0 && grid[node.x-1][node.y] !=1 && distance_to_coord([node.x-1, node.y], end_coords) < node.value){
+		if(node.x > 0 && grid[node.x-1][node.y] !=1){
 			node_add_sorted(new Grid_Node(node.x-1, node.y, 
-				distance_to_coord([node.x-1, node.y], end_coords), node), open_set, closed_set);
+				node.value + score_node([node.x-1, node.y], start_coords, end_coords), node), open_set, closed_set);
 		}
 		//right neighbor
-		if(node.x < array_length(grid[node.x])-1 && grid[node.x+1][node.y] !=1 && distance_to_coord([node.x+1, node.y], end_coords) < node.value) {
+		if(node.x < array_length(grid[node.x])-1 && grid[node.x+1][node.y] !=1) {
 			node_add_sorted(new Grid_Node(node.x+1, node.y,
-				distance_to_coord([node.x+1, node.y], end_coords), node), open_set, closed_set);
+				node.value + score_node([node.x+1, node.y], start_coords, end_coords), node), open_set, closed_set);
 		}
 		//up neighbor
-		if(node.y > 0 && grid[node.x][node.y-1] !=1 && distance_to_coord([node.x, node.y-1], end_coords) < node.value){
+		if(node.y > 0 && grid[node.x][node.y-1] !=1){
 			node_add_sorted(new Grid_Node(node.x, node.y-1, 
-				distance_to_coord([node.x, node.y-1], end_coords), node), open_set, closed_set);
+				node.value + score_node([node.x, node.y-1], start_coords, end_coords), node), open_set, closed_set);
 		}
 		//down neighbor
-		if(node.y < array_length(grid)-1 && grid[node.x][node.y+1] !=1 && distance_to_coord([node.x, node.y+1], end_coords) < node.value){
+		if(node.y < array_length(grid)-1 && grid[node.x][node.y+1] !=1){
 			node_add_sorted(new Grid_Node(node.x, node.y+1, 
-				distance_to_coord([node.x, node.y+1], end_coords), node), open_set, closed_set);
+				node.value + score_node([node.x, node.y+1], start_coords, end_coords), node), open_set, closed_set);
 		}
-		
-		debug_print("we tried");
 	}
 	
 	return undefined;
 }
 
+function score_node(node_coords, start_coords, end_coords){
+	return abs(start_coords[0] - node_coords[0]) + abs(start_coords[1] - node_coords[1])
+	+ abs(node_coords[0] - end_coords[0]) + abs(node_coords[1] - end_coords[1])
+}
+
 function distance_to_coord(start_coords, end_coords){
-	return sqrt(sqr(end_coords[0] - start_coords[0]) + sqr(end_coords[1] - start_coords[1]));
+	return abs(start_coords[0] - end_coords[0]) + abs(start_coords[1] - end_coords[1]);
 }
 
 function node_add_sorted(node, open_set, closed_set){
@@ -59,7 +62,14 @@ function node_add_sorted(node, open_set, closed_set){
 	for(var i=0; i < array_length(closed_set); i++) if(node.x == closed_set[i].x && node.y == closed_set[i].y) return;
 	
 	for(var i=0; i < array_length(open_set); i++){
-		if(node.x == open_set[i].x && node.y == open_set[i].y) return;
+		if(node.x == open_set[i].x && node.y == open_set[i].y){
+			if(node.value < open_set[i].value){
+				open_set[i].previous = node.previous;
+				open_set[i].value = node.value;
+			}
+			else return;			
+		}
+		
 		if(node.value < open_set[i].value){			
 			array_insert(open_set, i, node);
 			return;
