@@ -10,7 +10,7 @@ global.Window_Manager.Create_Window(544, 0);
 global.Game_Manager = new Game_Manager();
 
 global.output_window = global.Window_Manager.Create_Window(544, room_height-room_height*(1/4), true);
-global.output_window.active = true;
+global.output_window.active = false;
 #endregion
 
 #region Token Debug String Map

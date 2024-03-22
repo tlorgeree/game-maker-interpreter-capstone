@@ -1,4 +1,9 @@
 if(active){
+	cursor_timer--;
+	if(cursor_timer<=0){
+		cursor_timer = cursor_timer_max;
+		cursor_visible = !cursor_visible;
+	}
 	if(keyboard_lastkey)&&(keyboard_check_pressed(ord(chr(keyboard_lastkey))))
 	&&(!keyboard_check_pressed(vk_backspace))&&(!keyboard_check_pressed(vk_tab))
 	&&(!keyboard_check_pressed(vk_shift)){

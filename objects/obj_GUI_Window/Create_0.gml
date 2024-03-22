@@ -9,16 +9,11 @@ if(output){ sprite_index = spr_Window_Output;
 
 text = "";
 
+cursor_timer_max = 40;
+cursor_timer = cursor_timer_max;
+cursor_visible = true;
+
 if(output) sprite_index = spr_Window_Output;
-state = {
-	Active : function(){
-		
-	},
-	
-	Inactive : function(){
-		id.state.Active();
-	}
-}
 
 Resize = function(width, height){
 	//Changes the size of the window
