@@ -75,6 +75,16 @@ function Block_Statement(token): Statement(token) constructor{
 		return str;
 	}
 }
+
+function Index_Statement(token) : Statement(token) constructor{
+	left = undefined; //expression
+	index = undefined; //expression
+	value = undefined;
+	
+	String = function(){
+		return $"{left.String()}[{index.String()}] = {value.String()};";	
+	}
+}
 #endregion
 
 #region Expression Nodes
@@ -173,7 +183,7 @@ function Index_Expression(token) : Expression(token) constructor{
 	index = undefined; //expression
 	
 	String = function(){
-		return $"({left.String()}[{index.String()}])";	
+		return $"{left.String()}[{index.String()}]";	
 	}
 }
 #endregion

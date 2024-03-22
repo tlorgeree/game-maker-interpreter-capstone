@@ -1,3 +1,6 @@
+spd = 3;
+actions = [];
+
 Get_X = function(){
 	return coords[0];
 }

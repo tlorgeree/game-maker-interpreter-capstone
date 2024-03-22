@@ -4,10 +4,10 @@ global.null = new Null();
 global.builtins = new Environment();
 global.builtins.store = {
 	len : new Built_In(function(obj){
-		switch(instanceof(obj)){
-			case "Array":
+		switch(obj.Type()){
+			case "ARRAY":
 				return new Integer(array_length(obj.elements));
-			case "String":
+			case "STRING":
 				return new Integer(string_length(obj));
 			default:
 				return global.null;
@@ -15,11 +15,11 @@ global.builtins.store = {
 	}),
 	
 	array_add : new Built_In(function(obj, index, to_add){
-		if(instanceof(obj) == "Array") array_insert(obj.elements, index, Eval(to_add, new Environment()));
+		if(obj.Type() == "ARRAY") array_insert(obj.elements, index.value, to_add);
 	}),
 	
 	array_remove : new Built_In(function(obj, index){
-		if(instanceof(obj) == "Array") array_delete(obj.elements, index, 1);
+		if(obj.Type() == "ARRAY") array_delete(obj.elements, index.value, 1);
 		
 	}),
 	
@@ -104,6 +104,16 @@ function Eval(node, env){
 			if(Is_Error(node.value)) return val;
 			env.Set(node.name.value, val);
 			return;
+		case "Index_Statement":
+			debug_print("eval index statement");
+			var left = Eval(node.left, env);
+			if(Is_Error(left)) return left;
+			var index = Eval(node.index, env);
+			if(Is_Error(index)) return index;
+			
+			var value =(!is_undefined(node.value)) ? Eval(node.value, env) : undefined;
+			
+			return Eval_Index_Statement(left, index, value);
 		//expressions
 		case "Integer_Literal":
 			debug_print("eval integer literal");
@@ -352,8 +362,17 @@ function Unwrap_Return_Value(obj){
 }
 
 function Eval_Index_Expression(left, index){
-	if(left.Type() == "ARRAY" && index.Type() == "INTEGER") return Eval_Array_Index_Expression(left, index);
-	return new Error($"index operator not supported: {left.Type()}");
+	if!(left.Type() == "ARRAY" && index.Type() == "INTEGER") return new Error($"index operator not supported: {left.Type()}");
+
+	return Eval_Array_Index_Expression(left, index);	
+}
+
+function Eval_Index_Statement(left, index, value){
+	if!(left.Type() == "ARRAY" && index.Type() == "INTEGER") return new Error($"index operator not supported: {left.Type()}");
+	if(value.Type() != "INTEGER") return new Error($"Array assignment value must be an integer: {value.Type()}");
+	
+	left.elements[index.value] = value;
+	
 }
 
 function Eval_Array_Index_Expression(array, index){

@@ -419,13 +419,33 @@ function Parser(input_lexer) constructor{
 		return list;
 	}
 	
-	Parse_Index_Expression = function(left){
-		var expression = new Index_Expression(curr_token);
-		expression.left = left;
+	Parse_Index_Expression = function(left){		
 		Next_Token();
-		expression.index = Parse_Expression(PRECEDENCE.LOWEST);
+		var index = Parse_Expression(PRECEDENCE.LOWEST);
 		Next_Token();
-		return expression;
+		
+		//check for value reassignment instead
+		if(!Peek_Token_Is(TOKEN.ASSIGN)){
+			var expression = new Index_Expression(curr_token);
+			expression.index = index;
+			expression.left = left;
+			return expression;
+		}
+		
+		Next_Token();
+		Next_Token();
+		
+		var value = Parse_Expression(PRECEDENCE.LOWEST);	
+		
+		if(!Curr_Token_Is(TOKEN.SEMICOLON)){
+			Next_Token();	
+		}
+		
+		var statement = new Index_Statement(curr_token);
+		statement.index = index;
+		statement.left = left;
+		statement.value = value;
+		return statement;
 	}
 	#endregion
 	

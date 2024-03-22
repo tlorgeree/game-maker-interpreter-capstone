@@ -154,10 +154,14 @@ let_statement_test = @"
 ";
 
 ifstmt = @"
-return len.len([1,2]);
+s = [1,2,4];
+array_add(s, 2, 3);
+array_remove(s,3);
+s[0] = 0;
+return s[0];
 ";
 
 repl = new Repl(ifstmt);
 var result = repl.Start();
 
-print("result is: " + string(result));
+print("result is: " + string(result.Inspect()));

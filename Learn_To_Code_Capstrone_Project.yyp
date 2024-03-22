@@ -33,6 +33,7 @@
     {"id":{"name":"obj_Goal","path":"objects/obj_Goal/obj_Goal.yy",},},
     {"id":{"name":"AST","path":"scripts/AST/AST.yy",},},
     {"id":{"name":"spr_Window_Output_Success","path":"sprites/spr_Window_Output_Success/spr_Window_Output_Success.yy",},},
+    {"id":{"name":"spr_Clear","path":"sprites/spr_Clear/spr_Clear.yy",},},
     {"id":{"name":"GUI_Window_Manager","path":"scripts/GUI_Window_Manager/GUI_Window_Manager.yy",},},
     {"id":{"name":"obj_Wall","path":"objects/obj_Wall/obj_Wall.yy",},},
     {"id":{"name":"spr_Window_Output_Failure","path":"sprites/spr_Window_Output_Failure/spr_Window_Output_Failure.yy",},},
