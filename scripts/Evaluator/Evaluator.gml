@@ -67,6 +67,8 @@ global.builtins.store = {
 			}
 			player.Move_Right();
 		}),
+		
+		
 	},
 	
 	wall_at_coords : new Built_In(function(coord_arr){
@@ -74,6 +76,20 @@ global.builtins.store = {
 		var at_coords = obj_Main.Coords_Get_Instance(coord_arr.Value());
 		if(at_coords != -1) return global.bool_true;
 		else return global.bool_false;
+	}),
+	
+	a_star_path : new Built_In(function(start_x, start_y, end_x, end_y){
+		if(start_x.Type() != "INTEGER" || start_y.Type() != "INTEGER" || end_x.Type() != "INTEGER" 
+			|| end_y.Type() != "INTEGER") return new Error("path coordinate types need to be integers");
+		var path = a_star([start_x.value, start_y.value], [end_x.value, end_y.value], obj_Main.board);
+		var array = new Array(array_create(array_length(path), 0));
+		
+		for(var i=0; i<array_length(path); i++){
+			path[i][0] = new Integer(path[i][0]);
+			path[i][1] = new Integer(path[i][1]);
+			array.elements[i] = new Array(path[i]);
+		}
+		return array;
 	}),
 };
 
