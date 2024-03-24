@@ -83,7 +83,7 @@ function node_add_sorted(node, open_set, closed_set){
 function reconstruct_path(node){
 	var curr_node = node;
 	var path = [];
-	while(!is_undefined(curr_node)){
+	while(!is_undefined(curr_node.previous)){
 		array_insert(path, 0, [curr_node.x, curr_node.y]);
 		curr_node = curr_node.previous;
 	}

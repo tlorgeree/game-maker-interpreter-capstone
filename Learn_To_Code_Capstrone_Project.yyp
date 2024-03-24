@@ -45,6 +45,7 @@
     {"id":{"name":"MACROS","path":"scripts/MACROS/MACROS.yy",},},
     {"id":{"name":"obj_Player","path":"objects/obj_Player/obj_Player.yy",},},
     {"id":{"name":"Lexer","path":"scripts/Lexer/Lexer.yy",},},
+    {"id":{"name":"Actions","path":"scripts/Actions/Actions.yy",},},
     {"id":{"name":"Helper_Functions","path":"scripts/Helper_Functions/Helper_Functions.yy",},},
     {"id":{"name":"fnt_Default","path":"fonts/fnt_Default/fnt_Default.yy",},},
     {"id":{"name":"obj_GUI_Window","path":"objects/obj_GUI_Window/obj_GUI_Window.yy",},},
