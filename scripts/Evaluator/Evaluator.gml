@@ -66,9 +66,48 @@ global.builtins.store = {
 				return new Error("Player object not instantiated");	
 			}
 			player.Move_Right();
+		}),		
+		set_path : new Built_In(function(path_arr){
+			if(path_arr.Type() != "ARRAY") return new Error("set path needs to be an array of coord arrays");
+			var path = array_create(array_length(path_arr.elements), 0);
+			for(var i=0; i<array_length(path);i++){
+				if(path_arr.elements[i].Type() != "ARRAY") return new Error("set path needs to be an array of coord arrays");
+				if(array_length(path_arr.elements[i].elements) != 2) return new Error("set path coords needs to be an array of 2 integers");
+				if(path_arr.elements[i].elements[0].Type() != "INTEGER") return new Error("set path needs to be an array of coord arrays");
+				if(path_arr.elements[i].elements[1].Type() != "INTEGER") return new Error("set path needs to be an array of coord arrays");
+				path[i] = array_create(array_length(path_arr.elements[i]), 0);
+				path[i] = [0,0];
+				path[i][0] = path_arr.elements[i].elements[0].value;
+				path[i][1] = path_arr.elements[i].elements[1].value;
+			}
+			
+			var player = obj_Main.Get_Player();
+			if(is_undefined(player)){
+				return new Error("Player object not instantiated");	
+			}
+			player.Set_Path(path);
+		}),
+		execute : new Built_In(function(){
+			var player = obj_Main.Get_Player();
+			if(is_undefined(player)){
+				return new Error("Player object not instantiated");	
+			}
+			player.Execute_Path();
 		}),
 		
-		
+	},
+	
+	Goal : {
+		get_x : new Built_In(function(){
+			var goal = obj_Main.Get_Goal();
+			if(is_undefined(goal)) return undefined;
+			return new Integer(goal.Get_X());
+		}),
+		get_y : new Built_In(function(obj){
+			var goal = obj_Main.Get_Goal();
+			if(is_undefined(goal)) return undefined;
+			return new Integer(goal.Get_Y());
+		}),
 	},
 	
 	wall_at_coords : new Built_In(function(coord_arr){
@@ -81,7 +120,7 @@ global.builtins.store = {
 	a_star_path : new Built_In(function(start_x, start_y, end_x, end_y){
 		if(start_x.Type() != "INTEGER" || start_y.Type() != "INTEGER" || end_x.Type() != "INTEGER" 
 			|| end_y.Type() != "INTEGER") return new Error("path coordinate types need to be integers");
-		var path = a_star([start_x.value, start_y.value], [end_x.value, end_y.value], obj_Main.board);
+		var path = a_star([start_x.value, start_y.value], [end_x.value, end_y.value], obj_Main.board_pattern);
 		var array = new Array(array_create(array_length(path), 0));
 		
 		for(var i=0; i<array_length(path); i++){

@@ -4,4 +4,11 @@ enum STATUS {
 	FAILURE,
 }
 
+enum DIR {
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+}
+
 #macro TILE_SIZE 32
