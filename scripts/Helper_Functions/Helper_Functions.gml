@@ -6,6 +6,11 @@ function print(str){
 	show_debug_message(str);	
 }
 
+function char_is_letter(char){
+	return ((ord(char) >= ord("a") && ord(char) <= ord("z"))
+		|| (ord(char) >= ord("A") && ord(char) <= ord("Z")))
+}
+
 function Grid_Node(_x, _y, val=infinity, prev=undefined) constructor{
 	x = _x;
 	y = _y;
