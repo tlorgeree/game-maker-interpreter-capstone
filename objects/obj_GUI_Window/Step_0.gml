@@ -49,5 +49,11 @@ if(active){
 	if(keyboard_check_pressed(vk_up)) Cursor_Up();
 	if(keyboard_check_pressed(vk_down)) Cursor_Down();	
 	if(keyboard_check_pressed(vk_left)) Cursor_Left();	
-	if(keyboard_check_pressed(vk_right)) Cursor_Right();	
+	if(keyboard_check_pressed(vk_right)) Cursor_Right();
+	
+	//move cursor on click
+	if(mouse_check_button_pressed(mb_left) && mouse_x > x && mouse_x < x + window_w)
+	&&(mouse_y > y && mouse_y < y + window_h){
+		Cursor_To_Position(mouse_x, mouse_y);	
+	}
 }

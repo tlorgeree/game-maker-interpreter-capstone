@@ -142,3 +142,18 @@ Cursor_X_Adj = function(){
 	
 	return false;
 }
+
+Cursor_To_Position = function(_x, _y){
+	// Get Y Position
+	if(_y < y+24) cursor_coords[1] = 0;
+	else{
+		var y_coord = round((_y - (y + 24))/19);
+		cursor_coords[1] = (y_coord < array_length(text)) ? y_coord : array_length(text)-1;
+	}
+	
+	if(_x < x+5) cursor_coords[0] = 0;
+	else{
+		var x_coord	= round((_x - (x + 5))/9);
+		cursor_coords[0] = (x_coord < string_length(text[cursor_coords[1]])) ? x_coord : string_length(text[cursor_coords[1]]);
+	}
+}
