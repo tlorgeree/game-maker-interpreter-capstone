@@ -46,33 +46,48 @@ Set_Mode = function(status){
 }
 
 Format_Text = function(){
-	//Text formatting to keep it within the window
-	//New line on width exceeded
+    // Text formatting to keep it within the window
+    // New line on width exceeded
 	var line = 0;
-	while(line<array_length(text)){
-		if(string_width(text[line]) > window_w-18){
-			var last_space = 0;
-			var first_space = -1;
-			while((string_char_at(text[line], string_length(text[line])-last_space) == " " || first_space ==-1) 
-				&& (last_space < string_length(text[line]))){
-				last_space++;
-				if(first_space == -1 && string_char_at(text[line], string_length(text[line])-last_space) == " "){
-					first_space = last_space;
+	while(line < array_length(text)){
+		if(string_width(text[line]) > window_w - 18){
+			var new_line = "";
+			var line_len = string_length(text[line]);
+			for(var i=1; i<=line_len; i++){
+				if(string_char_at(text[line], i) == " "){
+					if((string_width(new_line) + string_width(" ")) < window_w - 18) new_line += " ";
+					continue;
 				}
+				
+				var word = string_char_at(text[line], i);
+				var j=1;
+				var next_char = string_char_at(text[line], i+j);
+				while((next_char != " ") 
+					&& ((i+j) <= string_length(text[line]))){
+					word += next_char;
+					j++;
+					next_char = string_char_at(text[line], i+j);
+				}
+					
+				i += j-1;
+				if((string_width(new_line) + string_width(word)) >= window_w - 18) break;			
+				
+				new_line += word;
 			}
 			
-			if(last_space < string_length(text[line])){
-				var ind = string_length(text[line])-last_space;
-				var new_str = string_delete(text[line], ind+1, last_space);
-				var next_str = string_delete(text[line], 1, string_length(text[line])-first_space);
-				
-				text[line] = new_str;
-				array_insert(text, line+1, next_str);
-			}
+			var new_len = string_length(new_line);
+			var next_line = string_delete(text[line], 1, new_len);
+			
+			cursor_coords[1]++;
+			cursor_coords[0] -= new_len;
+			array_insert(text, line+1, next_line);
+			text[line] = new_line;
+			
 		}
 		line++;
 	}
 }
+
 
 Get_Full_Text = function(){
 	var str = "";
