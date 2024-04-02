@@ -8,6 +8,9 @@ if(output){ sprite_index = spr_Window_Output;
 }
 
 text = [""];
+viewable_text = [text[0]];
+view_start = 0;
+num_lines = 1;
 
 cursor_timer_max = 40;
 cursor_timer = cursor_timer_max;
@@ -77,15 +80,17 @@ Format_Text = function(){
 			
 			var new_len = string_length(new_line);
 			var next_line = string_delete(text[line], 1, new_len);
-			
-			cursor_coords[1]++;
-			cursor_coords[0] -= new_len;
+						
 			array_insert(text, line+1, next_line);
 			text[line] = new_line;
+			Adjust_Viewable_Text();
+			Cursor_Down();
+			cursor_coords[0] -= new_len;
 			
 		}
 		line++;
 	}
+	
 }
 
 
@@ -98,14 +103,22 @@ Get_Full_Text = function(){
 }
 
 Cursor_Up = function(){
-	if(cursor_coords[1] == 0) return;
+	if(cursor_coords[1] == 0){
+		Scroll_Up();
+		Cursor_X_Adj();
+		return;
+	}
 	
 	cursor_coords[1]--;
 	Cursor_X_Adj();
 }
 
 Cursor_Down = function(){
-	if(cursor_coords[1]>=(array_length(text)-1)) return;
+	if(cursor_coords[1]>=(array_length(viewable_text)-1)){
+		Scroll_Down();
+		Cursor_X_Adj();
+		return;
+	}
 	
 	cursor_coords[1]++;
 	Cursor_X_Adj();
@@ -114,8 +127,8 @@ Cursor_Down = function(){
 Cursor_Left = function(){
 	if(cursor_coords[0] == 0){
 		if(cursor_coords[1] == 0) return;
-		cursor_coords[1]--;
-		cursor_coords[0] = string_length(text[cursor_coords[1]]);
+		Cursor_Up();;
+		cursor_coords[0] = string_length(viewable_text[cursor_coords[1]]);
 		return;
 	}
 	
@@ -123,10 +136,9 @@ Cursor_Left = function(){
 }
 
 Cursor_Right = function(){
-	if(cursor_coords[0] == string_length(text[cursor_coords[1]])){
-		if(cursor_coords[1] == array_length(text)-1) return;
-		cursor_coords[1]++;
-		cursor_coords[0] = 0;
+	if(cursor_coords[0] == string_length(viewable_text[cursor_coords[1]])){
+		if(cursor_coords[1] + num_lines = array_length(text) -1) return;
+		Cursor_Down();
 		return;
 	}
 	
@@ -134,7 +146,7 @@ Cursor_Right = function(){
 }
 
 Cursor_X_Adj = function(){
-	var len = string_length(text[cursor_coords[1]]);
+	var len = string_length(viewable_text[cursor_coords[1]]);
 	if(cursor_coords[0] > len){
 		cursor_coords[0] = len;
 		return true;
@@ -150,10 +162,38 @@ Cursor_To_Position = function(_x, _y){
 		var y_coord = round((_y - (y + 24))/19);
 		cursor_coords[1] = (y_coord < array_length(text)) ? y_coord : array_length(text)-1;
 	}
-	
+	// Get X Position
 	if(_x < x+5) cursor_coords[0] = 0;
 	else{
 		var x_coord	= round((_x - (x + 5))/9);
 		cursor_coords[0] = (x_coord < string_length(text[cursor_coords[1]])) ? x_coord : string_length(text[cursor_coords[1]]);
 	}
+}
+
+Scroll_Up = function(){
+	if(view_start == 0) return;
+	view_start--;
+	Adjust_Viewable_Text();
+}
+
+Scroll_Down = function(){
+	if(array_length(text) <= num_lines || view_start+num_lines == array_length(text)) return;
+	view_start++;
+	Adjust_Viewable_Text();
+}
+
+Calc_Num_Lines = function(){
+	num_lines = min(array_length(text), floor(window_h/19)-1);	
+}
+
+Adjust_Viewable_Text = function(){
+	viewable_text = array_create(num_lines, -1);
+	
+	for(var i=0; i<num_lines; i++){
+		viewable_text[i] = 
+		text[i + view_start];	
+	}
+	debug_print(viewable_text);
+	Cursor_X_Adj();
+	
 }

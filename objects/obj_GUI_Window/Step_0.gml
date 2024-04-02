@@ -10,10 +10,10 @@ if(active){
 	&&(!keyboard_check_pressed(vk_shift)&&(!keyboard_check_pressed(vk_enter)
 	&&(!keyboard_check_pressed(vk_up)&&(!keyboard_check_pressed(vk_down))
 	&&(!keyboard_check_pressed(vk_left))&&(!keyboard_check_pressed(vk_right))))){
-		text[cursor_coords[1]] = string_insert(string(keyboard_lastchar),
-			text[cursor_coords[1]],
-			cursor_coords[0]+1);
-			Cursor_Right();
+		text[cursor_coords[1] + view_start] = string_insert(string(keyboard_lastchar),
+			text[cursor_coords[1] + view_start], cursor_coords[0]+1);
+		Adjust_Viewable_Text();
+		Cursor_Right();
 		Format_Text();
 	}
 
@@ -38,10 +38,13 @@ if(active){
 		text[cursor_coords[1]] = string_delete(text[cursor_coords[1]], cursor_coords[0],1);
 		Cursor_Left();
 		Format_Text();
+		Adjust_Viewable_Text();
 	}
 	if(keyboard_check_pressed(vk_enter)){
-		array_push(text, "");
-		cursor_coords[1]++;
+		array_insert(text, cursor_coords[1]+view_start+1, "");
+		Calc_Num_Lines();
+		Adjust_Viewable_Text();
+		Cursor_Down();
 		cursor_coords[0] = 0;
 	}
 	
