@@ -25,7 +25,7 @@ if(active){
 			debug_print("Return type: " + (eval_code.Type() ?? "unknown type"));
 			global.output_window.text = [eval_code.Inspect()];
 			global.output_window.Format_Text();
-			if(out_type == "Error") global.output_window.Set_Mode(STATUS.FAILURE);
+			if(out_type == "ERROR") global.output_window.Set_Mode(STATUS.FAILURE);
 			else global.output_window.Set_Mode(STATUS.SUCCESS);
 			
 		} else{ 
@@ -64,4 +64,3 @@ if(active){
 //Scroll wheel
 if(mouse_wheel_up() && Mouse_Is_In_Window()) Scroll_Up();
 else if(mouse_wheel_down() && Mouse_Is_In_Window()) Scroll_Down();
-

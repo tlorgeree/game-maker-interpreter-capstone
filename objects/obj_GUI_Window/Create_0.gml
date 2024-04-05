@@ -57,7 +57,7 @@ Format_Text = function(){
 			var new_line = "";
 			var line_len = string_length(text[line]);
 			for(var i=1; i<=line_len; i++){
-				if(string_char_at(text[line], i) == " "){
+				if(string_char_at(text[line], i) == " "){					
 					if((string_width(new_line) + string_width(" ")) < window_w - 18) new_line += " ";
 					continue;
 				}
@@ -78,6 +78,10 @@ Format_Text = function(){
 				new_line += word;
 			}
 			
+			if(string_length(new_line) == 0){
+				line++;
+				continue;
+			}
 			var new_len = string_length(new_line);
 			var next_line = string_delete(text[line], 1, new_len);
 						
@@ -85,8 +89,7 @@ Format_Text = function(){
 			text[line] = new_line;
 			Adjust_Viewable_Text();
 			Cursor_Down();
-			cursor_coords[0] -= new_len;
-			
+			cursor_coords[0] -= new_len;		
 		}
 		line++;
 	}
