@@ -26,7 +26,7 @@
   "origin": 0,
   "parent": {
     "name": "Goal",
-    "path": "folders/Main/Code/Room_Elements/Goal.yy",
+    "path": "folders/Code/Room_Elements/Goal.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

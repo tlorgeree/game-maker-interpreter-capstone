@@ -60,3 +60,8 @@ if(active){
 		Cursor_To_Position(mouse_x, mouse_y);	
 	}
 }
+
+//Scroll wheel
+if(mouse_wheel_up() && Mouse_Is_In_Window()) Scroll_Up();
+else if(mouse_wheel_down() && Mouse_Is_In_Window()) Scroll_Down();
+

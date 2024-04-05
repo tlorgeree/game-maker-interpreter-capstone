@@ -49,7 +49,7 @@
   "origin": 0,
   "parent": {
     "name": "GUI_Window",
-    "path": "folders/Main/Code/Managers/GUI_Window.yy",
+    "path": "folders/Code/Managers/GUI_Window.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {

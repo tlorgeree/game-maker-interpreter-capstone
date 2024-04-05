@@ -11,7 +11,7 @@
   "overriddenProperties": [],
   "parent": {
     "name": "GUI_Window",
-    "path": "folders/Main/Code/Managers/GUI_Window.yy",
+    "path": "folders/Code/Managers/GUI_Window.yy",
   },
   "parentObjectId": null,
   "persistent": false,

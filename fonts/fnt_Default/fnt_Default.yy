@@ -120,7 +120,7 @@
   "maintainGms1Font": false,
   "parent": {
     "name": "Fonts",
-    "path": "folders/Main/Fonts.yy",
+    "path": "folders/Fonts.yy",
   },
   "pointRounding": 0,
   "ranges": [

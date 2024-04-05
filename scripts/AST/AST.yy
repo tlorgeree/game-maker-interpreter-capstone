@@ -6,6 +6,6 @@
   "isDnD": false,
   "parent": {
     "name": "Interpreters",
-    "path": "folders/Main/Code/Managers/Interpreters.yy",
+    "path": "folders/Code/Managers/Interpreters.yy",
   },
 }

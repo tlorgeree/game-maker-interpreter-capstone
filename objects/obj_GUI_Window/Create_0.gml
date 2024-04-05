@@ -193,7 +193,10 @@ Adjust_Viewable_Text = function(){
 		viewable_text[i] = 
 		text[i + view_start];	
 	}
-	debug_print(viewable_text);
-	Cursor_X_Adj();
-	
+	Cursor_X_Adj();	
+}
+
+Mouse_Is_In_Window = function(){
+	return ((mouse_x >= x && mouse_x <= x + window_w)
+	&& (mouse_y >= y && mouse_y <= y + window_h));
 }

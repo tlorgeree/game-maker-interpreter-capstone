@@ -26,7 +26,7 @@
   "origin": 0,
   "parent": {
     "name": "Player",
-    "path": "folders/Main/Code/Player.yy",
+    "path": "folders/Code/Player.yy",
   },
   "preMultiplyAlpha": false,
   "sequence": {
