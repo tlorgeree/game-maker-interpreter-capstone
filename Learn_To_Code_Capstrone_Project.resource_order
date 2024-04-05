@@ -15,6 +15,7 @@
   "ResourceOrderSettings": [
     {"name":"AST","order":4,"path":"scripts/AST/AST.yy",},
     {"name":"spr_Window_Output_Success","order":2,"path":"sprites/spr_Window_Output_Success/spr_Window_Output_Success.yy",},
+    {"name":"Pathifinding_For_Interpreter","order":6,"path":"notes/Pathifinding_For_Interpreter/Pathifinding_For_Interpreter.yy",},
     {"name":"spr_Clear","order":5,"path":"sprites/spr_Clear/spr_Clear.yy",},
     {"name":"Player_State_Machine","order":3,"path":"scripts/Player_State_Machine/Player_State_Machine.yy",},
     {"name":"GUI_Window_Manager","order":2,"path":"scripts/GUI_Window_Manager/GUI_Window_Manager.yy",},

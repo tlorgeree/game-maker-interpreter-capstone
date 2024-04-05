@@ -33,6 +33,7 @@
     {"id":{"name":"obj_Goal","path":"objects/obj_Goal/obj_Goal.yy",},},
     {"id":{"name":"AST","path":"scripts/AST/AST.yy",},},
     {"id":{"name":"spr_Window_Output_Success","path":"sprites/spr_Window_Output_Success/spr_Window_Output_Success.yy",},},
+    {"id":{"name":"Pathifinding_For_Interpreter","path":"notes/Pathifinding_For_Interpreter/Pathifinding_For_Interpreter.yy",},},
     {"id":{"name":"spr_Clear","path":"sprites/spr_Clear/spr_Clear.yy",},},
     {"id":{"name":"Player_State_Machine","path":"scripts/Player_State_Machine/Player_State_Machine.yy",},},
     {"id":{"name":"GUI_Window_Manager","path":"scripts/GUI_Window_Manager/GUI_Window_Manager.yy",},},
