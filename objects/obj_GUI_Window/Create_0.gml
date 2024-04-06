@@ -162,15 +162,33 @@ Cursor_To_Position = function(_x, _y){
 	// Get Y Position
 	if(_y < y+24) cursor_coords[1] = 0;
 	else{
-		var y_coord = round((_y - (y + 24))/19);
-		cursor_coords[1] = (y_coord < array_length(text)) ? y_coord : array_length(text)-1;
+		var y_coord = round((_y - (y + 30))/19);
+		cursor_coords[1] = (y_coord < array_length(viewable_text)) ? y_coord : array_length(viewable_text)-1;
 	}
 	// Get X Position
 	if(_x < x+5) cursor_coords[0] = 0;
 	else{
-		var x_coord	= round((_x - (x + 5))/9);
-		cursor_coords[0] = (x_coord < string_length(text[cursor_coords[1]])) ? x_coord : string_length(text[cursor_coords[1]]);
+		var x_coord	= round((_x - (x + 10))/9);
+		cursor_coords[0] = (x_coord < string_length(viewable_text[cursor_coords[1]])) ? x_coord : string_length(viewable_text[cursor_coords[1]]);
 	}
+}
+
+Click_Get_Position = function(){
+	// Get Y Position
+	var coords = [0,0];
+	if(mouse_y < y+24) coords[1] = 0;
+	else{
+		var y_coord = round((mouse_y - (y + 30))/19);
+		coords[1] = (y_coord < array_length(viewable_text)) ? y_coord : array_length(viewable_text)-1;
+	}
+	// Get X Position
+	if(mouse_x < x+5) coords[0] = 0;
+	else{
+		var x_coord	= round((mouse_x - (x + 10))/9);
+		coords[0] = (x_coord < string_length(viewable_text[coords[1]])) ? x_coord : string_length(viewable_text[coords[1]]);
+	}
+	
+	return coords;
 }
 
 Scroll_Up = function(){
@@ -218,4 +236,12 @@ Text_Cut_Range = function(x1, y1, x2, y2){
 	Text_Delete_Range(x1, y1, x2, y2);
 }
 
-Get_Text_Before_Coords
+Get_Text_Before_Coords = function(_x, _y){
+	if(_y > array_length(text)) return "";
+	return string_delete(text[_y], _x+1, string_length(text[_y]) - _x);
+}
+
+Get_Text_After_Coords = function(_x, _y){
+	if(_y > array_length(text)) return "";
+	return string_delete(text[_y], 1, _x);
+}

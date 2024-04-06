@@ -41,7 +41,8 @@ if(active){
 		Adjust_Viewable_Text();
 	}
 	if(keyboard_check_pressed(vk_enter)){
-		array_insert(text, cursor_coords[1]+view_start+1, "");
+		array_insert(text, cursor_coords[1]+view_start+1, Get_Text_After_Coords(cursor_coords[0], cursor_coords[1]+view_start));
+		text[cursor_coords[1]+view_start] = Get_Text_Before_Coords(cursor_coords[0], cursor_coords[1]+view_start);
 		Calc_Num_Lines();
 		Adjust_Viewable_Text();
 		Cursor_Down();
@@ -67,11 +68,23 @@ else if(mouse_wheel_down() && Mouse_Is_In_Window()) Scroll_Down();
 
 //Text Highlighting
 if(mouse_check_button_pressed(mb_left) && Mouse_Is_In_Window()){
-	highlighted_text_range = [[mouse_x, mouse_y]];
+	highlighted_text_range = [Click_Get_Position()];
 }
 
 if(mouse_check_button_released(mb_left) && Mouse_Is_In_Window()){
-	if(array_legnth(highlighted_text_range) != 1) return;
-	array_push(highlighted_text_range, [mouse_x, mouse_y]);
-	debug_print(highlighted_text_range);
+	if(array_length(highlighted_text_range) != 1) return;
+	array_push(highlighted_text_range, Click_Get_Position());
+	if(highlighted_text_range[0,0] == highlighted_text_range[1,0]
+		&& highlighted_text_range[0,1] == highlighted_text_range[1,1]){
+			highlighted_text_range = [];
+			return;
+	}
+	
+	if((highlighted_text_range[0,1] > highlighted_text_range[1,1])
+		|| ((highlighted_text_range[0,1] == highlighted_text_range[1,1]) 
+		&& (highlighted_text_range[0,0] > highlighted_text_range[1,0]))){
+		var temp = highlighted_text_range[0];
+		array_delete(highlighted_text_range, 0, 1);
+		array_push(highlighted_text_range, temp);
+	}
 }
