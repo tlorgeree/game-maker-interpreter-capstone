@@ -64,3 +64,14 @@ if(active){
 //Scroll wheel
 if(mouse_wheel_up() && Mouse_Is_In_Window()) Scroll_Up();
 else if(mouse_wheel_down() && Mouse_Is_In_Window()) Scroll_Down();
+
+//Text Highlighting
+if(mouse_check_button_pressed(mb_left) && Mouse_Is_In_Window()){
+	highlighted_text_range = [[mouse_x, mouse_y]];
+}
+
+if(mouse_check_button_released(mb_left) && Mouse_Is_In_Window()){
+	if(array_legnth(highlighted_text_range) != 1) return;
+	array_push(highlighted_text_range, [mouse_x, mouse_y]);
+	debug_print(highlighted_text_range);
+}
