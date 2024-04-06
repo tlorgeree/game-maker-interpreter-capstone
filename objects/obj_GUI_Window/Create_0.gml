@@ -9,6 +9,7 @@ if(output){ sprite_index = spr_Window_Output;
 
 text = [""];
 viewable_text = [text[0]];
+highlighted_text_range = []; //[[x1,y1], [x2, y2]]
 view_start = 0;
 num_lines = 1;
 
@@ -92,15 +93,14 @@ Format_Text = function(){
 			cursor_coords[0] -= new_len;		
 		}
 		line++;
-	}
-	
+	}	
 }
 
 
 Get_Full_Text = function(){
 	var str = "";
 	for(var i=0; i<array_length(text); i++){
-		str += text[i];	
+		str += (i == array_length(text) - 1) ? text[i] : text[i] + " ";
 	}
 	return str;
 }
@@ -202,4 +202,20 @@ Adjust_Viewable_Text = function(){
 Mouse_Is_In_Window = function(){
 	return ((mouse_x >= x && mouse_x <= x + window_w)
 	&& (mouse_y >= y && mouse_y <= y + window_h));
+} 
+
+Text_Delete_Range = function(x1, y1, x2, y2){
+	
 }
+
+Text_Copy_Range = function(x1, y1, x2, y2){
+	
+}
+
+Text_Cut_Range = function(x1, y1, x2, y2){
+	if(!active) return;
+	Text_Copy_Range(x1, y1, x2, y2);
+	Text_Delete_Range(x1, y1, x2, y2);
+}
+
+Get_Text_Before_Coords
