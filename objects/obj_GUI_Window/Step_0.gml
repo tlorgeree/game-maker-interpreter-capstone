@@ -35,7 +35,21 @@ if(active){
 	}
 	
 	if(keyboard_check_pressed(vk_backspace)){
-		text[cursor_coords[1]] = string_delete(text[cursor_coords[1]], cursor_coords[0],1);
+		if((cursor_coords[0] == 0) && ((cursor_coords[1] + view_start) != 0)){
+			var str;
+			var prev_line_len = string_length(viewable_text[cursor_coords[1] -1]);
+			var curr_line_len = string_length(viewable_text[cursor_coords[1]]);
+			
+			if(string_char_at(viewable_text[cursor_coords[1] - 1], 
+				prev_line_len) == " "){
+				str = string_copy(viewable_text[cursor_coords[1]], 1, curr_line_len);
+			} else str = " " + string_copy(viewable_text[cursor_coords[1]], 1, curr_line_len);			
+			
+			text[cursor_coords[1] -1 + view_start] += str;
+			array_delete(text, cursor_coords[1] + view_start , 1);						
+			
+		}else text[cursor_coords[1] + view_start] = string_delete(text[cursor_coords[1] + view_start], cursor_coords[0],1);
+		
 		Cursor_Left();
 		Format_Text();
 		Adjust_Viewable_Text();

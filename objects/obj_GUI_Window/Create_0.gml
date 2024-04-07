@@ -130,7 +130,7 @@ Cursor_Down = function(){
 Cursor_Left = function(){
 	if(cursor_coords[0] == 0){
 		if(cursor_coords[1] == 0) return;
-		Cursor_Up();;
+		Cursor_Up();
 		cursor_coords[0] = string_length(viewable_text[cursor_coords[1]]);
 		return;
 	}
@@ -140,8 +140,9 @@ Cursor_Left = function(){
 
 Cursor_Right = function(){
 	if(cursor_coords[0] == string_length(viewable_text[cursor_coords[1]])){
-		if(cursor_coords[1] + num_lines = array_length(text) -1) return;
+		if(cursor_coords[1] + view_start == array_length(text) -1) return;
 		Cursor_Down();
+		cursor_coords[0] = 0;
 		return;
 	}
 	
@@ -208,6 +209,7 @@ Calc_Num_Lines = function(){
 }
 
 Adjust_Viewable_Text = function(){
+	Calc_Num_Lines();
 	viewable_text = array_create(num_lines, -1);
 	
 	for(var i=0; i<num_lines; i++){
@@ -219,7 +221,7 @@ Adjust_Viewable_Text = function(){
 
 Mouse_Is_In_Window = function(){
 	return ((mouse_x >= x && mouse_x <= x + window_w)
-	&& (mouse_y >= y && mouse_y <= y + window_h));
+		&& (mouse_y >= y && mouse_y <= y + window_h));
 } 
 
 Text_Delete_Range = function(x1, y1, x2, y2){
