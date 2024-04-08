@@ -246,7 +246,17 @@ Text_Delete_Range = function(x1, y1, x2, y2){
 }
 
 Text_Copy_Range = function(x1, y1, x2, y2){
+	var str = "";
+	if(y1 < 0) y1 = 0;
+	if(y2 >= array_length(text)) y2 = array_length(text) - 1;
 	
+	if(y1 == y2) str = string_delete(Get_Text_Before_Coords(x2, y1), 1, x1);
+	else{
+		str += Get_Text_After_Coords(x1, y1);
+		for(var i=y1+1; i<y2; i++) str += "\n" + string_copy(text[i + view_start], 1, string_length(text[i + view_start]));	
+		str += "\n" + Get_Text_Before_Coords(x2, y2);		
+	}
+	clipboard_set_text(str);
 }
 
 Text_Cut_Range = function(x1, y1, x2, y2){
@@ -256,11 +266,11 @@ Text_Cut_Range = function(x1, y1, x2, y2){
 }
 
 Get_Text_Before_Coords = function(_x, _y){
-	if(_y > array_length(text)) return "";
-	return string_delete(text[_y], _x+1, string_length(text[_y]) - _x);
+	if(_y + view_start > array_length(text)) return "";
+	return string_delete(text[view_start + _y], _x+1, string_length(text[view_start + _y]) - _x);
 }
 
 Get_Text_After_Coords = function(_x, _y){
-	if(_y > array_length(text)) return "";
-	return string_delete(text[_y], 1, _x);
+	if(_y + view_start > array_length(text)) return "";
+	return string_delete(text[view_start + _y], 1, _x);
 }

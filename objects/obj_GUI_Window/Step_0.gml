@@ -9,7 +9,9 @@ if(active){
 	&&(!keyboard_check_pressed(vk_backspace))&&(!keyboard_check_pressed(vk_tab))
 	&&(!keyboard_check_pressed(vk_shift)&&(!keyboard_check_pressed(vk_enter)
 	&&(!keyboard_check_pressed(vk_up)&&(!keyboard_check_pressed(vk_down))
-	&&(!keyboard_check_pressed(vk_left))&&(!keyboard_check_pressed(vk_right))))){
+	&&(!keyboard_check_pressed(vk_left))&&(!keyboard_check_pressed(vk_right))
+	&& (!keyboard_check(vk_control))
+	))){
 		text[cursor_coords[1] + view_start] = string_insert(string(keyboard_lastchar),
 			text[cursor_coords[1] + view_start], cursor_coords[0]+1);
 		Adjust_Viewable_Text();
@@ -79,6 +81,15 @@ if(active){
 	if(mouse_check_button_pressed(mb_left) && mouse_x > x && mouse_x < x + window_w)
 	&&(mouse_y > y && mouse_y < y + window_h){
 		Cursor_To_Position(mouse_x, mouse_y);	
+	}
+	
+	if((array_length(highlighted_text_range) == 2) && keyboard_check(vk_control)){
+		if(keyboard_check_pressed(ord("C"))){
+			Text_Copy_Range(highlighted_text_range[0,0], highlighted_text_range[0,1], 
+				highlighted_text_range[1,0], highlighted_text_range[1,1]);
+		} else if(keyboard_check_pressed(ord("X"))){
+			
+		}
 	}
 }
 
