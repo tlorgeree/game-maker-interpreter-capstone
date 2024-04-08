@@ -35,6 +35,12 @@ if(active){
 	}
 	
 	if(keyboard_check_pressed(vk_backspace)){
+		if(array_length(highlighted_text_range) == 2){
+			Text_Delete_Range(highlighted_text_range[0,0], highlighted_text_range[0,1], 
+				highlighted_text_range[1,0], highlighted_text_range[1,1]);
+			highlighted_text_range = [];	
+			return;
+		}
 		if((cursor_coords[0] == 0) && ((cursor_coords[1] + view_start) != 0)){
 			var str;
 			var prev_line_len = string_length(viewable_text[cursor_coords[1] -1]);

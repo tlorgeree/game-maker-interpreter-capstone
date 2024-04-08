@@ -174,6 +174,11 @@ Cursor_To_Position = function(_x, _y){
 	}
 }
 
+Cursor_To_Coords = function(_x, _y){
+	cursor_coords[0] = _x;
+	cursor_coords[1] = _y;
+}
+
 Click_Get_Position = function(){
 	// Get Y Position
 	var coords = [0,0];
@@ -225,7 +230,19 @@ Mouse_Is_In_Window = function(){
 } 
 
 Text_Delete_Range = function(x1, y1, x2, y2){
+	if(y1 < 0) y1 = 0;
+	if(y2 >= array_length(text)) y2 = array_length(text) - 1;
 	
+	if(y1 == y2) text[view_start + y1] = string_delete(text[view_start + y1], x1+1, x2-x1);
+	else{
+		text[view_start + y2] = string_delete(text[view_start + y2], 1, string_length(text[view_start + y2]) - x2);
+		for(var i = y2-1; i>y1; i--) array_delete(text, view_start  + i, 1);
+		text[view_start + y1] = string_delete(text[view_start + y1], x1+1, string_length(text[view_start+y1])-x1);
+		
+	}
+	Format_Text();
+	Adjust_Viewable_Text();
+	Cursor_To_Coords(x1, y1);
 }
 
 Text_Copy_Range = function(x1, y1, x2, y2){
