@@ -231,18 +231,18 @@ Mouse_Is_In_Window = function(){
 
 Text_Delete_Range = function(x1, y1, x2, y2){
 	if(y1 < 0) y1 = 0;
-	if(y2 >= array_length(text)) y2 = array_length(text) - 1;
+	if(y2 + view_start >= array_length(text)) y2 = array_length(text) - 1 - view_start;
 	
 	if(y1 == y2) text[view_start + y1] = string_delete(text[view_start + y1], x1+1, x2-x1);
 	else{
-		text[view_start + y2] = string_delete(text[view_start + y2], 1, string_length(text[view_start + y2]) - x2);
+		text[view_start + y2] = string_delete(text[view_start + y2], 1, x2);
 		for(var i = y2-1; i>y1; i--) array_delete(text, view_start  + i, 1);
 		text[view_start + y1] = string_delete(text[view_start + y1], x1+1, string_length(text[view_start+y1])-x1);
 		
 	}
-	Format_Text();
-	Adjust_Viewable_Text();
 	Cursor_To_Coords(x1, y1);
+	Format_Text();
+	Adjust_Viewable_Text();	
 }
 
 Text_Copy_Range = function(x1, y1, x2, y2){
@@ -263,6 +263,37 @@ Text_Cut_Range = function(x1, y1, x2, y2){
 	if(!active) return;
 	Text_Copy_Range(x1, y1, x2, y2);
 	Text_Delete_Range(x1, y1, x2, y2);
+}
+
+Text_Paste = function(_x, _y){
+	if(!clipboard_has_text()) return;
+	var str = clipboard_get_text();
+	if(string_length(str) == 0) return;
+	
+	var new_arr = [];
+	
+	var i=1;
+	var curr_str = "";
+	
+	while(i <= string_length(str)){
+		if(string_char_at(str,i) == "\n"){
+			array_push(new_arr, string_copy(curr_str, 1, string_length(curr_str)));
+			curr_str = "";
+		}else curr_str += string_char_at(str, i);
+	
+		i++;
+	}
+	array_push(new_arr, string_copy(curr_str, 1, string_length(curr_str)));
+	
+	if(array_length(new_arr) > 0) text[_y + view_start] = string_insert(string_copy(new_arr[0],1,string_length(new_arr[0])), text[_y + view_start], _x);
+	if(array_length(new_arr) > 1) {
+		for(i=1; i<array_length(new_arr); i++){
+			array_insert(text, _y + i + view_start, string_copy(new_arr[i], 1, string_length(new_arr[i])));
+		}
+	}
+	
+	Format_Text();
+	Adjust_Viewable_Text();
 }
 
 Get_Text_Before_Coords = function(_x, _y){

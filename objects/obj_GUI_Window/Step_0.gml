@@ -87,9 +87,20 @@ if(active){
 		if(keyboard_check_pressed(ord("C"))){
 			Text_Copy_Range(highlighted_text_range[0,0], highlighted_text_range[0,1], 
 				highlighted_text_range[1,0], highlighted_text_range[1,1]);
-		} else if(keyboard_check_pressed(ord("X"))){
-			
+		}else if(keyboard_check_pressed(ord("X"))){
+			Text_Cut_Range(highlighted_text_range[0,0], highlighted_text_range[0,1], 
+				highlighted_text_range[1,0], highlighted_text_range[1,1]);
+			highlighted_text_range = [];
 		}
+	}
+	
+	if(keyboard_check_pressed(ord("V")) && keyboard_check(vk_control)){
+		if(array_length(highlighted_text_range) == 2){
+			Text_Delete_Range(highlighted_text_range[0,0], highlighted_text_range[0,1],
+				highlighted_text_range[1,0], highlighted_text_range[1,1]);
+		}
+		
+		Text_Paste(cursor_coords[0], cursor_coords[1]);
 	}
 }
 
