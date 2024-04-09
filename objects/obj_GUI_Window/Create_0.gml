@@ -279,6 +279,8 @@ Text_Paste = function(_x, _y){
 		if(string_char_at(str,i) == "\n"){
 			array_push(new_arr, string_copy(curr_str, 1, string_length(curr_str)));
 			curr_str = "";
+		}else if(string_char_at(str,i) == "\t"){
+			curr_str += "   ";			
 		}else curr_str += string_char_at(str, i);
 	
 		i++;
