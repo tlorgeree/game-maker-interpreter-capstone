@@ -20,10 +20,10 @@ function Player_State_Move(){
 		var dir = point_direction(x,y,x_to, y_to);
 		x += lengthdir_x(spd, dir);
 		y += lengthdir_y(spd, dir);
-	
-		if(abs(x_to-x)< spd/10) x = x_to;
-		if(abs(y_to-y)< spd/10) y = y_to;
 	}
+	
+	if(abs(x_to-x) < spd/2) x = x_to;
+	if(abs(y_to-y) < spd/2) y = y_to;
 	
 	if(x == x_to && y == y_to) state = Player_State_Idle;
 }

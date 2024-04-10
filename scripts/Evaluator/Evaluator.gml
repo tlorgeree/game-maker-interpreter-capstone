@@ -95,6 +95,13 @@ global.builtins.store = {
 			player.Execute_Path();
 		}),
 		
+		reset : new Built_In(function(){
+			var player = obj_Main.Get_Player();
+			if(is_undefined(player)){
+				return new Error("Player object not instantiated");	
+			}
+			player.Reset_Position();
+		}),
 	},
 	
 	Goal : {
@@ -110,9 +117,9 @@ global.builtins.store = {
 		}),
 	},
 	
-	wall_at_coords : new Built_In(function(coord_arr){
-		if(instanceof(coord_arr) != "Array") return new Error("wall_at_coords: Input type needs to be array");
-		var at_coords = obj_Main.Coords_Get_Instance(coord_arr.Value());
+	wall_at_coords : new Built_In(function(x_coord, y_coord){
+		if(x_coord.Type() != "INTEGER" || y_coord.Type() != "INTEGER") return new Error("wall_at_coords: Input types must be integer");
+		var at_coords = obj_Main.Coords_Get_Instance([x_coord.Value(), y_coord.Value()]);
 		if(at_coords != -1) return global.bool_true;
 		else return global.bool_false;
 	}),
@@ -359,7 +366,7 @@ function Is_Truthy(obj){
 }
 
 function Eval_Block_Statement(statement_arr, env){
-	var result;
+	var result = undefined;
 	
 	for(var i=0; i<array_length(statement_arr); i++){
 		result = Eval(statement_arr[i], env);	

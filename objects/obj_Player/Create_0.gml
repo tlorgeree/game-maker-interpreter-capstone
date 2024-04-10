@@ -43,6 +43,7 @@ Set_Path = function(path_arr){
 }
 
 Execute_Path = function(){
+	if(state != Player_State_Idle) return;
 	actions = [];
 	var prev = coords;
 	for(var i=0; i<array_length(path); i++){
@@ -59,4 +60,12 @@ Execute_Path = function(){
 		}
 		prev = path[i];
 	}
+}
+
+Reset_Position = function(){
+	x_to = TILE_SIZE;
+	y_to = 14 * TILE_SIZE;
+	coords = [1,14];
+	
+	state = Player_State_Move;
 }
