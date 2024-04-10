@@ -2,7 +2,7 @@ function a_star(start_coords, end_coords, grid){
 	var open_set = [[start_coords[0], start_coords[1], 99999999, -1]];
 	var closed_set = [];
 	
-	while(array_length(open_set) > 0){		
+	while(len(open_set) > 0){		
 		var node = open_set[0];
 		if(noce[0] == end_coords[0] && node[1] == end_coords[1]) return reconstruct_path(node);
 		array_delete(open_set, 0, 1);
@@ -14,7 +14,7 @@ function a_star(start_coords, end_coords, grid){
 				node[2] + score_node([node[0]-1, node[1]], start_coords, end_coords), node), 					open_set, closed_set);
 		}
 		//right neighbor
-		if(node[0] < array_length(grid[node[0]])-1 && grid[node[0]+1][node[1]] !=1) {
+		if(node[0] < len(grid[node[0]])-1 && grid[node[0]+1][node[1]] !=1) {
 			node_add_sorted(new Grid_Node(node[0]+1, node[1],
 				node[2] + score_node([node[0]+1, node[1]], start_coords, end_coords), node), 					open_set, closed_set);
 		}
@@ -24,7 +24,7 @@ function a_star(start_coords, end_coords, grid){
 				node[2] + score_node([node[0], node[1]-1], start_coords, end_coords), node), 					open_set, closed_set);
 		}
 		//down neighbor
-		if(node[1] < array_length(grid)-1 && grid[node[0]][node[1]+1] !=1){
+		if(node[1] < len(grid)-1 && grid[node[0]][node[1]+1] !=1){
 			node_add_sorted(new Grid_Node(node[0], node[1]+1, 
 				node[2] + score_node([node[0], node[1]+1], start_coords, end_coords), node), 					open_set, closed_set);
 		}
@@ -44,9 +44,9 @@ function distance_to_coord(start_coords, end_coords){
 
 function node_add_sorted(node, open_set, closed_set){
 	//don't add if already visited
-	for(var i=0; i < array_length(closed_set); i++) if(node[0] == closed_set[i][0] && node[1] == closed_set[i]		[1]) return;
+	for(var i=0; i < len(closed_set); i++) if(node[0] == closed_set[i][0] && node[1] == closed_set[i]		[1]) return;
 	
-	for(var i=0; i < array_length(open_set); i++){
+	for(var i=0; i < len(open_set); i++){
 		if(node[0] == open_set[i][0] && node[1] == open_set[i][1]){
 			if(node[2] < open_set[i][2]){
 				open_set[i][3] = node[3];

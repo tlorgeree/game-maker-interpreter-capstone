@@ -93,7 +93,8 @@ Format_Text = function(){
 			cursor_coords[0] -= new_len;		
 		}
 		line++;
-	}	
+	}
+	Adjust_Viewable_Text();
 }
 
 
