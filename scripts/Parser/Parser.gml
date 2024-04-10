@@ -321,13 +321,12 @@ function Parser(input_lexer) constructor{
 		Next_Token();
 		Next_Token();
 		expression.iterator = Parse_Statement();
-		if(is_undefined(expression.iterator)) return undefined;
 		
+		if(is_undefined(expression.iterator)) return undefined;
 		if(!Expect_Peek(TOKEN.RPAREN)) return undefined;
 		if(!Expect_Peek(TOKEN.LBRACE)) return undefined;
 		
 		expression.block = Parse_Block_Statement();
-		
 		return expression;
 	}
 	
