@@ -26,6 +26,8 @@ if(active){
 		if(!is_undefined(out_type)){
 			debug_print("Return type: " + (eval_code.Type() ?? "unknown type"));
 			global.output_window.text = [eval_code.Inspect()];
+			global.output_window.view_start = 0;
+			global.output_window.cursor_coords = [0,0];
 			global.output_window.Format_Text();
 			if(out_type == "ERROR") global.output_window.Set_Mode(STATUS.FAILURE);
 			else global.output_window.Set_Mode(STATUS.SUCCESS);
@@ -62,6 +64,7 @@ if(active){
 		Format_Text();
 		Adjust_Viewable_Text();
 	}
+	
 	if(keyboard_check_pressed(vk_enter)){
 		array_insert(text, cursor_coords[1]+view_start+1, Get_Text_After_Coords(cursor_coords[0], cursor_coords[1]+view_start));
 		text[cursor_coords[1]+view_start] = Get_Text_Before_Coords(cursor_coords[0], cursor_coords[1]+view_start);

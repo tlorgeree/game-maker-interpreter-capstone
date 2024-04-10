@@ -218,8 +218,7 @@ Adjust_Viewable_Text = function(){
 	viewable_text = array_create(num_lines, -1);
 	
 	for(var i=0; i<num_lines; i++){
-		viewable_text[i] = 
-		text[i + view_start];	
+		viewable_text[i] = text[i + view_start];	
 	}
 	Cursor_X_Adj();	
 }

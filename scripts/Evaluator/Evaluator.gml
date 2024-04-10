@@ -130,6 +130,20 @@ global.builtins.store = {
 		}
 		return array;
 	}),
+	
+	get_grid : new Built_In(function(){
+		var board_width = array_length(obj_Main.board_pattern);
+		var grid = new Array(array_create(board_width, -1));
+		
+		for(var i=0; i<board_width; i++){
+			var height = array_length(obj_Main.board_pattern[i]);
+			var column = new Array(array_create(height, -1));
+			for(var j=0; j< height; j++) column.elements[j] = new Integer(obj_Main.board_pattern[i][j]);
+			grid.elements[i] = column;
+		}
+		
+		return grid;
+	}),
 };
 
 function Eval(node, env){
