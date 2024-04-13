@@ -103,21 +103,10 @@ function Create_Maze(){
 	var node;
 	var stack = [[1,14]];
 	var found = false;
-	while(array_length(stack) > 0){
-		if(array_length(stack) > 1 && found){
-			var throwaway = irandom(99);	
-			if(throwaway >= 30)
-			{
-				var to_pop = stack[array_length(stack)-1];
-				if !(to_pop[0] == 14 && to_pop[1] == 1)
-				||(to_pop[0] == 15 && to_pop[1] == 2){
-					array_pop(stack);
-				}
-			}
-		}
-		
+	while(array_length(stack) > 0){		
 		node = array_pop(stack);
-		if(!Valid_Path_Coord(node[0], node[1], grid)) continue;
+		var max_neighbors = irandom_range(3,3);;//must be > 3
+		if(!Valid_Path_Coord(node[0], node[1], grid, max_neighbors)) continue;
 		grid[node[0], node[1]] = 0;
 		
 		var options = [];
@@ -130,10 +119,10 @@ function Create_Maze(){
 		}
 		
 		//check 4 dirs
-		if(Valid_Path_Coord(node[0]+1, node[1], grid)) array_push(options, [node[0]+1, node[1]]);
-		if(Valid_Path_Coord(node[0]-1, node[1], grid)) array_push(options, [node[0]-1, node[1]]);
-		if(Valid_Path_Coord(node[0], node[1]+1, grid)) array_push(options, [node[0], node[1]+1]);
-		if(Valid_Path_Coord(node[0], node[1]-1, grid)) array_push(options, [node[0], node[1]-1]);
+		if(Valid_Path_Coord(node[0]+1, node[1], grid, max_neighbors)) array_push(options, [node[0]+1, node[1]]);
+		if(Valid_Path_Coord(node[0]-1, node[1], grid, max_neighbors)) array_push(options, [node[0]-1, node[1]]);
+		if(Valid_Path_Coord(node[0], node[1]+1, grid, max_neighbors)) array_push(options, [node[0], node[1]+1]);
+		if(Valid_Path_Coord(node[0], node[1]-1, grid, max_neighbors)) array_push(options, [node[0], node[1]-1]);
 		
 		var num_opts = array_length(options);
 		while(num_opts > 0){
@@ -142,13 +131,12 @@ function Create_Maze(){
 			array_delete(options, choice, 1);
 			num_opts--;
 		}
-		debug_print(stack)
 	}
-	debug_print("got here for some reason");
-	return grid;
+	
+	return (found) ? grid : Create_Maze();
 }
 
-function Valid_Path_Coord(_x, _y, grid){
+function Valid_Path_Coord(_x, _y, grid, max_neighbors){
 	//cannot be placed on boarder or beyond
 	if(grid[_x,_y] == 0) return false;
 	var w = array_length(grid)-1;
@@ -158,28 +146,38 @@ function Valid_Path_Coord(_x, _y, grid){
 	
 	//make sure selected point wouldn't form 2x2 path square
 	//top-left
+	var top = grid[_x][_y-1];
+	var top_left = grid[_x-1][_y-1];
+	var left = grid[_x-1][_y];
+	var bottom_left = grid[_x-1][_y+1];
+	var bottom = grid[_x][_y+1];
+	var bottom_right = grid[_x+1][_y+1];
+	var right = grid[_x+1][_y];
+	var top_right = grid[_x+1][_y-1];
+	
 	if(_x > 1 && _y > 1){
-		if((grid[_x-1][_y-1] == 0)
-		&&(grid[_x-1][_y] == 0 && grid[_x][_y-1] == 0)) return false;
+		if((top-left == 0)
+		&&(left == 0 && top == 0)) return false;
 	}
 	
 	//top-right
 	if(_x < w-1 && _y > 1){
-		if((grid[_x+1][_y-1] == 0)
-		&&(grid[_x+1][_y] == 0 && grid[_x][_y-1] == 0)) return false;
+		if((top_right == 0)
+		&&(right == 0 && top == 0)) return false;
 	}
 	
 	//bottom-left
 	if(_x > 1 && _y < h-1){
-		if((grid[_x-1][_y+1] == 0)
-		&&(grid[_x-1][_y] == 0 && grid[_x][_y+1] == 0)) return false;
+		if((bottom_left == 0)
+		&&(left == 0 && bottom == 0)) return false;
 	}
 	
 	//bottom-right
 	if(_x < w-1 && _y < h-1){
-		if((grid[_x+1][_y+1] == 0)
-		&&(grid[_x+1][_y] == 0 && grid[_x][_y+1] == 0)) return false;
+		if((bottom_right == 0)
+		&&(right == 0 && bottom == 0)) return false;
 	}
 	
-	return true;
+	return ((8 - (top + top_left + top_right + left + right
+	+ bottom + bottom_left + bottom_right)) < max_neighbors);
 }
