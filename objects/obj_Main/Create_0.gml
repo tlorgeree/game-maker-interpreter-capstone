@@ -3,6 +3,7 @@ randomize();
 display_set_gui_size(960, 540);
 global.debug = true;
 window_set_fullscreen(0);
+win = false;
 #endregion
 
 #region Managers
@@ -86,35 +87,7 @@ board_h = 16;
 board = array_create(board_w, -1);
 for(var i=0; i<board_w; i++) board[i] = array_create(board_h, -1);
 
-board_pattern = [
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-[1,0,1,0,0,0,1,0,1,0,0,0,0,0,0,1],
-[1,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1],
-[1,0,1,1,0,0,1,0,1,0,0,0,0,0,0,1],
-[1,0,1,0,0,1,1,0,1,1,1,1,1,1,0,1],
-[1,0,1,0,0,1,1,0,0,0,1,0,0,0,0,1],
-[1,0,0,1,0,0,1,0,1,0,1,0,1,1,1,1],
-[1,1,0,0,1,0,1,0,1,0,1,0,0,0,0,1],
-[1,0,1,0,0,0,1,0,1,0,1,0,1,0,1,1],
-[1,0,0,0,1,0,1,0,1,0,0,0,1,0,0,1],
-[1,1,1,0,1,0,1,0,1,0,1,0,1,1,0,1],
-[1,0,0,0,1,0,1,0,1,0,1,0,1,0,0,1],
-[1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,1],
-[1,0,0,0,1,0,1,0,1,0,1,0,1,0,0,1],
-[1,1,1,0,1,0,1,0,1,0,1,0,1,1,0,1],
-[1,0,0,0,1,0,0,0,1,0,1,0,0,0,0,1],
-[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-];
-
 board_pattern = Create_Maze();
-
-/*for(var i=0; i<board_w; i++){
-	for(var j=0; j<board_h; j++){
-		if(i==0 || i==(board_w-1) || j==0 || j==(board_h-1)){
-			board[i][j] = instance_create_layer(i*TILE_SIZE, j*TILE_SIZE, "Instances", obj_Wall);
-		}
-	}
-}*/
 
 for(var i=0; i<board_w; i++){
 	for(var j=0; j<board_h; j++){
@@ -131,6 +104,23 @@ player = instance_create_layer(TILE_SIZE*1, TILE_SIZE*14, "Instances", obj_Playe
 goal = instance_create_layer(TILE_SIZE*15, TILE_SIZE*1, "Instances", obj_Goal, {
 	coords : [15,1]
 });
+
+New_Maze = function(){
+	board_pattern = Create_Maze();
+	
+	for(var i=0; i<board_w; i++){
+		for(var j=0; j<board_h; j++){
+			if(board[i][j] != -1){
+				instance_destroy(board[i][j]);
+				board[i][j] = -1;
+			}
+			if(board_pattern[i][j] == 1){
+				board[i][j] = instance_create_layer(i*TILE_SIZE, j*TILE_SIZE, "Instances", obj_Wall);
+			}
+		}
+	}
+	path = a_star(player.coords, goal.coords, board_pattern);
+}
 
 Coords_Within_Bounds = function(coord_arr){
 	if(!is_array(coord_arr)) return false;
@@ -168,3 +158,8 @@ repl = new Repl(ifstmt);
 var result = repl.Start();
 
 print("result is: " + string(result.Inspect()));
+
+for(var i=0; i<999; i++){
+	debug_print(i);
+	Create_Maze();
+}

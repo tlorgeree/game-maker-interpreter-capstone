@@ -3,6 +3,12 @@ function Player_State_Idle(){
 		if(actions[0].complete) array_delete(actions, 0, 1);
 		else actions[0].Execute();
 	}
+	if(Get_X() == obj_Goal.Get_X() && Get_Y() == obj_Goal.Get_Y()){
+		obj_Main.win = true;
+		global.output_window.Set_Mode(STATUS.SUCCESS);
+		global.output_window.text = "YOU WIN!\n\n use crtl + R to restart with a new maze";
+		global.output_window.Format_Text();
+	}
 }
 
 function Player_State_Move(){

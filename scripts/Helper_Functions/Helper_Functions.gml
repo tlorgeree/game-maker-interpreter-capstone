@@ -18,7 +18,7 @@ function Grid_Node(_x, _y, val=infinity, prev=undefined) constructor{
 	previous = prev;
 }
 
-function a_star(start_coords, end_coords, grid){
+function a_star(start_coords, end_coords, grid, ignore_collision=false){
 	var open_set = [new Grid_Node(start_coords[0], start_coords[1])];
 	var closed_set = [];
 	
@@ -29,28 +29,28 @@ function a_star(start_coords, end_coords, grid){
 		array_push(closed_set, node);
 		
 		//left neighbor
-		if(node.x > 0 && grid[node.x-1][node.y] !=1){
+		if(node.x > 0 && (ignore_collision || grid[node.x-1][node.y] !=1)){
 			node_add_sorted(new Grid_Node(node.x-1, node.y, 
 				node.value + score_node([node.x-1, node.y], start_coords, end_coords), node), open_set, closed_set);
 		}
 		//right neighbor
-		if(node.x < array_length(grid[node.x])-1 && grid[node.x+1][node.y] !=1) {
+		if(node.x < array_length(grid[node.x])-1 && (ignore_collision || grid[node.x+1][node.y] !=1)){
 			node_add_sorted(new Grid_Node(node.x+1, node.y,
 				node.value + score_node([node.x+1, node.y], start_coords, end_coords), node), open_set, closed_set);
 		}
 		//up neighbor
-		if(node.y > 0 && grid[node.x][node.y-1] !=1){
+		if(node.y > 0 && (ignore_collision || grid[node.x][node.y-1] !=1)){
 			node_add_sorted(new Grid_Node(node.x, node.y-1, 
 				node.value + score_node([node.x, node.y-1], start_coords, end_coords), node), open_set, closed_set);
 		}
 		//down neighbor
-		if(node.y < array_length(grid)-1 && grid[node.x][node.y+1] !=1){
+		if(node.y < array_length(grid)-1 && (ignore_collision || grid[node.x][node.y+1] !=1)){
 			node_add_sorted(new Grid_Node(node.x, node.y+1, 
 				node.value + score_node([node.x, node.y+1], start_coords, end_coords), node), open_set, closed_set);
 		}
 	}
 	
-	return undefined;
+	return [];
 }
 
 function score_node(node_coords, start_coords, end_coords){
@@ -103,22 +103,21 @@ function Create_Maze(){
 	var node;
 	var stack = [[1,14]];
 	var found = false;
-	while(array_length(stack) > 0){		
+	while(array_length(stack) > 0){
 		node = array_pop(stack);
 		var max_neighbors = irandom_range(3,3);;//must be > 3
 		if(!Valid_Path_Coord(node[0], node[1], grid, max_neighbors)) continue;
 		grid[node[0], node[1]] = 0;
-		
-		var options = [];
-		
+				
 		//check for goal
-		if(node[0] == 14 && node[1] == 1)
-		||(node[0] == 15 && node[1] == 2){
+		if((node[0] == 14 && node[1] == 1)
+		||(node[0] == 15 && node[1] == 2)){
 			grid[15,1] = 0;
 			found = true;
-		}
+		}		
 		
 		//check 4 dirs
+		var options = [];
 		if(Valid_Path_Coord(node[0]+1, node[1], grid, max_neighbors)) array_push(options, [node[0]+1, node[1]]);
 		if(Valid_Path_Coord(node[0]-1, node[1], grid, max_neighbors)) array_push(options, [node[0]-1, node[1]]);
 		if(Valid_Path_Coord(node[0], node[1]+1, grid, max_neighbors)) array_push(options, [node[0], node[1]+1]);
@@ -133,7 +132,43 @@ function Create_Maze(){
 		}
 	}
 	
-	return (found) ? grid : Create_Maze();
+	// catch edge case
+	if(!found){
+		//get closest tile to goal
+		var nearest = [];
+		var stack = [[15,1]];
+		while(array_length(stack) > 0){
+			node = array_pop(stack);
+			//check for goal
+			if(grid[node[0]][node[1]] == 0){
+				debug_print(node);
+				nearest =[node[0], node[1]];
+				break;
+			}
+			
+			var options = [];
+			//if(Valid_Path_Coord(node[0]+1, node[1], grid, 8)) array_push(options, [node[0]+1, node[1]]);
+			if(Valid_Path_Coord(node[0]-1, node[1], grid, 8)) array_push(options, [node[0]-1, node[1]]);
+			if(Valid_Path_Coord(node[0], node[1]+1, grid, 8)) array_push(options, [node[0], node[1]+1]);
+			//if(Valid_Path_Coord(node[0], node[1]-1, grid, 8)) array_push(options, [node[0], node[1]-1]);
+			
+			var num_opts = array_length(options);
+			while(num_opts > 0){
+				var choice = irandom(num_opts-1);
+				array_push(stack, options[choice]);
+				array_delete(options, choice, 1);
+				num_opts--;
+			}
+		}
+		if(array_length(nearest == 2)){
+			var path = a_star([15,1], nearest, grid, true);
+			grid[15,1] = 0;
+			for(var i = 0; i < array_length(path); i++) grid[path[i][0]][path[i][1]] = 0;
+		}
+	}
+	
+	if(array_length(a_star([1,14],[15,1], grid) == 0)) debug_print("Failed");
+	return grid;
 }
 
 function Valid_Path_Coord(_x, _y, grid, max_neighbors){
