@@ -158,8 +158,3 @@ repl = new Repl(ifstmt);
 var result = repl.Start();
 
 print("result is: " + string(result.Inspect()));
-
-for(var i=0; i<999; i++){
-	debug_print(i);
-	Create_Maze();
-}

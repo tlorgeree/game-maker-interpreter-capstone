@@ -103,9 +103,9 @@ function Create_Maze(){
 	var node;
 	var stack = [[1,14]];
 	var found = false;
-	while(array_length(stack) > 0){
+	while(array_length(stack) > 0){ 
 		node = array_pop(stack);
-		var max_neighbors = irandom_range(3,3);;//must be > 3
+		var max_neighbors = 3;//must be > 2
 		if(!Valid_Path_Coord(node[0], node[1], grid, max_neighbors)) continue;
 		grid[node[0], node[1]] = 0;
 				
@@ -131,43 +131,38 @@ function Create_Maze(){
 			num_opts--;
 		}
 	}
-	
+	 
 	// catch edge case
 	if(!found){
-		//get closest tile to goal
 		var nearest = [];
-		var stack = [[15,1]];
-		while(array_length(stack) > 0){
-			node = array_pop(stack);
-			//check for goal
-			if(grid[node[0]][node[1]] == 0){
-				debug_print(node);
-				nearest =[node[0], node[1]];
-				break;
-			}
-			
+		for(var step=1; step<16; step++){
 			var options = [];
-			//if(Valid_Path_Coord(node[0]+1, node[1], grid, 8)) array_push(options, [node[0]+1, node[1]]);
-			if(Valid_Path_Coord(node[0]-1, node[1], grid, 8)) array_push(options, [node[0]-1, node[1]]);
-			if(Valid_Path_Coord(node[0], node[1]+1, grid, 8)) array_push(options, [node[0], node[1]+1]);
-			//if(Valid_Path_Coord(node[0], node[1]-1, grid, 8)) array_push(options, [node[0], node[1]-1]);
-			
-			var num_opts = array_length(options);
-			while(num_opts > 0){
-				var choice = irandom(num_opts-1);
-				array_push(stack, options[choice]);
-				array_delete(options, choice, 1);
-				num_opts--;
+			for(var i=0; i<step; i++){			
+				for(var j=0; j<step; j++){
+					if(grid[15-i][1+j] == 0) array_push(options, [15-i,1+j]);
+				}
 			}
+			
+			if(array_length(options) > 0){		
+				var dist = infinity;
+				for(var i=0; i<array_length(options);i++){
+					var curr_dist = abs(options[i][0] - 15) + abs(options[i][1] - 1);
+					if(curr_dist < dist){
+						dist = curr_dist;
+						nearest = options[i];
+					}
+				}
+				break;
+			}			
 		}
-		if(array_length(nearest == 2)){
+		
+		if(array_length(nearest) == 2){
 			var path = a_star([15,1], nearest, grid, true);
 			grid[15,1] = 0;
 			for(var i = 0; i < array_length(path); i++) grid[path[i][0]][path[i][1]] = 0;
 		}
 	}
-	
-	if(array_length(a_star([1,14],[15,1], grid) == 0)) debug_print("Failed");
+		
 	return grid;
 }
 
