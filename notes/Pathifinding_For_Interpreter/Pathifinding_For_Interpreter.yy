@@ -1,9 +1,11 @@
 {
-  "resourceType": "GMNotes",
-  "resourceVersion": "1.1",
-  "name": "Pathifinding_For_Interpreter",
-  "parent": {
-    "name": "Code",
-    "path": "folders/Code.yy",
+  "$GMNotes":"",
+  "%Name":"Pathifinding_For_Interpreter",
+  "name":"Pathifinding_For_Interpreter",
+  "parent":{
+    "name":"Code",
+    "path":"folders/Code.yy",
   },
+  "resourceType":"GMNotes",
+  "resourceVersion":"2.0",
 }

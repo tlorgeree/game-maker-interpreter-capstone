@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "GUI_Window_Manager",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Managers",
-    "path": "folders/Code/Managers.yy",
+  "$GMScript":"",
+  "%Name":"GUI_Window_Manager",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GUI_Window_Manager",
+  "parent":{
+    "name":"Managers",
+    "path":"folders/Code/Managers.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

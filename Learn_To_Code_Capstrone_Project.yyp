@@ -1,35 +1,35 @@
 {
-  "resourceType": "GMProject",
-  "resourceVersion": "1.7",
-  "name": "Learn_To_Code_Capstrone_Project",
-  "AudioGroups": [
-    {"resourceType":"GMAudioGroup","resourceVersion":"1.3","name":"audiogroup_default","targets":-1,},
+  "$GMProject":"",
+  "%Name":"Learn_To_Code_Capstrone_Project",
+  "AudioGroups":[
+    {"$GMAudioGroup":"","%Name":"audiogroup_default","name":"audiogroup_default","resourceType":"GMAudioGroup","resourceVersion":"2.0","targets":-1,},
   ],
-  "configs": {
-    "children": [],
-    "name": "Default",
+  "configs":{
+    "children":[],
+    "name":"Default",
   },
-  "defaultScriptType": 1,
-  "Folders": [
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Code","folderPath":"folders/Code.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Managers","folderPath":"folders/Code/Managers.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"GUI_Window","folderPath":"folders/Code/Managers/GUI_Window.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Interpreters","folderPath":"folders/Code/Managers/Interpreters.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Player","folderPath":"folders/Code/Player.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Room_Elements","folderPath":"folders/Code/Room_Elements.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Goal","folderPath":"folders/Code/Room_Elements/Goal.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Wall","folderPath":"folders/Code/Room_Elements/Wall.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Fonts","folderPath":"folders/Fonts.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"group1","folderPath":"folders/group1.yy",},
-    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Rooms","folderPath":"folders/Rooms.yy",},
+  "defaultScriptType":1,
+  "Folders":[
+    {"$GMFolder":"","%Name":"Code","folderPath":"folders/Code.yy","name":"Code","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Managers","folderPath":"folders/Code/Managers.yy","name":"Managers","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"GUI_Window","folderPath":"folders/Code/Managers/GUI_Window.yy","name":"GUI_Window","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Interpreters","folderPath":"folders/Code/Managers/Interpreters.yy","name":"Interpreters","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Player","folderPath":"folders/Code/Player.yy","name":"Player","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Room_Elements","folderPath":"folders/Code/Room_Elements.yy","name":"Room_Elements","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Goal","folderPath":"folders/Code/Room_Elements/Goal.yy","name":"Goal","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Wall","folderPath":"folders/Code/Room_Elements/Wall.yy","name":"Wall","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Fonts","folderPath":"folders/Fonts.yy","name":"Fonts","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"group1","folderPath":"folders/group1.yy","name":"group1","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Rooms","folderPath":"folders/Rooms.yy","name":"Rooms","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
-  "IncludedFiles": [],
-  "isEcma": false,
-  "LibraryEmitters": [],
-  "MetaData": {
-    "IDEVersion": "2023.11.1.129",
+  "IncludedFiles":[],
+  "isEcma":false,
+  "LibraryEmitters":[],
+  "MetaData":{
+    "IDEVersion":"2024.2.0.132",
   },
-  "resources": [
+  "name":"Learn_To_Code_Capstrone_Project",
+  "resources":[
     {"id":{"name":"obj_Goal","path":"objects/obj_Goal/obj_Goal.yy",},},
     {"id":{"name":"AST","path":"scripts/AST/AST.yy",},},
     {"id":{"name":"spr_Window_Output_Success","path":"sprites/spr_Window_Output_Success/spr_Window_Output_Success.yy",},},
@@ -60,11 +60,13 @@
     {"id":{"name":"Game_Manager","path":"scripts/Game_Manager/Game_Manager.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
-  "RoomOrderNodes": [
+  "resourceType":"GMProject",
+  "resourceVersion":"2.0",
+  "RoomOrderNodes":[
     {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
-  "templateType": "game",
-  "TextureGroups": [
-    {"resourceType":"GMTextureGroup","resourceVersion":"1.3","name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"targets":-1,},
+  "templateType":"game",
+  "TextureGroups":[
+    {"$GMTextureGroup":"","%Name":"Default","autocrop":true,"border":2,"compressFormat":"bz2","customOptions":"","directory":"","groupParent":null,"isScaled":true,"loadType":"default","mipsToGenerate":0,"name":"Default","resourceType":"GMTextureGroup","resourceVersion":"2.0","targets":-1,},
   ],
 }

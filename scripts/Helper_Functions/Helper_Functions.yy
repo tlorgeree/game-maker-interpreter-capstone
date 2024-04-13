@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "Helper_Functions",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Code",
-    "path": "folders/Code.yy",
+  "$GMScript":"",
+  "%Name":"Helper_Functions",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Helper_Functions",
+  "parent":{
+    "name":"Code",
+    "path":"folders/Code.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

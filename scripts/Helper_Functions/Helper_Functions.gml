@@ -95,3 +95,91 @@ function reconstruct_path(node){
 	
 	return path;
 }
+
+function Create_Maze(){
+	var grid = array_create(17, -1);
+	for(var col = 0; col < 17; col++) grid[col] = array_create(16, 1);
+	
+	var node;
+	var stack = [[1,14]];
+	var found = false;
+	while(array_length(stack) > 0){
+		if(array_length(stack) > 1 && found){
+			var throwaway = irandom(99);	
+			if(throwaway >= 30)
+			{
+				var to_pop = stack[array_length(stack)-1];
+				if !(to_pop[0] == 14 && to_pop[1] == 1)
+				||(to_pop[0] == 15 && to_pop[1] == 2){
+					array_pop(stack);
+				}
+			}
+		}
+		
+		node = array_pop(stack);
+		if(!Valid_Path_Coord(node[0], node[1], grid)) continue;
+		grid[node[0], node[1]] = 0;
+		
+		var options = [];
+		
+		//check for goal
+		if(node[0] == 14 && node[1] == 1)
+		||(node[0] == 15 && node[1] == 2){
+			grid[15,1] = 0;
+			found = true;
+		}
+		
+		//check 4 dirs
+		if(Valid_Path_Coord(node[0]+1, node[1], grid)) array_push(options, [node[0]+1, node[1]]);
+		if(Valid_Path_Coord(node[0]-1, node[1], grid)) array_push(options, [node[0]-1, node[1]]);
+		if(Valid_Path_Coord(node[0], node[1]+1, grid)) array_push(options, [node[0], node[1]+1]);
+		if(Valid_Path_Coord(node[0], node[1]-1, grid)) array_push(options, [node[0], node[1]-1]);
+		
+		var num_opts = array_length(options);
+		while(num_opts > 0){
+			var choice = irandom(num_opts-1);
+			array_push(stack, options[choice]);
+			array_delete(options, choice, 1);
+			num_opts--;
+		}
+		debug_print(stack)
+	}
+	debug_print("got here for some reason");
+	return grid;
+}
+
+function Valid_Path_Coord(_x, _y, grid){
+	//cannot be placed on boarder or beyond
+	if(grid[_x,_y] == 0) return false;
+	var w = array_length(grid)-1;
+	var h = array_length(grid[_x])-1;
+	if(_x <= 0 || _x >= w)
+	||(_y <= 0 || _y >= h) return false;
+	
+	//make sure selected point wouldn't form 2x2 path square
+	//top-left
+	if(_x > 1 && _y > 1){
+		if((grid[_x-1][_y-1] == 0)
+		&&(grid[_x-1][_y] == 0 && grid[_x][_y-1] == 0)) return false;
+	}
+	
+	//top-right
+	if(_x < w-1 && _y > 1){
+		if((grid[_x+1][_y-1] == 0)
+		&&(grid[_x+1][_y] == 0 && grid[_x][_y-1] == 0)) return false;
+	}
+	
+	//bottom-left
+	if(_x > 1 && _y < h-1){
+		if((grid[_x-1][_y+1] == 0)
+		&&(grid[_x-1][_y] == 0 && grid[_x][_y+1] == 0)) return false;
+	}
+	
+	//bottom-right
+	if(_x < w-1 && _y < h-1){
+		if((grid[_x+1][_y+1] == 0)
+		&&(grid[_x+1][_y] == 0 && grid[_x][_y+1] == 0)) return false;
+	}
+	
+	return true;
+}

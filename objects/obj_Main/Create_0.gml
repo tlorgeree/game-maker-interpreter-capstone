@@ -1,4 +1,5 @@
 #region Init
+randomize();
 display_set_gui_size(960, 540);
 global.debug = true;
 window_set_fullscreen(0);
@@ -105,6 +106,7 @@ board_pattern = [
 [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ];
 
+board_pattern = Create_Maze();
 
 /*for(var i=0; i<board_w; i++){
 	for(var j=0; j<board_h; j++){

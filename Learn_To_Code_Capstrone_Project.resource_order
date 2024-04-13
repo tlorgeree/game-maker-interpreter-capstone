@@ -1,5 +1,5 @@
 {
-  "FolderOrderSettings": [
+  "FolderOrderSettings":[
     {"name":"Code","order":1,"path":"folders/Code.yy",},
     {"name":"Managers","order":1,"path":"folders/Code/Managers.yy",},
     {"name":"GUI_Window","order":1,"path":"folders/Code/Managers/GUI_Window.yy",},
@@ -12,7 +12,7 @@
     {"name":"group1","order":3,"path":"folders/group1.yy",},
     {"name":"Rooms","order":4,"path":"folders/Rooms.yy",},
   ],
-  "ResourceOrderSettings": [
+  "ResourceOrderSettings":[
     {"name":"AST","order":4,"path":"scripts/AST/AST.yy",},
     {"name":"spr_Window_Output_Success","order":2,"path":"sprites/spr_Window_Output_Success/spr_Window_Output_Success.yy",},
     {"name":"Pathifinding_For_Interpreter","order":6,"path":"notes/Pathifinding_For_Interpreter/Pathifinding_For_Interpreter.yy",},
