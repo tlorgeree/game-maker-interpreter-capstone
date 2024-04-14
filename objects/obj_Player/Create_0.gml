@@ -69,3 +69,7 @@ Reset_Position = function(){
 	
 	state = Player_State_Move;
 }
+
+At_Destination = function(){
+	return (x_to == x && y_to == y);	
+}

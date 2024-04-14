@@ -10,7 +10,7 @@ if(active){
 	&&(!keyboard_check_pressed(vk_shift)&&(!keyboard_check_pressed(vk_enter)
 	&&(!keyboard_check_pressed(vk_up)&&(!keyboard_check_pressed(vk_down))
 	&&(!keyboard_check_pressed(vk_left))&&(!keyboard_check_pressed(vk_right))
-	&& (!keyboard_check(vk_control))
+	&& (!keyboard_check(vk_control)&& (!keyboard_check(vk_delete)))
 	))){
 		text[cursor_coords[1] + view_start] = string_insert(string(keyboard_lastchar),
 			text[cursor_coords[1] + view_start], cursor_coords[0]+1);

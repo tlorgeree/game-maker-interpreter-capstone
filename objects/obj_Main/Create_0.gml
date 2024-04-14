@@ -4,6 +4,10 @@ display_set_gui_size(960, 540);
 global.debug = true;
 window_set_fullscreen(0);
 win = false;
+animate_timer_max = 7; 
+animate_timer = 0;
+colors = [c_red, c_orange, c_yellow, c_lime, c_aqua, c_fuchsia];
+color_offset = 0;
 #endregion
 
 #region Managers

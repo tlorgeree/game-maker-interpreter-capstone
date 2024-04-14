@@ -151,6 +151,13 @@ global.builtins.store = {
 		
 		return grid;
 	}),
+	
+	new_maze : new Built_In(function(){
+		if(array_length(obj_Main.player.path) > 0) return new Error("Cannot reset maze until the player has reached its destination");
+		obj_Main.player.Reset_Position();
+		obj_Main.New_Maze();
+		obj_Main.win = false;		
+	}),
 };
 
 function Eval(node, env){

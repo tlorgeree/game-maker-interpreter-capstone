@@ -1,4 +1,1 @@
-var color;
-if(obj_Main.win) color = c_lime;
-else color = c_white;
-draw_sprite_ext(sprite_index, image_index, x, y, 1, 1, 0, color, 1);
+draw_sprite_ext(sprite_index, image_index, x, y, 1, 1, 0, (obj_Main.win) ? color : c_white, 1);

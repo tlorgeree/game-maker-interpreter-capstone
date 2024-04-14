@@ -57,7 +57,7 @@ Format_Text = function(){
 		if(string_width(text[line]) > window_w - 18){
 			var new_line = "";
 			var line_len = string_length(text[line]);
-			for(var i=1; i<=line_len; i++){
+			for(var i=1; i<=line_len; i++){				
 				if(string_char_at(text[line], i) == " "){					
 					if((string_width(new_line) + string_width(" ")) < window_w - 18) new_line += " ";
 					continue;
