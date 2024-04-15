@@ -108,8 +108,8 @@ if(active){
 }
 
 //Scroll wheel
-if(mouse_wheel_up() && Mouse_Is_In_Window()) Scroll_Up();
-else if(mouse_wheel_down() && Mouse_Is_In_Window()) Scroll_Down();
+if(mouse_wheel_up() && Mouse_Is_In_Window() && array_length(highlighted_text_range) == 0) Scroll_Up();
+else if(mouse_wheel_down() && Mouse_Is_In_Window() && array_length(highlighted_text_range) == 0) Scroll_Down();
 
 //Text Highlighting
 if(mouse_check_button_pressed(mb_left) && Mouse_Is_In_Window()){
