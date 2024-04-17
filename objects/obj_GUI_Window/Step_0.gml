@@ -39,7 +39,7 @@ if(active){
 			}
 		} else{
 			array_insert(text, cursor_coords[1]+view_start+1, Get_Text_After_Coords(cursor_coords[0], cursor_coords[1]+view_start));
-			text[cursor_coords[1]+view_start] = Get_Text_Before_Coords(cursor_coords[0], cursor_coords[1]+view_start);
+			text[cursor_coords[1]+view_start+1] = Get_Text_Before_Coords(cursor_coords[0], cursor_coords[1]+view_start);
 			Calc_Num_Lines();
 			Adjust_Viewable_Text();
 			Cursor_Down();

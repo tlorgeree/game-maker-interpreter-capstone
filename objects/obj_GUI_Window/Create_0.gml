@@ -118,7 +118,7 @@ Cursor_Up = function(){
 }
 
 Cursor_Down = function(){
-	if(cursor_coords[1]>=(array_length(viewable_text)-2)){
+	if(cursor_coords[1]>=(array_length(viewable_text)-1)){
 		Scroll_Down();
 		Cursor_X_Adj();
 		return;
