@@ -57,7 +57,6 @@
     {"id":{"name":"Parser","path":"scripts/Parser/Parser.yy",},},
     {"id":{"name":"spr_Window","path":"sprites/spr_Window/spr_Window.yy",},},
     {"id":{"name":"Token","path":"scripts/Token/Token.yy",},},
-    {"id":{"name":"Game_Manager","path":"scripts/Game_Manager/Game_Manager.yy",},},
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
   "resourceType":"GMProject",

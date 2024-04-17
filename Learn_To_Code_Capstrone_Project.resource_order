@@ -34,6 +34,5 @@
     {"name":"Parser","order":3,"path":"scripts/Parser/Parser.yy",},
     {"name":"spr_Window","order":1,"path":"sprites/spr_Window/spr_Window.yy",},
     {"name":"Token","order":1,"path":"scripts/Token/Token.yy",},
-    {"name":"Game_Manager","order":5,"path":"scripts/Game_Manager/Game_Manager.yy",},
   ],
 }

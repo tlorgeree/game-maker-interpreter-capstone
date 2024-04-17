@@ -309,3 +309,95 @@ function depth_first_path(start_coords, end_coords, grid){
 	
 	return [];
 }
+
+function _len(arr){
+	return array_length(arr);
+}
+
+function _array_remove(array, ind){
+	array_delete(array, ind, 1);	
+}
+
+function _array_add(arr, ind, value){
+	array_insert(arr, ind, value);	
+}
+
+function _wall_at_coords(_x, _y){
+	return obj_Main.board_pattern[_x,_y] == 1;	
+}
+
+function array_in_array(to_find, to_search,){
+	for(var i=0; i<array_length(to_search); i++){
+		if(to_find[0] == to_search[i][0]){
+			if(to_find[1] == to_search[i][1]) return true;
+		}
+		
+	}	
+	return false;
+}
+
+function dfs(x_start,y_start,x_end,y_end,grid){
+	var visited = [];
+	var stack = [[x_start,y_start,-1]];
+	
+	while(_len(stack) > 0){
+		
+		var current = stack[_len(stack)-1];
+		if(current[0] == x_end){
+			if(current[1] == y_end){
+				var list = [];
+				var node = current;
+				
+				while(node[2] != -1){
+					_array_add(list, _len(list)-1, [node[0], node[1]]);
+					node = node[2];
+				}
+				return list;
+			}
+		}
+		
+		_array_remove(stack, _len(stack)-1);
+		_array_add(visited, _len(visited)-1, current);
+		
+		if(current[0] < _len(grid)-1){
+			if(!_wall_at_coords(current[0] + 1, current[1])){
+				if(!array_in_array([current[0] + 1, current[1], current], visited)){
+					if(!array_in_array([current[0] + 1, current[1], current], stack)){
+						_array_add(stack, _len(stack)-1, [current[0] + 1, current[1], current]);
+					}
+				}
+			}
+		}
+		
+		if(current[0] > 0){
+			if(!_wall_at_coords(current[0] - 1, current[1])){
+				if(!array_in_array([current[0] - 1, current[1], current], visited)){
+					if(!array_in_array([current[0] - 1, current[1], current], stack)){
+						_array_add(stack, _len(stack)-1, [current[0] - 1, current[1], current]);
+					}
+				}
+			}
+		}
+		
+		if(current[1] < _len(grid[0])-1){
+			if(!_wall_at_coords(current[0], current[1] + 1)){
+				if(!array_in_array([current[0], current[1] + 1, current], visited)){
+					if(!array_in_array([current[0], current[1] + 1, current], stack)){
+						_array_add(stack, _len(stack)-1, [current[0], current[1] + 1, current]);
+					}
+				}
+			}
+		}
+		
+		if(current[1] > 0){
+			if(!_wall_at_coords(current[0], current[1] - 1)){
+				if(!array_in_array([current[0], current[1] - 1, current], visited)){
+					if(!array_in_array([current[0], current[1] - 1, current], stack)){
+						_array_add(stack, _len(stack)-1, [current[0], current[1] - 1, current]);
+					}
+				}
+			}
+		}
+	}
+	return [];
+}

@@ -351,6 +351,7 @@ function Eval_While_Expression(node, env){
 	var block = undefined;
 	while(Is_Truthy(Eval(node.condition, env))){
 		block = Eval(node.block, env);	
+		if(instanceof(block) == "Return_Value" || instanceof(block) == "Error") break;
 	}
 	return block;
 }
@@ -361,6 +362,7 @@ function Eval_For_Expression(node, env){
 	var block = undefined;
 	while(Is_Truthy(Eval(node.condition, env))){
 		block = Eval(node.block, env);
+		if(instanceof(block) == "Return_Value" || instanceof(block) == "Error") break;
 		Eval(node.iterator, env);
 	}
 	return block;

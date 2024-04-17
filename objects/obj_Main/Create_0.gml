@@ -13,7 +13,6 @@ color_offset = 0;
 #region Managers
 global.Window_Manager = new GUI_Window_Manager();
 global.Window_Manager.Create_Window(544, 0);
-global.Game_Manager = new Game_Manager();
 
 global.output_window = global.Window_Manager.Create_Window(544, room_height-room_height*(1/4), true);
 global.output_window.active = false;
@@ -93,26 +92,6 @@ for(var i=0; i<board_w; i++) board[i] = array_create(board_h, -1);
 
 board_pattern = Create_Maze();
 
-board_pattern = [
-	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-	[1,0,0,0,1,0,0,0,1,1,1,1,0,0,0,1],
-	[1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1],
-	[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
-	[1,0,0,0,1,0,0,0,1,1,1,1,0,0,0,1],
-	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-];
-
 for(var i=0; i<board_w; i++){
 	for(var j=0; j<board_h; j++){
 		if(board_pattern[i][j] == 1){
@@ -160,9 +139,9 @@ Coords_Get_Instance = function(coord_arr){
 	return board[coord_arr[0]][coord_arr[1]];
 }
 
-path_a_star = a_star(player.coords, goal.coords, board_pattern);
-path_breadth_first = breadth_first_path(player.coords, goal.coords, board_pattern);
-path_depth_first = depth_first_path(player.coords, goal.coords, board_pattern);
+path_a_star = dfs(player.coords[0], player.coords[1], goal.coords[0], goal.coords[1], board_pattern);//a_star(player.coords, goal.coords, board_pattern);
+path_breadth_first = [];//breadth_first_path(player.coords, goal.coords, board_pattern);
+path_depth_first = [];//depth_first_path(player.coords, goal.coords, board_pattern);
 
 #endregion
 
