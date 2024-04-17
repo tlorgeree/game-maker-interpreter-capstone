@@ -1,5 +1,6 @@
 function Player_State_Idle(){
 	if(Get_X() == obj_Goal.Get_X() && Get_Y() == obj_Goal.Get_Y() && !obj_Main.win){
+		path = [];
 		obj_Main.win = true;
 		global.output_window.Set_Mode(STATUS.SUCCESS);
 		global.output_window.text = ["YOU WIN!",

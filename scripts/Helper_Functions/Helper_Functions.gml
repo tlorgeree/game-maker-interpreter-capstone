@@ -85,6 +85,18 @@ function node_add_sorted(node, open_set, closed_set){
 	return;
 }
 
+function node_previously_added(node, open_set, closed_set){
+	for(var i=0; i < array_length(closed_set); i++){
+		if(node.x == closed_set[i].x && node.y == closed_set[i].y) return true;
+	}
+	
+	for(var i=0; i < array_length(open_set); i++){
+		if(node.x == open_set[i].x && node.y == open_set[i].y) return true;
+	}
+	
+	return false;
+}
+
 function reconstruct_path(node){
 	var curr_node = node;
 	var path = [];
@@ -105,7 +117,7 @@ function Create_Maze(){
 	var found = false;
 	while(array_length(stack) > 0){ 
 		node = array_pop(stack);
-		var max_neighbors = 3;//must be > 2
+		var max_neighbors = 8;//must be > 2
 		if(!Valid_Path_Coord(node[0], node[1], grid, max_neighbors)) continue;
 		grid[node[0], node[1]] = 0;
 				
@@ -210,4 +222,90 @@ function Valid_Path_Coord(_x, _y, grid, max_neighbors){
 	
 	return ((8 - (top + top_left + top_right + left + right
 	+ bottom + bottom_left + bottom_right)) < max_neighbors);
+}
+
+function breadth_first_path(start_coords, end_coords, grid){
+	var open_set = [new Grid_Node(start_coords[0], start_coords[1])];
+	var closed_set = [];
+	
+	while(array_length(open_set) > 0){	
+		var node = open_set[0];
+		if(node.x == end_coords[0] && node.y == end_coords[1]) return reconstruct_path(node);
+		array_delete(open_set, 0, 1);
+		array_push(closed_set, node);
+		
+		//left neighbor
+		if(node.x > 0 && (grid[node.x-1][node.y] !=1)){
+			var new_node = new Grid_Node(node.x-1, node.y, 0, node);
+			if(!node_previously_added(new_node, open_set, closed_set)){
+				array_push(open_set, new_node);
+			}
+		}
+		//right neighbor
+		if(node.x < array_length(grid[node.x])-1 && (grid[node.x+1][node.y] !=1)){
+			var new_node = new Grid_Node(node.x+1, node.y, 0, node);
+			if(!node_previously_added(new_node, open_set, closed_set)){
+				array_push(open_set, new_node);
+			}
+		}
+		//up neighbor
+		if(node.y > 0 && (grid[node.x][node.y-1] !=1)){
+			var new_node = new Grid_Node(node.x, node.y-1, 0, node);
+			if(!node_previously_added(new_node, open_set, closed_set)){
+				array_push(open_set, new_node);
+			}
+		}
+		//down neighbor
+		if(node.y < array_length(grid)-1 && (grid[node.x][node.y+1] !=1)){				
+			var new_node = new Grid_Node(node.x, node.y+1, 0, node);
+			if(!node_previously_added(new_node, open_set, closed_set)){
+				array_push(open_set, new_node);
+			}
+		}
+	}
+	
+	return [];
+}
+
+function depth_first_path(start_coords, end_coords, grid){
+	var open_set = [new Grid_Node(start_coords[0], start_coords[1])];
+	var closed_set = [];
+	
+	while(array_length(open_set) > 0){
+		var node = open_set[0];
+		if(node.x == end_coords[0] && node.y == end_coords[1]) return reconstruct_path(node);
+		array_delete(open_set, 0, 1);
+		array_push(closed_set, node);
+		
+		//left neighbor
+		if(node.x > 0 && (grid[node.x-1][node.y] !=1)){
+			var new_node = new Grid_Node(node.x-1, node.y, 0, node);
+			if(!node_previously_added(new_node, open_set, closed_set)){
+				array_insert(open_set, 0, new_node);
+			}
+		}
+		//right neighbor
+		if(node.x < array_length(grid[node.x])-1 && (grid[node.x+1][node.y] !=1)){
+			var new_node = new Grid_Node(node.x+1, node.y, 0, node);
+			if(!node_previously_added(new_node, open_set, closed_set)){
+				array_insert(open_set, 0, new_node);
+			}
+		}
+		//up neighbor
+		if(node.y > 0 && (grid[node.x][node.y-1] !=1)){
+			var new_node = new Grid_Node(node.x, node.y-1, 0, node);
+			if(!node_previously_added(new_node, open_set, closed_set)){
+				array_insert(open_set, 0, new_node);
+			}
+		}
+		//down neighbor
+		if(node.y < array_length(grid)-1 && (grid[node.x][node.y+1] !=1)){				
+			var new_node = new Grid_Node(node.x, node.y+1, 0, node);
+			if(!node_previously_added(new_node, open_set, closed_set)){
+				array_insert(open_set, 0, new_node);
+			}
+		}
+	}
+	
+	return [];
 }

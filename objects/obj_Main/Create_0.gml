@@ -44,7 +44,7 @@ global.token_debug_str[TOKEN.RBRACKET] = "RBRACE";
 global.token_debug_str[TOKEN.LBRACE] = "LBRACE";
 global.token_debug_str[TOKEN.RBRACE] = "RBRACE";
 global.token_debug_str[TOKEN.FUNCTION] = "FUNCTION";
-global.token_debug_str[TOKEN.LET] = "LET";
+global.token_debug_str[TOKEN.VAR] = "VAR";
 global.token_debug_str[TOKEN.TRUE] = "TRUE";
 global.token_debug_str[TOKEN.FALSE] = "FALSE";
 global.token_debug_str[TOKEN.IF] = "IF";
@@ -57,7 +57,7 @@ global.token_debug_str[TOKEN.FOR] = "FOR";
 #region Keyword Map
 global.keywords = {}
 global.keywords[$ "function"] = TOKEN.FUNCTION;
-global.keywords[$ "let"] = TOKEN.LET;
+global.keywords[$ "var"] = TOKEN.VAR;
 global.keywords[$ "true"] = TOKEN.TRUE;
 global.keywords[$ "false"] = TOKEN.FALSE;
 global.keywords[$ "if"] = TOKEN.IF;
@@ -93,6 +93,26 @@ for(var i=0; i<board_w; i++) board[i] = array_create(board_h, -1);
 
 board_pattern = Create_Maze();
 
+board_pattern = [
+	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+	[1,0,0,0,1,0,0,0,1,1,1,1,0,0,0,1],
+	[1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1],
+	[1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+	[1,0,0,0,1,0,0,0,1,1,1,1,0,0,0,1],
+	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+	[1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+	[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+];
+
 for(var i=0; i<board_w; i++){
 	for(var j=0; j<board_h; j++){
 		if(board_pattern[i][j] == 1){
@@ -123,7 +143,11 @@ New_Maze = function(){
 			}
 		}
 	}
-	path = a_star(player.coords, goal.coords, board_pattern);
+	path_a_star = a_star(player.coords, goal.coords, board_pattern);
+	path_breadth_first = breadth_first_path(player.coords, goal.coords, board_pattern);
+	path_depth_first = depth_first_path(player.coords, goal.coords, board_pattern);
+
+	global.output_window.text = [""];
 }
 
 Coords_Within_Bounds = function(coord_arr){
@@ -136,7 +160,10 @@ Coords_Get_Instance = function(coord_arr){
 	return board[coord_arr[0]][coord_arr[1]];
 }
 
-path = a_star(player.coords, goal.coords, board_pattern);
+path_a_star = a_star(player.coords, goal.coords, board_pattern);
+path_breadth_first = breadth_first_path(player.coords, goal.coords, board_pattern);
+path_depth_first = depth_first_path(player.coords, goal.coords, board_pattern);
+
 #endregion
 
 let_statement_test = @"

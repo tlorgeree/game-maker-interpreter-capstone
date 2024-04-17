@@ -4,7 +4,6 @@ if(global.debug){
 }
 
 if(keyboard_check_pressed(ord("R")) && keyboard_check(vk_control)){
-	debug_print("this fired");
 	player.Reset_Position();
 	New_Maze();
 	win = false;

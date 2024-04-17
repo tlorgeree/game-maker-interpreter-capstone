@@ -141,7 +141,7 @@ function If_Expression(token) : Expression(token) constructor{
 }
 
 function For_Expression(token) : Expression(token) constructor{
-	expression = undefined; //let statement
+	expression = undefined; //var statement
 	condition = undefined; //expression
 	iterator = undefined; //expression
 	block = undefined; //block

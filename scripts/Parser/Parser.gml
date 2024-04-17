@@ -78,7 +78,7 @@ function Parser(input_lexer) constructor{
 	#region Statement Parsing
 	Parse_Statement = function(){
 		switch(curr_token.type){
-			case TOKEN.LET:
+			case TOKEN.VAR:
 				return Parse_Let_Statement();
 			case TOKEN.RETURN:
 				return Parse_Return_Statement();	
@@ -115,7 +115,7 @@ function Parser(input_lexer) constructor{
 	}
 	
 	Parse_Implied_Let_Statement = function(){
-		var statement = new Let_Statement(new Token(TOKEN.LET, "let"));
+		var statement = new Let_Statement(new Token(TOKEN.VAR, "let"));
 		
 		statement.name = new Identifier(curr_token);
 		

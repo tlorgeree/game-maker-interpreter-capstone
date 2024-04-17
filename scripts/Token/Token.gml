@@ -29,7 +29,7 @@ enum TOKEN {
 	
 	// Keywords
 	FUNCTION,
-	LET,
+	VAR,
 	TRUE,
 	FALSE,
 	IF,
