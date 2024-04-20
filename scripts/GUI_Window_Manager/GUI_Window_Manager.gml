@@ -6,4 +6,13 @@ function GUI_Window_Manager() constructor{
 		array_push(windows, window);
 		return window;
 	}
+	
+	Destroy_Window = function(index){
+		instance_destroy(windows[index]);
+		array_delete(windows, index, 1);
+	}
+	
+	Clear_Windows = function(){
+		for(var i=array_length(windows)-1; i>=0; i--) Destroy_Window(i);
+	}
 }
