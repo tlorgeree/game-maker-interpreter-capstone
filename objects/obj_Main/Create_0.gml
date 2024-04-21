@@ -144,27 +144,3 @@ path_breadth_first = [];//breadth_first_path(player.coords, goal.coords, board_p
 path_depth_first = [];//depth_first_path(player.coords, goal.coords, board_pattern);
 
 #endregion
-
-let_statement_test = @"
-	let add = function(x,y) { x+y;}
-	
-	let z = 1;
-	z=2;
-	for(let i = 1; i<10; i = i+1;){
-		z = add(z, 1);
-	}
-	return z;
-";
-
-ifstmt = @"
-s = [1,2,4];
-array_add(s, 2, 3);
-array_remove(s,3);
-s[0] = 0;
-return s[0];
-";
-
-repl = new Repl(ifstmt);
-var result = repl.Start();
-
-print("result is: " + string(result.Inspect()));
