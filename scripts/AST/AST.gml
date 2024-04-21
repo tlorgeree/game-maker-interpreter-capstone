@@ -224,7 +224,7 @@ function Array_Literal(token) : Expression(token) constructor{
 			if(i<array_length(elements)-1) elems += ", ";
 		}
 		
-		return $"[{elems}]";
+		return $"{tok.literal}[{elems}]";
 	}
 }
 #endregion

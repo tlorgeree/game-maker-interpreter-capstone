@@ -108,8 +108,8 @@ goal = instance_create_layer(TILE_SIZE*15, TILE_SIZE*1, "Instances", obj_Goal, {
 	coords : [15,1]
 });
 
-New_Maze = function(){
-	board_pattern = Create_Maze();
+New_Maze = function(int){
+	board_pattern = Create_Maze(int);
 	
 	for(var i=0; i<board_w; i++){
 		for(var j=0; j<board_h; j++){

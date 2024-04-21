@@ -34,10 +34,6 @@ global.builtins.store = {
 			if(is_undefined(player)) return undefined;
 			return new Integer(player.Get_Y());
 		}),
-		set_path : new Built_In(function(obj){
-			if(instanceof(obj) != "Array") return new Error("Cannot set Player path. Input needs to be an array or arrays."
-			+"\nFor example: [[x1,y1], [x2,y2], ... [xn, yn]]");
-		}),
 		move_up : new Built_In(function(){
 			var player = obj_Main.Get_Player();
 			if(is_undefined(player)){
@@ -138,6 +134,34 @@ global.builtins.store = {
 		return array;
 	}),
 	
+	bfs_path :  new Built_In(function(start_x, start_y, end_x, end_y){
+		if(start_x.Type() != "INTEGER" || start_y.Type() != "INTEGER" || end_x.Type() != "INTEGER" 
+			|| end_y.Type() != "INTEGER") return new Error("path coordinate types need to be integers");
+		var path = breadth_first_path([start_x.value, start_y.value], [end_x.value, end_y.value], obj_Main.board_pattern);
+		var array = new Array(array_create(array_length(path), 0));
+		
+		for(var i=0; i<array_length(path); i++){
+			path[i][0] = new Integer(path[i][0]);
+			path[i][1] = new Integer(path[i][1]);
+			array.elements[i] = new Array(path[i]);
+		}
+		return array;
+	}),
+	
+	dfs_path :  new Built_In(function(start_x, start_y, end_x, end_y){
+		if(start_x.Type() != "INTEGER" || start_y.Type() != "INTEGER" || end_x.Type() != "INTEGER" 
+			|| end_y.Type() != "INTEGER") return new Error("path coordinate types need to be integers");
+		var path = depth_first_path([start_x.value, start_y.value], [end_x.value, end_y.value], obj_Main.board_pattern);
+		var array = new Array(array_create(array_length(path), 0));
+		
+		for(var i=0; i<array_length(path); i++){
+			path[i][0] = new Integer(path[i][0]);
+			path[i][1] = new Integer(path[i][1]);
+			array.elements[i] = new Array(path[i]);
+		}
+		return array;
+	}),
+	
 	get_grid : new Built_In(function(){
 		var board_width = array_length(obj_Main.board_pattern);
 		var grid = new Array(array_create(board_width, -1));
@@ -152,10 +176,11 @@ global.builtins.store = {
 		return grid;
 	}),
 	
-	new_maze : new Built_In(function(){
+	new_maze : new Built_In(function(int = new Integer(1)){
+		if(int.Type() != "INTEGER") return new Error("maze difficulty must be an integer (1-6)");
 		if(array_length(obj_Main.player.path) > 0) return new Error("Cannot reset maze until the player has reached its destination");
 		obj_Main.player.Reset_Position();
-		obj_Main.New_Maze();
+		obj_Main.New_Maze(int.value);
 		obj_Main.win = false;		
 	}),
 };

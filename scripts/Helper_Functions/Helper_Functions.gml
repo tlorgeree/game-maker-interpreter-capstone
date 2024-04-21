@@ -108,7 +108,9 @@ function reconstruct_path(node){
 	return path;
 }
 
-function Create_Maze(){
+function Create_Maze(int=1){
+	if(int < 1) int = 1;
+	else if(int > 6) int = 6;
 	var grid = array_create(17, -1);
 	for(var col = 0; col < 17; col++) grid[col] = array_create(16, 1);
 	
@@ -117,7 +119,7 @@ function Create_Maze(){
 	var found = false;
 	while(array_length(stack) > 0){ 
 		node = array_pop(stack);
-		var max_neighbors = 8;//must be > 2
+		var max_neighbors = int + 2;//must be > 2
 		if(!Valid_Path_Coord(node[0], node[1], grid, max_neighbors)) continue;
 		grid[node[0], node[1]] = 0;
 				
