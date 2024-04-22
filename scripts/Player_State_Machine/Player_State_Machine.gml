@@ -9,7 +9,9 @@ function Player_State_Idle(){
 	}
 	if(array_length(actions)>0){
 		if(actions[0].complete) array_delete(actions, 0, 1);
-		else actions[0].Execute();
+		else if(!actions[0].Execute()){//end if unsuccessful
+			actions = [];
+		}
 	}	
 }
 

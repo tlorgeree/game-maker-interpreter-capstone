@@ -79,19 +79,19 @@ function Parser(input_lexer) constructor{
 	Parse_Statement = function(){
 		switch(curr_token.type){
 			case TOKEN.VAR:
-				return Parse_Let_Statement();
+				return Parse_Var_Statement();
 			case TOKEN.RETURN:
 				return Parse_Return_Statement();	
 			case TOKEN.FUNCTION:
 				return Parse_Function_Statement();
 			default:
-				if(Curr_Token_Is(TOKEN.IDENT) && (Peek_Token_Is(TOKEN.ASSIGN))) return Parse_Implied_Let_Statement();
+				if(Curr_Token_Is(TOKEN.IDENT) && (Peek_Token_Is(TOKEN.ASSIGN))) return Parse_Implied_Var_Statement();
 				return Parse_Expression_Statement();				
 		}
 	}
 	
-	Parse_Let_Statement = function(){
-		var statement = new Let_Statement(curr_token);
+	Parse_Var_Statement = function(){
+		var statement = new Var_Statement(curr_token);
 				
 		if(!Expect_Peek(TOKEN.IDENT)) return undefined;
 		
@@ -114,8 +114,8 @@ function Parser(input_lexer) constructor{
 		return statement;
 	}
 	
-	Parse_Implied_Let_Statement = function(){
-		var statement = new Let_Statement(new Token(TOKEN.VAR, "let"));
+	Parse_Implied_Var_Statement = function(){
+		var statement = new Var_Statement(new Token(TOKEN.VAR, "let"));
 		
 		statement.name = new Identifier(curr_token);
 		
@@ -175,6 +175,7 @@ function Parser(input_lexer) constructor{
 	}
 	
 	Parse_Expression_Statement = function(){
+		debug_print("Parse Expression Statement");
 		var statement = new Expression_Statement(curr_token);
 		
 		statement.expression = Parse_Expression(PRECEDENCE.LOWEST);
@@ -188,6 +189,7 @@ function Parser(input_lexer) constructor{
 	}
 	
 	Parse_Expression = function(precedence){
+		debug_print("Parse Expression");
 		var prefix = prefix_parse_fns[$ curr_token.type];
 		
 		if(is_undefined(prefix)){
@@ -212,6 +214,7 @@ function Parser(input_lexer) constructor{
 	}
 	
 	Parse_Prefix_Expression = function(){
+		debug_print("Parse Prefix Expression");
 		var expression = new Prefix_Expression(curr_token);		
 		Next_Token();
 		
@@ -221,6 +224,7 @@ function Parser(input_lexer) constructor{
 	}
 	
 	Parse_Infix_Expression = function(left_expression){
+		debug_print("Parse Infix Expression");
 		var expression = new Infix_Expression(curr_token);
 		expression.left = left_expression;
 		
@@ -480,7 +484,7 @@ function Parser(input_lexer) constructor{
 		if (num_errors) return;
 		
 		for(var i=0; i< num_errors; i++){
-			print($"Parser error: {errors[i]}");
+			debug_print($"Parser error: {errors[i]}");
 		}
 	}
 		

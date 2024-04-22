@@ -15,27 +15,35 @@ Get_Y = function(){
 }
 
 Move_Up = function(){
+	if(coords[1] - 1 < 0 || obj_Main.board_pattern[coords[0]][coords[1]-1] == 1) return false;
 	coords[1]--;
 	y_to = coords[1]*TILE_SIZE;
 	state = Player_State_Move;
+	return true;
 }
 
 Move_Down = function(){
+	if(coords[1] + 1 > obj_Main.board_h - 1|| obj_Main.board_pattern[coords[0]][coords[1]+1] == 1) return false;
 	coords[1]++;
 	y_to = coords[1]*TILE_SIZE;
 	state = Player_State_Move;
+	return true;
 }
 
 Move_Left = function(){
+	if(coords[0] - 1 < 0 || obj_Main.board_pattern[coords[0]-1][coords[1]] == 1) return false;
 	coords[0]--;
 	x_to = coords[0]*TILE_SIZE;
 	state = Player_State_Move;
+	return true;
 }
 
 Move_Right = function(){
+	if(coords[0] + 1 > obj_Main.board_w - 1 || obj_Main.board_pattern[coords[0]+1][coords[1]] == 1) return false;
 	coords[0]++;
 	x_to = coords[0]*TILE_SIZE;
 	state = Player_State_Move;
+	return true;
 }
 
 Set_Path = function(path_arr){

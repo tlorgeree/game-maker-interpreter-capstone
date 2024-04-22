@@ -4,7 +4,9 @@ function Action(method_to_call=undefined, args=[]) constructor{
 	complete = false; //action state
 	
 	Execute = function(){
-		method_call(fn, arguments);
+		var result = method_call(fn, arguments);
 		complete = true;
+		debug_print(result);
+		return result;
 	}
 }

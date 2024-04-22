@@ -162,7 +162,7 @@ global.builtins.store = {
 		return array;
 	}),
 	
-	get_grid : new Built_In(function(){
+	get_maze : new Built_In(function(){
 		var board_width = array_length(obj_Main.board_pattern);
 		var grid = new Array(array_create(board_width, -1));
 		
@@ -200,7 +200,7 @@ function Eval(node, env){
 		case "Return_Statement":
 			debug_print("eval return statement");
 			return new Return_Value(Eval(node.return_value, env));
-		case "Let_Statement":
+		case "Var_Statement":
 			debug_print("eval let statement");
 			var val = Eval(node.value, env);
 			if(Is_Error(node.value)) return val;

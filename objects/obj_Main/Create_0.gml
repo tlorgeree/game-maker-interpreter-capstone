@@ -1,7 +1,7 @@
 #region Init
 randomize();
 display_set_gui_size(960, 540);
-global.debug = true;
+global.debug = false;
 window_set_fullscreen(0);
 win = false;
 animate_timer_max = 7; 
@@ -108,7 +108,7 @@ goal = instance_create_layer(TILE_SIZE*15, TILE_SIZE*1, "Instances", obj_Goal, {
 	coords : [15,1]
 });
 
-New_Maze = function(int){
+New_Maze = function(int=3){
 	board_pattern = Create_Maze(int);
 	
 	for(var i=0; i<board_w; i++){
@@ -139,6 +139,9 @@ Coords_Get_Instance = function(coord_arr){
 	return board[coord_arr[0]][coord_arr[1]];
 }
 
+show_a_star_ghost = false;
+show_bfs_ghost = false;
+show_dfs_ghost = false;
 path_a_star = dfs(player.coords[0], player.coords[1], goal.coords[0], goal.coords[1], board_pattern);//a_star(player.coords, goal.coords, board_pattern);
 path_breadth_first = [];//breadth_first_path(player.coords, goal.coords, board_pattern);
 path_depth_first = [];//depth_first_path(player.coords, goal.coords, board_pattern);

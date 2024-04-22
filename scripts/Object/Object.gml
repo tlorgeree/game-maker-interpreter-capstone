@@ -59,7 +59,7 @@ function Environment(outer_env=undefined) : Object() constructor{
 		
 		for(var i=1; i< array_length(arr); i++){
 			if(is_undefined(val)) return val;
-			print(arr[i]);
+			debug_print(arr[i]);
 			val = val[$ arr[i]];
 		}
 		

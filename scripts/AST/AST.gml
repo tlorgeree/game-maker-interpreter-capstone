@@ -36,7 +36,7 @@ function Statement(token) : Node(token) constructor{
 	//Token Literal from Node
 }
 
-function Let_Statement(token) : Statement(token) constructor{
+function Var_Statement(token) : Statement(token) constructor{
 	String = function(){
 		return $"{Token_Literal()} {name.String()} = {(!is_undefined(value)) ? (string(value.String()) + " "): ""};";	
 	}
