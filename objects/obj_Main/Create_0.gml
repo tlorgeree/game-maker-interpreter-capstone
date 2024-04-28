@@ -127,6 +127,8 @@ New_Maze = function(int=1){
 	path_depth_first = depth_first_path(player.coords, goal.coords, board_pattern);
 
 	global.output_window.text = [""];
+	global.output_window.Format_Text();
+	global.output_window.Set_Mode(STATUS.NORMAL);
 }
 
 Coords_Within_Bounds = function(coord_arr){
@@ -142,8 +144,12 @@ Coords_Get_Instance = function(coord_arr){
 show_a_star_ghost = false;
 show_bfs_ghost = false;
 show_dfs_ghost = false;
+
+Toggle_BFS_Ghost = function(){ show_bfs_ghost = !show_bfs_ghost; }
+Toggle_DFS_Ghost = function(){ show_dfs_ghost = !show_dfs_ghost; }
+
 path_a_star = dfs(player.coords[0], player.coords[1], goal.coords[0], goal.coords[1], board_pattern);//a_star(player.coords, goal.coords, board_pattern);
-path_breadth_first = [];//breadth_first_path(player.coords, goal.coords, board_pattern);
-path_depth_first = [];//depth_first_path(player.coords, goal.coords, board_pattern);
+path_breadth_first = breadth_first_path(player.coords, goal.coords, board_pattern);
+path_depth_first = depth_first_path(player.coords, goal.coords, board_pattern);
 
 #endregion

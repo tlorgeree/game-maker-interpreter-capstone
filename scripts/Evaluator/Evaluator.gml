@@ -183,6 +183,14 @@ global.builtins.store = {
 		obj_Main.New_Maze(int.value);
 		obj_Main.win = false;		
 	}),
+	
+	toggle_bfs_ghost : new Built_In(function(){
+		obj_Main.Toggle_BFS_Ghost();	
+	}),
+	
+	toggle_dfs_ghost : new Built_In(function(){
+		obj_Main.Toggle_DFS_Ghost();	
+	}),	
 };
 
 function Eval(node, env){
