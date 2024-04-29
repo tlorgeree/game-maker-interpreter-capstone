@@ -54,7 +54,9 @@ if(active){
 			highlighted_text_range = [];	
 			return;
 		}
+		if!((cursor_coords[0] == 0) && ((cursor_coords[1] + view_start) == 0))
 		if((cursor_coords[0] == 0) && ((cursor_coords[1] + view_start) != 0)){
+			
 			var str;
 			var prev_line_len = string_length(viewable_text[cursor_coords[1] -1]);
 			var curr_line_len = string_length(viewable_text[cursor_coords[1]]);
@@ -67,8 +69,9 @@ if(active){
 			text[cursor_coords[1] -1 + view_start] += str;
 			array_delete(text, cursor_coords[1] + view_start , 1);						
 			
-		}else text[cursor_coords[1] + view_start] = string_delete(text[cursor_coords[1] + view_start], cursor_coords[0],1);
-		
+		}else if!((cursor_coords[0] == 0) && ((cursor_coords[1] + view_start) == 0)){
+			text[cursor_coords[1] + view_start] = string_delete(text[cursor_coords[1] + view_start], cursor_coords[0],1);
+		}
 		Cursor_Left();
 		Format_Text();
 		Adjust_Viewable_Text();
