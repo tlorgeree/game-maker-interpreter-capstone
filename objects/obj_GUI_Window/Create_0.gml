@@ -238,7 +238,7 @@ Text_Delete_Range = function(x1, y1, x2, y2){
 	if(y1 == y2) text[view_start + y1] = string_delete(text[view_start + y1], x1+1, x2-x1);
 	else{
 		text[view_start + y2] = string_delete(text[view_start + y2], 1, x2);
-		for(var i = y2-1; i>y1; i--) array_delete(text, view_start  + i, 1);
+		for(var i = y2-1; i>=y1; i--) array_delete(text, view_start  + i, 1);
 		text[view_start + y1] = string_delete(text[view_start + y1], x1+1, string_length(text[view_start+y1])-x1);
 		
 	}

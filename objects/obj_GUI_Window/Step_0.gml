@@ -12,6 +12,11 @@ if(active){
 	&&(!keyboard_check_pressed(vk_left))&&(!keyboard_check_pressed(vk_right))
 	&& (!keyboard_check(vk_control)&& (!keyboard_check(vk_delete)))
 	))){
+		if(array_length(highlighted_text_range) == 2){
+			Text_Delete_Range(highlighted_text_range[0,0], highlighted_text_range[0,1], 
+				highlighted_text_range[1,0], highlighted_text_range[1,1]);
+			highlighted_text_range = [];	
+		}
 		text[cursor_coords[1] + view_start] = string_insert(string(keyboard_lastchar),
 			text[cursor_coords[1] + view_start], cursor_coords[0]+1);
 		Adjust_Viewable_Text();

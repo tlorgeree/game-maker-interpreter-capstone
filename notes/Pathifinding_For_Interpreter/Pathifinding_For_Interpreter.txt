@@ -75,6 +75,6 @@ function dfs(x_start,y_start,x_end,y_end,grid){
 	}
 	return [];
 }
-var path_to = dfs(1,14,15,1, get_grid());
+var path_to = dfs(1,14,15,1, get_maze());
 Player.set_path(path_to);
 Player.execute();
