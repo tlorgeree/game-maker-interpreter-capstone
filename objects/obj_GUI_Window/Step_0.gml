@@ -33,8 +33,9 @@ if(active){
 				debug_print("Return type: " + (eval_code.Type() ?? "unknown type"));
 				global.output_window.text = [eval_code.Inspect()];
 				global.output_window.view_start = 0;
-				global.output_window.cursor_coords = [0,0];
+				
 				global.output_window.Format_Text();
+				global.output_window.cursor_coords = [0,0];
 				if(out_type == "ERROR") global.output_window.Set_Mode(STATUS.FAILURE);
 				else global.output_window.Set_Mode(STATUS.SUCCESS);
 			

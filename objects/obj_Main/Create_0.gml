@@ -127,6 +127,8 @@ New_Maze = function(int=1){
 	path_depth_first = depth_first_path(player.coords, goal.coords, board_pattern);
 
 	global.output_window.text = [""];
+	global.output_window.viewable_text = [global.output_window.text[0]];
+	global.output_window.view_start = 0;
 	global.output_window.Format_Text();
 	global.output_window.Set_Mode(STATUS.NORMAL);
 }

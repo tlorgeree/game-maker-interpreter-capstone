@@ -1,0 +1,6 @@
+new_maze(6);
+
+toggle_dfs_ghost();
+toggle_bfs_ghost();
+
+return get_maze();

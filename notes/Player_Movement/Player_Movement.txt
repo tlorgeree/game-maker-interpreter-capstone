@@ -2,3 +2,14 @@ while(!wall_at_coords(Player.get_x(),
  Player.get_y() - 1)){
  Player.move_up();
 }
+
+
+if(!wall_at_coords(Player.get_x(), 
+ Player.get_y() - 1)){
+ Player.move_up();
+}
+
+if(!wall_at_coords(Player.get_x() + 1, 
+ Player.get_y())){
+ Player.move_right();
+}

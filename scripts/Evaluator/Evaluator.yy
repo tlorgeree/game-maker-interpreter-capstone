@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"Evaluator",
   "parent":{
-    "name":"Interpreters",
-    "path":"folders/Code/Managers/Interpreters.yy",
+    "name":"Interpreter",
+    "path":"folders/Code/Managers/Interpreter.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

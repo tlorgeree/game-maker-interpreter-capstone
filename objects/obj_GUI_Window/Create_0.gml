@@ -150,6 +150,7 @@ Cursor_Right = function(){
 }
 
 Cursor_X_Adj = function(){
+	if(cursor_coords[1] < 0) cursor_coords[1] = 0;
 	var len = string_length(viewable_text[cursor_coords[1]]);
 	if(cursor_coords[0] > len){
 		cursor_coords[0] = len;
