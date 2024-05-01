@@ -216,7 +216,9 @@ Calc_Num_Lines = function(){
 Adjust_Viewable_Text = function(){
 	Calc_Num_Lines();
 	viewable_text = array_create(num_lines, -1);
-	array_copy(viewable_text,0,text,view_start,num_lines);
+	for(var i=0; i<num_lines; i++){
+		viewable_text[i] = text[i + view_start];	
+	}
 	if(cursor_coords[1] > array_length(viewable_text)-1) cursor_coords[1] = array_length(viewable_text)-1;
 	
 	Cursor_X_Adj();	
