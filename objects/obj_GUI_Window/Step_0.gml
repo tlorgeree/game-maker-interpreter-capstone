@@ -10,7 +10,7 @@ if(active){
 	&&(!keyboard_check_pressed(vk_shift)&&(!keyboard_check_pressed(vk_enter)
 	&&(!keyboard_check_pressed(vk_up)&&(!keyboard_check_pressed(vk_down))
 	&&(!keyboard_check_pressed(vk_left))&&(!keyboard_check_pressed(vk_right))
-	&& (!keyboard_check(vk_control)&& (!keyboard_check(vk_delete)))
+	&& (!keyboard_check(vk_control)&& (!keyboard_check(vk_delete) && !keyboard_check_pressed(vk_escape)))
 	))){
 		if(array_length(highlighted_text_range) == 2){
 			Text_Delete_Range(highlighted_text_range[0,0], highlighted_text_range[0,1], 
