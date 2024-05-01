@@ -210,16 +210,13 @@ Scroll_Down = function(){
 }
 
 Calc_Num_Lines = function(){
-	num_lines = min(array_length(text), floor(window_h/19)-1);	
+	num_lines = min(array_length(text) - view_start, floor(window_h/19)-1);	
 }
 
 Adjust_Viewable_Text = function(){
 	Calc_Num_Lines();
 	viewable_text = array_create(num_lines, -1);
-	
-	for(var i=0; i<num_lines; i++){
-		viewable_text[i] = text[i + view_start];	
-	}
+	array_copy(viewable_text,0,text,view_start,num_lines);
 	if(cursor_coords[1] > array_length(viewable_text)-1) cursor_coords[1] = array_length(viewable_text)-1;
 	
 	Cursor_X_Adj();	
@@ -300,11 +297,11 @@ Text_Paste = function(_x, _y){
 }
 
 Get_Text_Before_Coords = function(_x, _y){
-	if(_y + view_start > array_length(text)) return "";
+	if(_y + view_start >= array_length(text)) return "";
 	return string_delete(text[view_start + _y], _x+1, string_length(text[view_start + _y]) - _x);
 }
 
 Get_Text_After_Coords = function(_x, _y){
-	if(_y + view_start > array_length(text)) return "";
+	if(_y + view_start >= array_length(text)) return "";
 	return string_delete(text[view_start + _y], 1, _x);
 }
