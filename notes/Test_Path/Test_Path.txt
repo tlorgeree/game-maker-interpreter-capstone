@@ -1,0 +1,7 @@
+var path = a_star_path(
+ Player.get_x(), Player.get_y(),
+ Goal.get_x(), Goal.get_y()
+);
+
+Player.set_path(path);
+Player.execute();

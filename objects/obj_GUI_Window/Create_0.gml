@@ -89,8 +89,7 @@ Format_Text = function(){
 			array_insert(text, line+1, next_line);
 			text[line] = new_line;
 			Adjust_Viewable_Text();
-			Cursor_Down();
-			cursor_coords[0] -= new_len;		
+			Cursor_Down();	
 		}
 		line++;
 	}

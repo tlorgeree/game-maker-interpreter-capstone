@@ -6,6 +6,7 @@ function Action(method_to_call=undefined, args=[]) constructor{
 	Execute = function(){
 		var result = method_call(fn, arguments);
 		complete = true;
+		array_delete(obj_Main.Get_Player().path, 0, 1);
 		debug_print(result);
 		return result;
 	}

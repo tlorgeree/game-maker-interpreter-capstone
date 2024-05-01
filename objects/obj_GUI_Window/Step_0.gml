@@ -60,8 +60,7 @@ if(active){
 			return;
 		}
 		if!((cursor_coords[0] == 0) && ((cursor_coords[1] + view_start) == 0))
-		if((cursor_coords[0] == 0) && ((cursor_coords[1] + view_start) != 0)){
-			
+		if((cursor_coords[0] == 0) && ((cursor_coords[1]) != 0)){
 			var str;
 			var prev_line_len = string_length(viewable_text[cursor_coords[1] -1]);
 			var curr_line_len = string_length(viewable_text[cursor_coords[1]]);

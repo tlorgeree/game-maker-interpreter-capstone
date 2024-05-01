@@ -84,6 +84,7 @@ global.builtins.store = {
 			player.Set_Path(path);
 		}),
 		execute : new Built_In(function(){
+			if(obj_Main.Get_Player().state != Player_State_Idle) return new Error("Please wait for the player to finish its current action.");	;
 			var player = obj_Main.Get_Player();
 			if(is_undefined(player)){
 				return new Error("Player object not instantiated");	
@@ -121,6 +122,7 @@ global.builtins.store = {
 	}),
 	
 	a_star_path : new Built_In(function(start_x, start_y, end_x, end_y){
+		if(is_undefined(start_x) || is_undefined(start_y) || is_undefined(end_x) || is_undefined(end_y)) return new Error("path coordinate types need to be integers");
 		if(start_x.Type() != "INTEGER" || start_y.Type() != "INTEGER" || end_x.Type() != "INTEGER" 
 			|| end_y.Type() != "INTEGER") return new Error("path coordinate types need to be integers");
 		var path = a_star([start_x.value, start_y.value], [end_x.value, end_y.value], obj_Main.board_pattern);

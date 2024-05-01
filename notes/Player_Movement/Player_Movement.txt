@@ -1,0 +1,4 @@
+while(!wall_at_coords(Player.get_x(), 
+ Player.get_y() - 1)){
+ Player.move_up();
+}
