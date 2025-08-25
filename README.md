@@ -1,5 +1,5 @@
 # Purpose
-This project was a college capstone requirement. Here, I used GameMaker to create a small application where the user can code within game to pathfind with the mouse through the maze.
+This project was a college capstone requirement. Here, I used GameMaker to create a small application where the user can code within game to pathfind with the mouse through the maze. I misspelled Capstone in the GM file but that's a feature now, not a bug.
 
 
 ## Interpreter: Capabilities
